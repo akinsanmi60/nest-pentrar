@@ -1,4 +1,4 @@
-import type { Config } from './config.interface';
+import type { Config } from "./config.interface";
 
 const config: Config = {
   nest: {
@@ -9,14 +9,14 @@ const config: Config = {
   },
   swagger: {
     enabled: true,
-    title: 'Pentrar',
-    description: 'The pentrar API description',
-    version: '1.5',
-    path: 'api',
+    title: "Pentrar",
+    description: "The pentrar API description",
+    version: "1.5",
+    path: "api",
   },
   security: {
-    expiresIn: '2m',
-    refreshIn: '7d',
+    expiresIn: "2m",
+    refreshIn: "7d",
     bcryptSaltOrRound: 10,
   },
 };

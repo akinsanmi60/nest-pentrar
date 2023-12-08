@@ -1,2 +1,4 @@
 node_modules
 dist
+src/mail/mail-templates
+prisma/generated
