@@ -26,7 +26,6 @@ import { CompanyModule } from "./company/company.module";
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    //forRoutes("*") means forl all routes
     consumer.apply(LoggerMiddleware).forRoutes("*");
   }
 }
