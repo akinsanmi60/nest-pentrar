@@ -8,7 +8,7 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { ResponseInterceptor } from "../responeFilter/respone.service";
 import { MailService } from "../mail/mail.service";
 import { GetAllAggregatorDto, UpdateAggregatorDto } from "./dto/aggregator.dto";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "../../prisma/generated/client";
 
 @UseInterceptors(ResponseInterceptor)
 @Injectable()

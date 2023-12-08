@@ -11,7 +11,7 @@ import {
   VerifyEmailDto,
 } from "./dto/userAuth.dto";
 import { PrismaService } from "src/prisma/prisma.service";
-import { User } from "@prisma/client";
+import { User } from "../../prisma/generated/client";
 import { PasswordService } from "./password.service";
 import { MailService } from "../mail/mail.service";
 import { ResponseInterceptor } from "../responeFilter/respone.service";

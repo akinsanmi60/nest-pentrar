@@ -11,7 +11,7 @@ import {
   ForgotPasswordAggregatorDto,
 } from "./dto/userAuth.dto";
 import { PrismaService } from "src/prisma/prisma.service";
-import { Aggregator } from "@prisma/client";
+import { Aggregator } from "../../prisma/generated/client";
 import { PasswordService } from "./password.service";
 import { MailService } from "../mail/mail.service";
 import * as crypto from "crypto";

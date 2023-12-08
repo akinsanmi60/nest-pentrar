@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 
 import { PrismaService } from "src/prisma/prisma.service";
-import { Aggregator, Farmer, User } from "@prisma/client";
+import { Aggregator, Farmer, User } from "../../prisma/generated/client";
 
 @Injectable()
 export class AuthResolver {

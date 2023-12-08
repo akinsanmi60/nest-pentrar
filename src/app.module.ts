@@ -7,10 +7,10 @@ import { PrismaService } from "./prisma/prisma.service";
 import config from "./common/configs/config";
 import { ConfigModule } from "@nestjs/config";
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
-import { FarmerModule } from "./farmer/farmer.module";
 import { AggregatorModule } from "./userAggregator/aggregator.module";
 import { UserModule } from "./user/user.module";
-import { CompanyModule } from "./company/company.module";
+import { FarmerModule } from "./userFarmer/farmer.module";
+import { CompanyModule } from "./userCompany/company.module";
 
 @Module({
   imports: [

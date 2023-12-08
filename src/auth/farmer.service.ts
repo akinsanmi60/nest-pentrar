@@ -18,7 +18,7 @@ import crypto from "crypto";
 import { v4 as uuidv4 } from "uuid";
 import { ResponseInterceptor } from "src/responeFilter/respone.service";
 import { AuthResolver } from "./authFinder.service";
-import { Farmer } from "@prisma/client";
+import { Farmer } from "../../prisma/generated/client";
 
 @UseInterceptors(ResponseInterceptor)
 @Injectable()
