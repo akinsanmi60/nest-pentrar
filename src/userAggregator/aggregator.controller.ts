@@ -23,8 +23,6 @@ export class AggregatorController {
     return await this.aggregatorService.getAllAggregators(dto);
   }
 
-  //hello
-
   @Post(":id/activate-aggregator")
   @ApiParam({ name: "id", type: "string" })
   async activateAggregator(@Param("id") id: string) {
