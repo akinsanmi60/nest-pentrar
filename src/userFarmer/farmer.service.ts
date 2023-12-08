@@ -71,7 +71,7 @@ export class FarmerService {
             last_name: search.toString(),
           },
           {
-            pentrar_aggregator_id: search.toString(),
+            pentrar_farmer_id: search.toString(),
           },
           { id: { contains: search.toString(), mode: "insensitive" } },
           // Add more fields as needed
