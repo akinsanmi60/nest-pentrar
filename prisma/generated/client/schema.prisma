@@ -1,0 +1,133 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL_NEON")
+  directUrl = env("DIRECT_URL_NEON")
+}
+
+model User {
+  id                 String        @id @default(uuid())
+  created_at         DateTime      @default(now()) @map("created_at")
+  updated_at         DateTime      @updatedAt @map("updated_at")
+  email              String        @unique
+  password           String?
+  first_name         String?
+  last_name          String?
+  role               String?
+  last_active        String?
+  status             UserStatus
+  phone_number       String?       @unique
+  is_active          Boolean?
+  pentrar_user_id    String?       @unique
+  Farmer             Farmer[]
+  Transporter        Transporter[]
+  Aggregator         Aggregator[]
+  verification_code  String?       @unique
+  password_resetCode String?       @unique
+  isEmail_verified   Boolean       @default(false)
+}
+
+model Aggregator {
+  id                    String        @id @default(uuid()) @map("_id")
+  created_at            DateTime      @map("created_at")
+  updated_at            DateTime      @updatedAt @map("updated_at")
+  is_active             Boolean?
+  email                 String?       @unique
+  password              String?
+  first_name            String?
+  last_name             String?
+  last_active           String?
+  phone_number          String?       @unique
+  pentrar_aggregator_id String?       @unique
+  user                  User?         @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
+  created_by_id         String?
+  Farmer                Farmer[]
+  Transporter           Transporter[]
+  verification_code     String?       @unique
+  password_resetCode    String?       @unique
+  isEmail_verified      Boolean       @default(false)
+  status                UserStatus
+  role                  String?
+}
+
+model Farmer {
+  id                 String        @id @default(uuid())
+  created_at         DateTime      @default(now()) @map("created_at")
+  updated_at         DateTime      @updatedAt @map("updated_at")
+  email              String?       @unique
+  phone_number       String?       @unique
+  password           String?
+  first_name         String?
+  last_name          String?
+  type_of_produce    String[]
+  pentrar_farmer_id  String?       @unique
+  aggregator         Aggregator    @relation(fields: [created_by_id], references: [pentrar_aggregator_id], map: "aggregator_relation")
+  user               User          @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
+  created_by_id      String
+  last_active        String?
+  list_of_produce    Produce[]
+  Transporter        Transporter[]
+  status             UserStatus
+  verification_code  String?       @unique
+  password_resetCode String?       @unique
+  isEmail_verified   Boolean       @default(false)
+  role               String?
+  is_active          Boolean?
+}
+
+model Transporter {
+  id                 String     @id @default(uuid())
+  created_at         DateTime   @default(now()) @map("created_at")
+  updated_at         DateTime   @updatedAt @map("updated_at")
+  email              String     @unique
+  password           String?
+  first_name         String?
+  last_name          String?
+  role               String?
+  last_active        String?
+  status             UserStatus
+  phone_number       String?    @unique
+  is_active          Boolean?
+  pentrar_trans_id   String?
+  aggregator         Aggregator @relation(fields: [created_by_id], references: [pentrar_aggregator_id], map: "aggregator_relation")
+  user               User       @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
+  farmer             Farmer     @relation(fields: [created_by_id], references: [pentrar_farmer_id], map: "farmer_relation")
+  created_by_id      String
+  verification_code  String?    @unique
+  password_resetCode String?    @unique
+  isEmail_verified   Boolean    @default(false)
+  vehicle_type       String?
+  vehicle_number     String?
+  Vehicle_license    String?
+}
+
+model Produce {
+  id                 String   @id @default(uuid()) @map("_id")
+  name               String?
+  quantity           Int?
+  unit               Int?
+  farmer             Farmer   @relation(fields: [farmer_id], references: [id])
+  farmer_id          String
+  created_at         DateTime @default(now()) @map("created_at")
+  updated_at         DateTime @updatedAt @map("updated_at")
+  pentrar_produce_id String?
+  image              String?
+  description        String?
+}
+
+enum UserStatus {
+  Active
+  Inactive
+  Pending
+  Invited
+}
