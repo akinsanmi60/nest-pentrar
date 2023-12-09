@@ -1,15 +1,54 @@
-import { Injectable } from "@nestjs/common";
-import { MailService } from "../../mail/mail.service";
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+} from "@nestjs/common";
 import { PrismaService } from "src/prisma/prisma.service";
+import {
+  AddProduceDto,
+  GetAllProduceDto,
+  ProduceUpdateDto,
+} from "./dto/farm-produce.dto";
+import { Prisma } from "../../../prisma/generated/client";
+import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class FarmProduceService {
-  constructor(
-    private readonly prisma: PrismaService,
-    private readonly mailService: MailService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {}
 
-  async getAllFarmProduce(dto) {
+  async createFarmProduce(dto: AddProduceDto, id: string) {
+    const { name, quantity, unit, image, description } = dto;
+
+    const findeUser =
+      (await this.findOneAggregatorById(id)) ||
+      (await this.findOneCompanyById(id)) ||
+      (await this.findOneFarmerById(id));
+
+    if (!findeUser) {
+      throw new BadRequestException("User not found");
+    }
+
+    const newProduce = await this.prisma.produce.create({
+      data: {
+        name: name,
+        quantity: quantity,
+        unit: unit,
+        image: image,
+        description: description,
+        farmer_id: findeUser.id,
+        pentrar_produce_id: uuidv4(),
+      },
+    });
+
+    return {
+      message: "Farm produce created successfully",
+      data: {
+        ...newProduce,
+      },
+    };
+  }
+
+  async getAllFarmProduce(dto: GetAllProduceDto) {
     const {
       created_at,
       page = 1,
@@ -52,12 +91,6 @@ export class FarmProduceService {
       if (search) {
         where.OR = [
           {
-            first_name: search.toString(),
-          },
-          {
-            last_name: search.toString(),
-          },
-          {
             pentrar_produce_id: search.toString(),
           },
           {
@@ -95,8 +128,8 @@ export class FarmProduceService {
       const totalPages = Math.ceil(totalCount / limitNumber);
 
       const message = allproduce.length
-        ? "Aggregators fetched successfully"
-        : "No Aggregators Found";
+        ? "Produces fetched successfully"
+        : "No Produces Found";
       const success = allproduce?.length ? true : false;
 
       return {
@@ -106,12 +139,114 @@ export class FarmProduceService {
           total_pages: success ? totalPages : 0,
           current_page: success ? Number(page) : 0,
           page_size: success ? offset : 0,
-          aggregators_list: allproduce,
+          produces_list: allproduce,
         },
       };
     } catch (error) {
-      console.error("Error in get all aggregators:", error);
+      console.error("Error in get all produce:", error);
       throw error;
     }
+  }
+
+  async deleteProduce(id: string) {
+    try {
+      const deletedProduce = await this.prisma.produce.delete({
+        where: { id },
+      });
+
+      if (!deletedProduce) {
+        throw new BadRequestException("Produce not found");
+      }
+
+      return {
+        message: "Produce deleted successfully",
+        data: {
+          ...deletedProduce,
+        },
+      };
+    } catch (error) {
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        // Handle Prisma known errors, e.g., record not found
+        if (error.code === "P2025") {
+          throw new BadRequestException("Produce not found");
+        }
+      }
+
+      console.error("Error deleting produce:", error);
+      throw new InternalServerErrorException("Failed to delete produce");
+    }
+  }
+
+  async updateProduce(id: string, dto: ProduceUpdateDto) {
+    const { quantity, unit, description } = dto;
+    const availableProduce = await this.prisma.produce.findUnique({
+      where: { id },
+    });
+
+    if (!availableProduce) {
+      throw new BadRequestException("Produce not found");
+    }
+
+    const user_time_created = new Date(); // Make sure to implement generatedTime function
+
+    const produceUpdated = await this.prisma.produce.update({
+      where: { id },
+      data: {
+        quantity: quantity,
+        unit: unit,
+        description: description,
+        updated_at: user_time_created,
+      },
+    });
+
+    if (!produceUpdated) {
+      throw new BadRequestException("Failed to update produce");
+    }
+
+    return {
+      message: "Produce updated successfully",
+      data: {
+        ...produceUpdated,
+      },
+    };
+  }
+
+  async getProduceById(id: string) {
+    const produce = await this.prisma.produce.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        image: true,
+        name: true,
+        quantity: true,
+        unit: true,
+        created_at: true,
+        updated_at: true,
+        farmer_id: true,
+        description: true,
+        pentrar_produce_id: true,
+      },
+    });
+
+    if (!produce) {
+      throw new BadRequestException("Produce not found");
+    }
+
+    return {
+      message: "Produce fetched successfully",
+      data: {
+        ...produce,
+      },
+    };
+  }
+
+  private async findOneAggregatorById(id: string) {
+    return this.prisma.aggregator.findUnique({ where: { id } });
+  }
+  private async findOneCompanyById(id: string) {
+    return this.prisma.company.findUnique({ where: { id } });
+  }
+  private async findOneFarmerById(id: string) {
+    return this.prisma.farmer.findUnique({ where: { id } });
   }
 }
