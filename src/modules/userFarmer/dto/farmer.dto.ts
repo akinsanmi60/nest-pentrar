@@ -1,10 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, IsNumber, IsString, IsUUID, Length } from "class-validator";
-import { AggregatorInfoDto } from "src/userAggregator/dto/aggregator.dto";
-import { getFarmerInfoResponse } from "src/userFarmer/dto/farmer.dto";
-import { TransporterInfoDto } from "src/userTransporter/dto/transporter.dto";
+import { IsNumber, IsString, IsUUID, Length } from "class-validator";
+import { TransporterInfoDto } from "../../../modules/userTransporter/dto/transporter.dto";
 
-export class GetAllCompanyDto {
+export class GetAllFarmerDto {
   @ApiProperty({
     example: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     required: false,
@@ -26,9 +24,9 @@ export class GetAllCompanyDto {
 
   @ApiProperty({ example: "pen1234", required: false })
   @IsString()
-  pentrar_company_id: string;
+  pentrar_farmer_id: string;
 
-  @ApiProperty({ example: "08-12-2023", required: false })
+  @ApiProperty({ example: "08-12-202", required: false })
   created_at: string;
 
   @ApiProperty({
@@ -45,7 +43,7 @@ export class GetAllCompanyDto {
   phone_number: string;
 }
 
-export class ActivateCompanyDto {
+export class ActivateFarmerDto {
   @ApiProperty({
     example: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     required: true,
@@ -53,67 +51,87 @@ export class ActivateCompanyDto {
   @IsUUID("4", { message: "ID must be a valid UUID." })
   id: string;
 }
-
-export class UpdateCompanyDto {
+export class UpdateFarmerDto {
   @ApiProperty()
-  @IsEmail({}, { message: "Please provide a valid email address." })
-  email: string;
+  @Length(11, 11, {
+    message: "Phone number must be at must be 11 characters long.",
+  })
+  phone_number: string;
 }
 
-export class getCompanyByIdDtoResponse {
+export class getFarmerByIdDtoResponse {
   @ApiProperty()
   id: string;
 
   @ApiProperty()
-  created_at: string;
+  first_name: string;
 
   @ApiProperty()
-  company_name: string;
+  last_name: string;
 
   @ApiProperty()
-  last_active: string;
-
-  @ApiProperty()
-  legal_entity_name: string;
+  pentrar_farmer_id: string;
 
   @ApiProperty()
   phone_number: string;
 
   @ApiProperty()
-  status: string;
-
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  updated_at: string;
+  list_of_produce: string;
 
   @ApiProperty()
   is_active: string;
 
   @ApiProperty()
-  pentrar_company_id: string;
+  created_at: string;
 
-  @ApiProperty({
-    type: () => getFarmerInfoResponse,
-    isArray: true,
-  })
-  farmers: getFarmerInfoResponse[];
+  @ApiProperty()
+  updated_at: string;
 
-  @ApiProperty({
-    type: () => AggregatorInfoDto,
-    isArray: true,
-  })
-  aggregators: AggregatorInfoDto[];
+  @ApiProperty()
+  created_by_id: string;
 
-  @ApiProperty({
-    type: () => TransporterInfoDto,
-    isArray: true,
-  })
+  @ApiProperty()
+  last_active: string;
+
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty()
+  status: string;
+
+  @ApiProperty({ type: () => TransporterInfoDto, isArray: true })
+  transporters: TransporterInfoDto[];
+}
+export class getFarmerInfoResponse {
+  @ApiProperty()
+  id: string;
+
+  @ApiProperty()
+  pentrar_farmer_id: string;
+
+  @ApiProperty()
+  first_name: string;
+
+  @ApiProperty()
+  last_name: string;
+
+  @ApiProperty()
+  phone_number: string;
+
+  @ApiProperty()
+  list_of_produce: string;
+
+  @ApiProperty()
+  is_active: boolean;
+
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty({ type: () => TransporterInfoDto, isArray: true })
   transporters: TransporterInfoDto[];
 }
 
-class CompanyDataResponse {
+class FarmerDataResponse {
   @ApiProperty()
   total: number;
 
@@ -127,15 +145,15 @@ class CompanyDataResponse {
   page_size: number;
 
   @ApiProperty({
-    type: () => getCompanyByIdDtoResponse,
+    type: () => getFarmerByIdDtoResponse,
     isArray: true,
   })
-  companies_list: getCompanyByIdDtoResponse[];
+  farmers_list: getFarmerByIdDtoResponse[];
 }
 
-export class GetAllCompanyResponse {
+export class GetAllFarmerResponse {
   @ApiProperty()
   message: string;
   @ApiProperty()
-  data: CompanyDataResponse;
+  data: FarmerDataResponse;
 }

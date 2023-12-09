@@ -1,9 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString, IsUUID, Length } from "class-validator";
-import { getFarmerInfoResponse } from "src/userFarmer/dto/farmer.dto";
-import { TransporterInfoDto } from "src/userTransporter/dto/transporter.dto";
+import { IsEmail, IsNumber, IsString, IsUUID, Length } from "class-validator";
+import { AggregatorInfoDto } from "../../../modules/userAggregator/dto/aggregator.dto";
+import { getFarmerInfoResponse } from "../../../modules/userFarmer/dto/farmer.dto";
+import { TransporterInfoDto } from "../../../modules/userTransporter/dto/transporter.dto";
 
-export class GetAllAggregatorDto {
+export class GetAllCompanyDto {
   @ApiProperty({
     example: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     required: false,
@@ -25,7 +26,7 @@ export class GetAllAggregatorDto {
 
   @ApiProperty({ example: "pen1234", required: false })
   @IsString()
-  pentrar_aggregator_id: string;
+  pentrar_company_id: string;
 
   @ApiProperty({ example: "08-12-2023", required: false })
   created_at: string;
@@ -44,7 +45,7 @@ export class GetAllAggregatorDto {
   phone_number: string;
 }
 
-export class ActivateAggregatorDto {
+export class ActivateCompanyDto {
   @ApiProperty({
     example: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     required: true,
@@ -52,91 +53,67 @@ export class ActivateAggregatorDto {
   @IsUUID("4", { message: "ID must be a valid UUID." })
   id: string;
 }
-export class UpdateAggregatorDto {
+
+export class UpdateCompanyDto {
   @ApiProperty()
-  @Length(11, 11, {
-    message: "Phone number must be at must be 11 characters long.",
-  })
-  phone_number: string;
+  @IsEmail({}, { message: "Please provide a valid email address." })
+  email: string;
 }
 
-export class AggregatorResponseDto {
+export class getCompanyByIdDtoResponse {
   @ApiProperty()
   id: string;
 
   @ApiProperty()
-  created_at: Date;
+  created_at: string;
 
   @ApiProperty()
-  updated_at: Date;
-
-  @ApiProperty()
-  is_active: boolean;
-
-  @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  first_name: string;
-
-  @ApiProperty()
-  last_name: string;
+  company_name: string;
 
   @ApiProperty()
   last_active: string;
 
   @ApiProperty()
+  legal_entity_name: string;
+
+  @ApiProperty()
   phone_number: string;
-
-  @ApiProperty()
-  pentrar_aggregator_id: string;
-
-  @ApiProperty()
-  created_by_id: string;
-
-  @ApiProperty({ type: () => getFarmerInfoResponse, isArray: true })
-  farmers: getFarmerInfoResponse[];
-
-  @ApiProperty({ type: () => TransporterInfoDto, isArray: true })
-  transporters: TransporterInfoDto[];
 
   @ApiProperty()
   status: string;
 
   @ApiProperty()
-  role: string;
-}
-
-export class AggregatorInfoDto {
-  @ApiProperty()
-  id: string;
+  email: string;
 
   @ApiProperty()
-  created_at: Date;
+  updated_at: string;
 
   @ApiProperty()
-  is_active: boolean;
+  is_active: string;
 
   @ApiProperty()
-  first_name: string;
+  pentrar_company_id: string;
 
-  @ApiProperty()
-  last_name: string;
-
-  @ApiProperty()
-  phone_number: string;
-
-  @ApiProperty()
-  pentrar_aggregator_id: string;
-
-  @ApiProperty({ type: () => getFarmerInfoResponse, isArray: true })
+  @ApiProperty({
+    type: () => getFarmerInfoResponse,
+    isArray: true,
+  })
   farmers: getFarmerInfoResponse[];
 
-  @ApiProperty({ type: () => TransporterInfoDto, isArray: true })
+  @ApiProperty({
+    type: () => AggregatorInfoDto,
+    isArray: true,
+  })
+  aggregators: AggregatorInfoDto[];
+
+  @ApiProperty({
+    type: () => TransporterInfoDto,
+    isArray: true,
+  })
   transporters: TransporterInfoDto[];
 }
 
-class AggregatorDataResponse {
+class CompanyDataResponse {
   @ApiProperty()
   total: number;
 
@@ -150,15 +127,15 @@ class AggregatorDataResponse {
   page_size: number;
 
   @ApiProperty({
-    type: () => AggregatorResponseDto,
+    type: () => getCompanyByIdDtoResponse,
     isArray: true,
   })
-  aggregators_list: AggregatorResponseDto[];
+  companies_list: getCompanyByIdDtoResponse[];
 }
 
-export class GetAllAggregatorResponse {
+export class GetAllCompanyResponse {
   @ApiProperty()
   message: string;
   @ApiProperty()
-  data: AggregatorDataResponse;
+  data: CompanyDataResponse;
 }

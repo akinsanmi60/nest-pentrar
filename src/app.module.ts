@@ -2,17 +2,17 @@ import { ResponseInterceptor } from "./responeFilter/respone.service";
 import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { AuthModule } from "./auth/auth.module";
 import { PrismaService } from "./prisma/prisma.service";
 import config from "./common/configs/config";
 import { ConfigModule } from "@nestjs/config";
 import { LoggerMiddleware } from "./middlewares/logger.middleware";
-import { AggregatorModule } from "./userAggregator/aggregator.module";
-import { UserModule } from "./user/user.module";
-import { FarmerModule } from "./userFarmer/farmer.module";
-import { CompanyModule } from "./userCompany/company.module";
-import { UserTransporterModule } from "./userTransporter/user-transporter.module";
-import { FarmProduceModule } from "./modules/farm-produce/farm-produce.module";
+import { AuthModule } from "./auth/auth.module";
+import { FarmProduceModule } from "./modules/farmProduce/farm-produce.module";
+import { UserModule } from "./modules/user/user.module";
+import { AggregatorModule } from "./modules/userAggregator/aggregator.module";
+import { CompanyModule } from "./modules/userCompany/company.module";
+import { FarmerModule } from "./modules/userFarmer/farmer.module";
+import { UserTransporterModule } from "./modules/userTransporter/user-transporter.module";
 
 @Module({
   imports: [

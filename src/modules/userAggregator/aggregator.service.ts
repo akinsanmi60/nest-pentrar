@@ -4,27 +4,27 @@ import {
   InternalServerErrorException,
   UseInterceptors,
 } from "@nestjs/common";
-import { GetAllFarmerDto, UpdateFarmerDto } from "./dto/farmer.dto";
 import { PrismaService } from "src/prisma/prisma.service";
-import { ResponseInterceptor } from "../responeFilter/respone.service";
-import { MailService } from "../mail/mail.service";
-import { Prisma } from "../../prisma/generated/client";
+import { ResponseInterceptor } from "../../responeFilter/respone.service";
+import { MailService } from "../../mail/mail.service";
+import { GetAllAggregatorDto, UpdateAggregatorDto } from "./dto/aggregator.dto";
+import { Prisma } from "../../../prisma/generated/client";
 
 @UseInterceptors(ResponseInterceptor)
 @Injectable()
-export class FarmerService {
+export class AggregratorService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly mailService: MailService,
   ) {}
-  async getAllFarmers(dto: GetAllFarmerDto) {
+  async getAllAggregators(dto: GetAllAggregatorDto) {
     const {
       created_at,
       page = 1,
       limit = 10,
       id,
       search,
-      pentrar_farmer_id,
+      pentrar_aggregator_id,
       status,
       phone_number,
     } = dto;
@@ -40,9 +40,9 @@ export class FarmerService {
         where.id = { contains: id, mode: "insensitive" };
       }
 
-      if (pentrar_farmer_id) {
-        where.pentrar_farmer_id = {
-          contains: pentrar_farmer_id,
+      if (pentrar_aggregator_id) {
+        where.pentrar_aggregator_id = {
+          contains: pentrar_aggregator_id,
         };
       }
 
@@ -71,7 +71,7 @@ export class FarmerService {
             last_name: search.toString(),
           },
           {
-            pentrar_farmer_id: search.toString(),
+            pentrar_aggregator_id: search.toString(),
           },
           {
             phone_number: search.toString(),
@@ -81,8 +81,8 @@ export class FarmerService {
         ];
       }
 
-      const [allFarmers, totalCount] = await Promise.all([
-        this.prisma.farmer.findMany({
+      const [allAggregators, totalCount] = await Promise.all([
+        this.prisma.aggregator.findMany({
           where,
           select: {
             id: true,
@@ -95,7 +95,17 @@ export class FarmerService {
             email: true,
             updated_at: true,
             is_active: true,
-            pentrar_farmer_id: true,
+            pentrar_aggregator_id: true,
+            farmers: {
+              select: {
+                id: true,
+                first_name: true,
+                last_name: true,
+                phone_number: true,
+                list_of_produce: true,
+                is_active: true,
+              },
+            },
             transporters: {
               select: {
                 id: true,
@@ -109,19 +119,19 @@ export class FarmerService {
           },
           orderBy: { created_at: "desc" },
           skip,
-          take: offset,
+          take: offset as number,
         }),
-        this.prisma.farmer.count({
+        this.prisma.aggregator.count({
           where,
         }),
       ]);
 
       const totalPages = Math.ceil(totalCount / limitNumber);
 
-      const message = allFarmers.length
-        ? "Farmers fetched successfully"
-        : "No farmers found";
-      const success = allFarmers?.length ? true : false;
+      const message = allAggregators.length
+        ? "Aggregators fetched successfully"
+        : "No Aggregators Found";
+      const success = allAggregators?.length ? true : false;
 
       return {
         message,
@@ -130,19 +140,19 @@ export class FarmerService {
           total_pages: success ? totalPages : 0,
           current_page: success ? Number(page) : 0,
           page_size: success ? offset : 0,
-          farmers_list: allFarmers,
+          aggregators_list: allAggregators,
         },
       };
     } catch (error) {
-      console.error("Error in get all farmers:", error);
+      console.error("Error in get all aggregators:", error);
       throw error;
     }
   }
 
-  async activateFarmer(id: string) {
+  async activateAggregator(id: string) {
     const user_time_created = new Date();
 
-    const activatedFarmer = await this.prisma.farmer.update({
+    const activatedAggregator = await this.prisma.aggregator.update({
       where: { id },
       data: {
         is_active: true,
@@ -150,67 +160,63 @@ export class FarmerService {
       },
     });
 
-    if (!activatedFarmer) {
-      throw new BadRequestException("Cannot  activate farmer");
+    if (!activatedAggregator) {
+      throw new BadRequestException("Cannot  activate  aggregator");
     }
 
     return {
-      message: "Farmer activated successfully",
+      message: "Aggregator activated successfully",
       data: {
-        ...activatedFarmer,
+        ...activatedAggregator,
       },
     };
   }
 
-  async deactivateFarmer(id: string) {
-    try {
-      const user_time_created = new Date();
+  async deactivateAggregator(id: string) {
+    const user_time_created = new Date();
 
-      const deactivatedFarmer = await this.prisma.farmer.update({
-        where: { id },
+    const deactivatedAggregator = await this.prisma.aggregator.update({
+      where: { id },
+      data: {
+        is_active: false,
+        updated_at: user_time_created,
+      },
+    });
+
+    if (!deactivatedAggregator) {
+      throw new BadRequestException("Cannot deactivate aggregator");
+    }
+
+    if (deactivatedAggregator) {
+      await this.mailService.deactiveVariousUsers({
+        to: deactivatedAggregator.email,
         data: {
-          is_active: false,
-          updated_at: user_time_created,
+          name: deactivatedAggregator.first_name,
         },
       });
 
-      if (!deactivatedFarmer) {
-        throw new BadRequestException("Cannot activate farmer");
-      }
-
-      if (deactivatedFarmer) {
-        await this.mailService.deactiveVariousUsers({
-          to: deactivatedFarmer.email,
-          data: {
-            name: deactivatedFarmer.first_name,
-          },
-        });
-
-        return {
-          message: "Farmer activated successfully",
-          data: {
-            ...deactivatedFarmer,
-          },
-        };
-      }
-    } catch (error) {
-      throw new InternalServerErrorException("Internal server error");
+      return {
+        message: "Aggregator deactivated successfully",
+        data: {
+          ...deactivatedAggregator,
+        },
+      };
     }
   }
 
-  async updateFarmer(id: string, dto: UpdateFarmerDto) {
+  async updateAggregator(id: string, dto: UpdateAggregatorDto) {
     const { phone_number } = dto;
-    const availableFarmer = await this.prisma.farmer.findUnique({
+    const availableAggregator = await this.prisma.aggregator.findUnique({
       where: { id },
     });
 
-    if (!availableFarmer) {
-      throw new BadRequestException("Farmer not found");
+    if (!availableAggregator) {
+      throw new BadRequestException("Aggregator not found");
     }
 
     const user_time_created = new Date(); // Make sure to implement generatedTime function
 
-    const updatedUser = await this.prisma.farmer.update({
+    const aggregatorUpdated = await this.prisma.aggregator.update({
       where: { id },
       data: {
         phone_number: phone_number,
@@ -218,49 +224,49 @@ export class FarmerService {
       },
     });
 
-    if (!updatedUser) {
-      throw new BadRequestException("Failed to update user");
+    if (!aggregatorUpdated) {
+      throw new BadRequestException("Failed to update aggregator");
     }
 
     return {
-      message: "Farmer updated successfully",
+      message: "Aggregator updated successfully",
       data: {
-        ...updatedUser,
+        ...aggregatorUpdated,
       },
     };
   }
 
-  async deleteFarmer(id: string) {
+  async deleteAggregator(id: string) {
     try {
-      const deletedFarmer = await this.prisma.farmer.delete({
+      const deletedAggregator = await this.prisma.aggregator.delete({
         where: { id },
       });
 
-      if (!deletedFarmer) {
-        throw new BadRequestException("Farmer not found");
+      if (!deletedAggregator) {
+        throw new BadRequestException("Aggregator not found");
       }
 
       return {
-        message: "Farmer deleted successfully",
+        message: "Aggregator deleted successfully",
         data: {
-          ...deletedFarmer,
+          ...deletedAggregator,
         },
       };
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         // Handle Prisma known errors, e.g., record not found
         if (error.code === "P2025") {
-          throw new BadRequestException("Farmer not found");
+          throw new BadRequestException("Aggregator not found");
         }
       }
 
-      console.error("Error deleting farmer:", error);
-      throw new InternalServerErrorException("Failed to delete Farmer");
+      console.error("Error deleting aggregator:", error);
+      throw new InternalServerErrorException("Failed to delete aggregator");
     }
   }
 
-  async getFarmerById(id: string) {
-    const farmer = await this.prisma.farmer.findUnique({
+  async getAggregatorById(id: string) {
+    const aggregator = await this.prisma.aggregator.findUnique({
       where: { id },
       select: {
         id: true,
@@ -273,7 +279,17 @@ export class FarmerService {
         email: true,
         updated_at: true,
         is_active: true,
-        pentrar_farmer_id: true,
+        pentrar_aggregator_id: true,
+        farmers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            phone_number: true,
+            list_of_produce: true,
+            is_active: true,
+          },
+        },
         transporters: {
           select: {
             id: true,
@@ -287,14 +303,14 @@ export class FarmerService {
       },
     });
 
-    if (!farmer) {
-      throw new BadRequestException("Farmer not found");
+    if (!aggregator) {
+      throw new BadRequestException("Aggregator not found");
     }
 
     return {
-      message: " fetched successfully",
+      message: "Aggregator fetched successfully",
       data: {
-        ...farmer,
+        ...aggregator,
       },
     };
   }

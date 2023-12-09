@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { FarmerController } from "./farmer.controller";
 import { FarmerService } from "./farmer.service";
 import { PrismaService } from "src/prisma/prisma.service";
-import { MailModule } from "../mail/mail.module";
+import { MailModule } from "../../mail/mail.module";
 
 @Module({
   imports: [MailModule],
