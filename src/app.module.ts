@@ -11,6 +11,8 @@ import { AggregatorModule } from "./userAggregator/aggregator.module";
 import { UserModule } from "./user/user.module";
 import { FarmerModule } from "./userFarmer/farmer.module";
 import { CompanyModule } from "./userCompany/company.module";
+import { UserTransporterModule } from "./userTransporter/user-transporter.module";
+import { FarmProduceModule } from "./modules/farm-produce/farm-produce.module";
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { CompanyModule } from "./userCompany/company.module";
     AggregatorModule,
     UserModule,
     CompanyModule,
+    UserTransporterModule,
+    FarmProduceModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService, ResponseInterceptor],

@@ -73,6 +73,9 @@ export class AggregratorService {
           {
             pentrar_aggregator_id: search.toString(),
           },
+          {
+            phone_number: search.toString(),
+          },
           { id: { contains: search.toString(), mode: "insensitive" } },
           // Add more fields as needed
         ];
@@ -93,7 +96,7 @@ export class AggregratorService {
             updated_at: true,
             is_active: true,
             pentrar_aggregator_id: true,
-            Farmer: {
+            farmers: {
               select: {
                 id: true,
                 first_name: true,
@@ -103,7 +106,7 @@ export class AggregratorService {
                 is_active: true,
               },
             },
-            Transporter: {
+            transporters: {
               select: {
                 id: true,
                 first_name: true,
@@ -170,7 +173,6 @@ export class AggregratorService {
   }
 
   async deactivateAggregator(id: string) {
-    console.log(id);
     const user_time_created = new Date();
 
     const deactivatedAggregator = await this.prisma.aggregator.update({
@@ -223,11 +225,11 @@ export class AggregratorService {
     });
 
     if (!aggregatorUpdated) {
-      throw new BadRequestException("Failed to update user");
+      throw new BadRequestException("Failed to update aggregator");
     }
 
     return {
-      message: "Farmer updated successfully",
+      message: "Aggregator updated successfully",
       data: {
         ...aggregatorUpdated,
       },
@@ -261,5 +263,55 @@ export class AggregratorService {
       console.error("Error deleting aggregator:", error);
       throw new InternalServerErrorException("Failed to delete aggregator");
     }
+  }
+
+  async getAggregatorById(id: string) {
+    const aggregator = await this.prisma.aggregator.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        created_at: true,
+        first_name: true,
+        last_active: true,
+        last_name: true,
+        phone_number: true,
+        status: true,
+        email: true,
+        updated_at: true,
+        is_active: true,
+        pentrar_aggregator_id: true,
+        farmers: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            phone_number: true,
+            list_of_produce: true,
+            is_active: true,
+          },
+        },
+        transporters: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            phone_number: true,
+            is_active: true,
+            pentrar_trans_id: true,
+          },
+        },
+      },
+    });
+
+    if (!aggregator) {
+      throw new BadRequestException("Aggregator not found");
+    }
+
+    return {
+      message: "Aggregator fetched successfully",
+      data: {
+        ...aggregator,
+      },
+    };
   }
 }

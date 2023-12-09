@@ -3,40 +3,72 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Query,
+  Put,
 } from "@nestjs/common";
 import { CompanyService } from "./company.service";
-import { CreateCompanyDto } from "./dto/create-company.dto";
-import { UpdateCompanyDto } from "./dto/update-company.dto";
+import {
+  GetAllCompanyDto,
+  GetAllCompanyResponse,
+  UpdateCompanyDto,
+  getCompanyByIdDtoResponse,
+} from "./dto/company.dto";
+import {
+  ApiBody,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from "@nestjs/swagger";
 
+@ApiTags("Company")
 @Controller("company")
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  @Post()
-  create(@Body() createCompanyDto: CreateCompanyDto) {
-    return this.companyService.create(createCompanyDto);
+  @Get("allComapanies")
+  @ApiQuery({ type: GetAllCompanyDto, required: false })
+  @ApiResponse({ type: GetAllCompanyResponse })
+  async getAllCompanies(@Query() dto) {
+    return this.companyService.getAllCompanies(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.companyService.findAll();
+  @Post(":id/activate-company")
+  @ApiParam({ name: "id", type: "string" })
+  @ApiResponse({ type: getCompanyByIdDtoResponse })
+  async activateCompany(@Param("id") id: string) {
+    return await this.companyService.activateCompany(id);
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.companyService.findOne(+id);
+  @Post(":id/deactivate-company")
+  @ApiParam({ name: "id", type: "string" })
+  @ApiResponse({ type: getCompanyByIdDtoResponse })
+  async deactivateCompany(@Param("id") id) {
+    console.log(id);
+    return await this.companyService.deactivateCompany(id);
   }
 
-  @Patch(":id")
-  update(@Param("id") id: string, @Body() updateCompanyDto: UpdateCompanyDto) {
-    return this.companyService.update(+id, updateCompanyDto);
+  @Put(":id/update-company")
+  @ApiParam({ name: "id" })
+  @ApiBody({ type: UpdateCompanyDto })
+  @ApiResponse({ type: getCompanyByIdDtoResponse })
+  async updateAggregator(@Param("id") id, @Body() dto) {
+    return await this.companyService.updateCompany(id, dto);
   }
 
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.companyService.remove(+id);
+  @Delete(":id/delete-company")
+  @ApiParam({ name: "id", type: String })
+  @ApiResponse({ type: getCompanyByIdDtoResponse })
+  async deleteCompany(@Param("id") id) {
+    return await this.companyService.deactivateCompany(id);
+  }
+
+  @Get(":id/individual-company")
+  @ApiParam({ name: "id", type: String })
+  @ApiResponse({ type: getCompanyByIdDtoResponse })
+  async getCompanyById(@Param("id") id) {
+    return await this.companyService.getCompanyById(id);
   }
 }

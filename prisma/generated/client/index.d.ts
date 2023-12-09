@@ -29,6 +29,11 @@ export type Aggregator = $Result.DefaultSelection<Prisma.$AggregatorPayload>
  */
 export type Farmer = $Result.DefaultSelection<Prisma.$FarmerPayload>
 /**
+ * Model Company
+ * 
+ */
+export type Company = $Result.DefaultSelection<Prisma.$CompanyPayload>
+/**
  * Model Transporter
  * 
  */
@@ -209,6 +214,16 @@ export class PrismaClient<
     * ```
     */
   get farmer(): Prisma.FarmerDelegate<ExtArgs>;
+
+  /**
+   * `prisma.company`: Exposes CRUD operations for the **Company** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Companies
+    * const companies = await prisma.company.findMany()
+    * ```
+    */
+  get company(): Prisma.CompanyDelegate<ExtArgs>;
 
   /**
    * `prisma.transporter`: Exposes CRUD operations for the **Transporter** model.
@@ -702,6 +717,7 @@ export namespace Prisma {
     User: 'User',
     Aggregator: 'Aggregator',
     Farmer: 'Farmer',
+    Company: 'Company',
     Transporter: 'Transporter',
     Produce: 'Produce'
   };
@@ -720,7 +736,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'user' | 'aggregator' | 'farmer' | 'transporter' | 'produce'
+      modelProps: 'user' | 'aggregator' | 'farmer' | 'company' | 'transporter' | 'produce'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -919,6 +935,72 @@ export namespace Prisma {
           count: {
             args: Prisma.FarmerCountArgs<ExtArgs>,
             result: $Utils.Optional<FarmerCountAggregateOutputType> | number
+          }
+        }
+      }
+      Company: {
+        payload: Prisma.$CompanyPayload<ExtArgs>
+        fields: Prisma.CompanyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CompanyFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CompanyFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          findFirst: {
+            args: Prisma.CompanyFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CompanyFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          findMany: {
+            args: Prisma.CompanyFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>[]
+          }
+          create: {
+            args: Prisma.CompanyCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          createMany: {
+            args: Prisma.CompanyCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          delete: {
+            args: Prisma.CompanyDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          update: {
+            args: Prisma.CompanyUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          deleteMany: {
+            args: Prisma.CompanyDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CompanyUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.CompanyUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$CompanyPayload>
+          }
+          aggregate: {
+            args: Prisma.CompanyAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateCompany>
+          }
+          groupBy: {
+            args: Prisma.CompanyGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<CompanyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CompanyCountArgs<ExtArgs>,
+            result: $Utils.Optional<CompanyCountAggregateOutputType> | number
           }
         }
       }
@@ -1203,15 +1285,15 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    Farmer: number
-    Transporter: number
-    Aggregator: number
+    farmers: number
+    transporters: number
+    aggregators: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Farmer?: boolean | UserCountOutputTypeCountFarmerArgs
-    Transporter?: boolean | UserCountOutputTypeCountTransporterArgs
-    Aggregator?: boolean | UserCountOutputTypeCountAggregatorArgs
+    farmers?: boolean | UserCountOutputTypeCountFarmersArgs
+    transporters?: boolean | UserCountOutputTypeCountTransportersArgs
+    aggregators?: boolean | UserCountOutputTypeCountAggregatorsArgs
   }
 
   // Custom InputTypes
@@ -1230,7 +1312,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountFarmerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountFarmersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FarmerWhereInput
   }
 
@@ -1238,7 +1320,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountTransporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountTransportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransporterWhereInput
   }
 
@@ -1246,7 +1328,7 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountAggregatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type UserCountOutputTypeCountAggregatorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AggregatorWhereInput
   }
 
@@ -1257,13 +1339,13 @@ export namespace Prisma {
    */
 
   export type AggregatorCountOutputType = {
-    Farmer: number
-    Transporter: number
+    farmers: number
+    transporters: number
   }
 
   export type AggregatorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Farmer?: boolean | AggregatorCountOutputTypeCountFarmerArgs
-    Transporter?: boolean | AggregatorCountOutputTypeCountTransporterArgs
+    farmers?: boolean | AggregatorCountOutputTypeCountFarmersArgs
+    transporters?: boolean | AggregatorCountOutputTypeCountTransportersArgs
   }
 
   // Custom InputTypes
@@ -1282,7 +1364,7 @@ export namespace Prisma {
   /**
    * AggregatorCountOutputType without action
    */
-  export type AggregatorCountOutputTypeCountFarmerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AggregatorCountOutputTypeCountFarmersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FarmerWhereInput
   }
 
@@ -1290,7 +1372,7 @@ export namespace Prisma {
   /**
    * AggregatorCountOutputType without action
    */
-  export type AggregatorCountOutputTypeCountTransporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type AggregatorCountOutputTypeCountTransportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransporterWhereInput
   }
 
@@ -1302,12 +1384,12 @@ export namespace Prisma {
 
   export type FarmerCountOutputType = {
     list_of_produce: number
-    Transporter: number
+    transporters: number
   }
 
   export type FarmerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     list_of_produce?: boolean | FarmerCountOutputTypeCountList_of_produceArgs
-    Transporter?: boolean | FarmerCountOutputTypeCountTransporterArgs
+    transporters?: boolean | FarmerCountOutputTypeCountTransportersArgs
   }
 
   // Custom InputTypes
@@ -1334,7 +1416,61 @@ export namespace Prisma {
   /**
    * FarmerCountOutputType without action
    */
-  export type FarmerCountOutputTypeCountTransporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type FarmerCountOutputTypeCountTransportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TransporterWhereInput
+  }
+
+
+
+  /**
+   * Count Type CompanyCountOutputType
+   */
+
+  export type CompanyCountOutputType = {
+    farmers: number
+    aggregators: number
+    transporters: number
+  }
+
+  export type CompanyCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farmers?: boolean | CompanyCountOutputTypeCountFarmersArgs
+    aggregators?: boolean | CompanyCountOutputTypeCountAggregatorsArgs
+    transporters?: boolean | CompanyCountOutputTypeCountTransportersArgs
+  }
+
+  // Custom InputTypes
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CompanyCountOutputType
+     */
+    select?: CompanyCountOutputTypeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountFarmersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FarmerWhereInput
+  }
+
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountAggregatorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AggregatorWhereInput
+  }
+
+
+  /**
+   * CompanyCountOutputType without action
+   */
+  export type CompanyCountOutputTypeCountTransportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransporterWhereInput
   }
 
@@ -1596,9 +1732,9 @@ export namespace Prisma {
     verification_code?: boolean
     password_resetCode?: boolean
     isEmail_verified?: boolean
-    Farmer?: boolean | User$FarmerArgs<ExtArgs>
-    Transporter?: boolean | User$TransporterArgs<ExtArgs>
-    Aggregator?: boolean | User$AggregatorArgs<ExtArgs>
+    farmers?: boolean | User$farmersArgs<ExtArgs>
+    transporters?: boolean | User$transportersArgs<ExtArgs>
+    aggregators?: boolean | User$aggregatorsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1622,9 +1758,9 @@ export namespace Prisma {
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Farmer?: boolean | User$FarmerArgs<ExtArgs>
-    Transporter?: boolean | User$TransporterArgs<ExtArgs>
-    Aggregator?: boolean | User$AggregatorArgs<ExtArgs>
+    farmers?: boolean | User$farmersArgs<ExtArgs>
+    transporters?: boolean | User$transportersArgs<ExtArgs>
+    aggregators?: boolean | User$aggregatorsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -1632,9 +1768,9 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      Farmer: Prisma.$FarmerPayload<ExtArgs>[]
-      Transporter: Prisma.$TransporterPayload<ExtArgs>[]
-      Aggregator: Prisma.$AggregatorPayload<ExtArgs>[]
+      farmers: Prisma.$FarmerPayload<ExtArgs>[]
+      transporters: Prisma.$TransporterPayload<ExtArgs>[]
+      aggregators: Prisma.$AggregatorPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2018,11 +2154,11 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
-    Farmer<T extends User$FarmerArgs<ExtArgs> = {}>(args?: Subset<T, User$FarmerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, 'findMany'> | Null>;
+    farmers<T extends User$farmersArgs<ExtArgs> = {}>(args?: Subset<T, User$farmersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    Transporter<T extends User$TransporterArgs<ExtArgs> = {}>(args?: Subset<T, User$TransporterArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
+    transporters<T extends User$transportersArgs<ExtArgs> = {}>(args?: Subset<T, User$transportersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    Aggregator<T extends User$AggregatorArgs<ExtArgs> = {}>(args?: Subset<T, User$AggregatorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AggregatorPayload<ExtArgs>, T, 'findMany'> | Null>;
+    aggregators<T extends User$aggregatorsArgs<ExtArgs> = {}>(args?: Subset<T, User$aggregatorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AggregatorPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2380,9 +2516,9 @@ export namespace Prisma {
 
 
   /**
-   * User.Farmer
+   * User.farmers
    */
-  export type User$FarmerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$farmersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Farmer
      */
@@ -2401,9 +2537,9 @@ export namespace Prisma {
 
 
   /**
-   * User.Transporter
+   * User.transporters
    */
-  export type User$TransporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$transportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Transporter
      */
@@ -2422,9 +2558,9 @@ export namespace Prisma {
 
 
   /**
-   * User.Aggregator
+   * User.aggregators
    */
-  export type User$AggregatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type User$aggregatorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Aggregator
      */
@@ -2675,7 +2811,7 @@ export namespace Prisma {
     last_active: string | null
     phone_number: string | null
     pentrar_aggregator_id: string | null
-    created_by_id: string | null
+    created_by_id: string
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean
@@ -2718,9 +2854,10 @@ export namespace Prisma {
     isEmail_verified?: boolean
     status?: boolean
     role?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
     user?: boolean | Aggregator$userArgs<ExtArgs>
-    Farmer?: boolean | Aggregator$FarmerArgs<ExtArgs>
-    Transporter?: boolean | Aggregator$TransporterArgs<ExtArgs>
+    farmers?: boolean | Aggregator$farmersArgs<ExtArgs>
+    transporters?: boolean | Aggregator$transportersArgs<ExtArgs>
     _count?: boolean | AggregatorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["aggregator"]>
 
@@ -2745,9 +2882,10 @@ export namespace Prisma {
   }
 
   export type AggregatorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
     user?: boolean | Aggregator$userArgs<ExtArgs>
-    Farmer?: boolean | Aggregator$FarmerArgs<ExtArgs>
-    Transporter?: boolean | Aggregator$TransporterArgs<ExtArgs>
+    farmers?: boolean | Aggregator$farmersArgs<ExtArgs>
+    transporters?: boolean | Aggregator$transportersArgs<ExtArgs>
     _count?: boolean | AggregatorCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2755,9 +2893,10 @@ export namespace Prisma {
   export type $AggregatorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Aggregator"
     objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs> | null
-      Farmer: Prisma.$FarmerPayload<ExtArgs>[]
-      Transporter: Prisma.$TransporterPayload<ExtArgs>[]
+      farmers: Prisma.$FarmerPayload<ExtArgs>[]
+      transporters: Prisma.$TransporterPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2771,7 +2910,7 @@ export namespace Prisma {
       last_active: string | null
       phone_number: string | null
       pentrar_aggregator_id: string | null
-      created_by_id: string | null
+      created_by_id: string
       verification_code: string | null
       password_resetCode: string | null
       isEmail_verified: boolean
@@ -3142,11 +3281,13 @@ export namespace Prisma {
   export interface Prisma__AggregatorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
 
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
     user<T extends Aggregator$userArgs<ExtArgs> = {}>(args?: Subset<T, Aggregator$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | null, null, ExtArgs>;
 
-    Farmer<T extends Aggregator$FarmerArgs<ExtArgs> = {}>(args?: Subset<T, Aggregator$FarmerArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, 'findMany'> | Null>;
+    farmers<T extends Aggregator$farmersArgs<ExtArgs> = {}>(args?: Subset<T, Aggregator$farmersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    Transporter<T extends Aggregator$TransporterArgs<ExtArgs> = {}>(args?: Subset<T, Aggregator$TransporterArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
+    transporters<T extends Aggregator$transportersArgs<ExtArgs> = {}>(args?: Subset<T, Aggregator$transportersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -3521,9 +3662,9 @@ export namespace Prisma {
 
 
   /**
-   * Aggregator.Farmer
+   * Aggregator.farmers
    */
-  export type Aggregator$FarmerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Aggregator$farmersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Farmer
      */
@@ -3542,9 +3683,9 @@ export namespace Prisma {
 
 
   /**
-   * Aggregator.Transporter
+   * Aggregator.transporters
    */
-  export type Aggregator$TransporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Aggregator$transportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Transporter
      */
@@ -3844,8 +3985,9 @@ export namespace Prisma {
     is_active?: boolean
     aggregator?: boolean | AggregatorDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
     list_of_produce?: boolean | Farmer$list_of_produceArgs<ExtArgs>
-    Transporter?: boolean | Farmer$TransporterArgs<ExtArgs>
+    transporters?: boolean | Farmer$transportersArgs<ExtArgs>
     _count?: boolean | FarmerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["farmer"]>
 
@@ -3873,8 +4015,9 @@ export namespace Prisma {
   export type FarmerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     aggregator?: boolean | AggregatorDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
     list_of_produce?: boolean | Farmer$list_of_produceArgs<ExtArgs>
-    Transporter?: boolean | Farmer$TransporterArgs<ExtArgs>
+    transporters?: boolean | Farmer$transportersArgs<ExtArgs>
     _count?: boolean | FarmerCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3884,8 +4027,9 @@ export namespace Prisma {
     objects: {
       aggregator: Prisma.$AggregatorPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
+      company: Prisma.$CompanyPayload<ExtArgs>
       list_of_produce: Prisma.$ProducePayload<ExtArgs>[]
-      Transporter: Prisma.$TransporterPayload<ExtArgs>[]
+      transporters: Prisma.$TransporterPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4275,9 +4419,11 @@ export namespace Prisma {
 
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
+
     list_of_produce<T extends Farmer$list_of_produceArgs<ExtArgs> = {}>(args?: Subset<T, Farmer$list_of_produceArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProducePayload<ExtArgs>, T, 'findMany'> | Null>;
 
-    Transporter<T extends Farmer$TransporterArgs<ExtArgs> = {}>(args?: Subset<T, Farmer$TransporterArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
+    transporters<T extends Farmer$transportersArgs<ExtArgs> = {}>(args?: Subset<T, Farmer$transportersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
 
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4658,9 +4804,9 @@ export namespace Prisma {
 
 
   /**
-   * Farmer.Transporter
+   * Farmer.transporters
    */
-  export type Farmer$TransporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Farmer$transportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the Transporter
      */
@@ -4690,6 +4836,1219 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well.
      */
     include?: FarmerInclude<ExtArgs> | null
+  }
+
+
+
+  /**
+   * Model Company
+   */
+
+  export type AggregateCompany = {
+    _count: CompanyCountAggregateOutputType | null
+    _min: CompanyMinAggregateOutputType | null
+    _max: CompanyMaxAggregateOutputType | null
+  }
+
+  export type CompanyMinAggregateOutputType = {
+    id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    email: string | null
+    phone_number: string | null
+    password: string | null
+    company_name: string | null
+    company_address: string | null
+    legal_entity_name: string | null
+    tax_identification_number: string | null
+    pentrar_company_id: string | null
+    created_by_id: string | null
+    last_active: string | null
+    company_type: string | null
+    point_of_contact: string | null
+    parent_company: string | null
+    subsidiaries_company: string | null
+    annual_revenue: string | null
+    financial_statement: string | null
+    status: $Enums.UserStatus | null
+    verification_code: string | null
+    password_resetCode: string | null
+    isEmail_verified: boolean | null
+    role: string | null
+    is_active: boolean | null
+  }
+
+  export type CompanyMaxAggregateOutputType = {
+    id: string | null
+    created_at: Date | null
+    updated_at: Date | null
+    email: string | null
+    phone_number: string | null
+    password: string | null
+    company_name: string | null
+    company_address: string | null
+    legal_entity_name: string | null
+    tax_identification_number: string | null
+    pentrar_company_id: string | null
+    created_by_id: string | null
+    last_active: string | null
+    company_type: string | null
+    point_of_contact: string | null
+    parent_company: string | null
+    subsidiaries_company: string | null
+    annual_revenue: string | null
+    financial_statement: string | null
+    status: $Enums.UserStatus | null
+    verification_code: string | null
+    password_resetCode: string | null
+    isEmail_verified: boolean | null
+    role: string | null
+    is_active: boolean | null
+  }
+
+  export type CompanyCountAggregateOutputType = {
+    id: number
+    created_at: number
+    updated_at: number
+    email: number
+    phone_number: number
+    password: number
+    company_name: number
+    company_address: number
+    legal_entity_name: number
+    tax_identification_number: number
+    pentrar_company_id: number
+    created_by_id: number
+    last_active: number
+    company_type: number
+    point_of_contact: number
+    parent_company: number
+    subsidiaries_company: number
+    annual_revenue: number
+    financial_statement: number
+    status: number
+    verification_code: number
+    password_resetCode: number
+    isEmail_verified: number
+    role: number
+    is_active: number
+    _all: number
+  }
+
+
+  export type CompanyMinAggregateInputType = {
+    id?: true
+    created_at?: true
+    updated_at?: true
+    email?: true
+    phone_number?: true
+    password?: true
+    company_name?: true
+    company_address?: true
+    legal_entity_name?: true
+    tax_identification_number?: true
+    pentrar_company_id?: true
+    created_by_id?: true
+    last_active?: true
+    company_type?: true
+    point_of_contact?: true
+    parent_company?: true
+    subsidiaries_company?: true
+    annual_revenue?: true
+    financial_statement?: true
+    status?: true
+    verification_code?: true
+    password_resetCode?: true
+    isEmail_verified?: true
+    role?: true
+    is_active?: true
+  }
+
+  export type CompanyMaxAggregateInputType = {
+    id?: true
+    created_at?: true
+    updated_at?: true
+    email?: true
+    phone_number?: true
+    password?: true
+    company_name?: true
+    company_address?: true
+    legal_entity_name?: true
+    tax_identification_number?: true
+    pentrar_company_id?: true
+    created_by_id?: true
+    last_active?: true
+    company_type?: true
+    point_of_contact?: true
+    parent_company?: true
+    subsidiaries_company?: true
+    annual_revenue?: true
+    financial_statement?: true
+    status?: true
+    verification_code?: true
+    password_resetCode?: true
+    isEmail_verified?: true
+    role?: true
+    is_active?: true
+  }
+
+  export type CompanyCountAggregateInputType = {
+    id?: true
+    created_at?: true
+    updated_at?: true
+    email?: true
+    phone_number?: true
+    password?: true
+    company_name?: true
+    company_address?: true
+    legal_entity_name?: true
+    tax_identification_number?: true
+    pentrar_company_id?: true
+    created_by_id?: true
+    last_active?: true
+    company_type?: true
+    point_of_contact?: true
+    parent_company?: true
+    subsidiaries_company?: true
+    annual_revenue?: true
+    financial_statement?: true
+    status?: true
+    verification_code?: true
+    password_resetCode?: true
+    isEmail_verified?: true
+    role?: true
+    is_active?: true
+    _all?: true
+  }
+
+  export type CompanyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Company to aggregate.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Companies
+    **/
+    _count?: true | CompanyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CompanyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CompanyMaxAggregateInputType
+  }
+
+  export type GetCompanyAggregateType<T extends CompanyAggregateArgs> = {
+        [P in keyof T & keyof AggregateCompany]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCompany[P]>
+      : GetScalarType<T[P], AggregateCompany[P]>
+  }
+
+
+
+
+  export type CompanyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CompanyWhereInput
+    orderBy?: CompanyOrderByWithAggregationInput | CompanyOrderByWithAggregationInput[]
+    by: CompanyScalarFieldEnum[] | CompanyScalarFieldEnum
+    having?: CompanyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CompanyCountAggregateInputType | true
+    _min?: CompanyMinAggregateInputType
+    _max?: CompanyMaxAggregateInputType
+  }
+
+  export type CompanyGroupByOutputType = {
+    id: string
+    created_at: Date
+    updated_at: Date
+    email: string | null
+    phone_number: string | null
+    password: string | null
+    company_name: string | null
+    company_address: string | null
+    legal_entity_name: string | null
+    tax_identification_number: string | null
+    pentrar_company_id: string | null
+    created_by_id: string
+    last_active: string | null
+    company_type: string | null
+    point_of_contact: string | null
+    parent_company: string | null
+    subsidiaries_company: string | null
+    annual_revenue: string | null
+    financial_statement: string | null
+    status: $Enums.UserStatus
+    verification_code: string | null
+    password_resetCode: string | null
+    isEmail_verified: boolean
+    role: string | null
+    is_active: boolean | null
+    _count: CompanyCountAggregateOutputType | null
+    _min: CompanyMinAggregateOutputType | null
+    _max: CompanyMaxAggregateOutputType | null
+  }
+
+  type GetCompanyGroupByPayload<T extends CompanyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CompanyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CompanyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CompanyGroupByOutputType[P]>
+            : GetScalarType<T[P], CompanyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CompanySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    email?: boolean
+    phone_number?: boolean
+    password?: boolean
+    company_name?: boolean
+    company_address?: boolean
+    legal_entity_name?: boolean
+    tax_identification_number?: boolean
+    pentrar_company_id?: boolean
+    created_by_id?: boolean
+    last_active?: boolean
+    company_type?: boolean
+    point_of_contact?: boolean
+    parent_company?: boolean
+    subsidiaries_company?: boolean
+    annual_revenue?: boolean
+    financial_statement?: boolean
+    status?: boolean
+    verification_code?: boolean
+    password_resetCode?: boolean
+    isEmail_verified?: boolean
+    role?: boolean
+    is_active?: boolean
+    farmers?: boolean | Company$farmersArgs<ExtArgs>
+    aggregators?: boolean | Company$aggregatorsArgs<ExtArgs>
+    transporters?: boolean | Company$transportersArgs<ExtArgs>
+    _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["company"]>
+
+  export type CompanySelectScalar = {
+    id?: boolean
+    created_at?: boolean
+    updated_at?: boolean
+    email?: boolean
+    phone_number?: boolean
+    password?: boolean
+    company_name?: boolean
+    company_address?: boolean
+    legal_entity_name?: boolean
+    tax_identification_number?: boolean
+    pentrar_company_id?: boolean
+    created_by_id?: boolean
+    last_active?: boolean
+    company_type?: boolean
+    point_of_contact?: boolean
+    parent_company?: boolean
+    subsidiaries_company?: boolean
+    annual_revenue?: boolean
+    financial_statement?: boolean
+    status?: boolean
+    verification_code?: boolean
+    password_resetCode?: boolean
+    isEmail_verified?: boolean
+    role?: boolean
+    is_active?: boolean
+  }
+
+  export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    farmers?: boolean | Company$farmersArgs<ExtArgs>
+    aggregators?: boolean | Company$aggregatorsArgs<ExtArgs>
+    transporters?: boolean | Company$transportersArgs<ExtArgs>
+    _count?: boolean | CompanyCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+
+  export type $CompanyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Company"
+    objects: {
+      farmers: Prisma.$FarmerPayload<ExtArgs>[]
+      aggregators: Prisma.$AggregatorPayload<ExtArgs>[]
+      transporters: Prisma.$TransporterPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      created_at: Date
+      updated_at: Date
+      email: string | null
+      phone_number: string | null
+      password: string | null
+      company_name: string | null
+      company_address: string | null
+      legal_entity_name: string | null
+      tax_identification_number: string | null
+      pentrar_company_id: string | null
+      created_by_id: string
+      last_active: string | null
+      company_type: string | null
+      point_of_contact: string | null
+      parent_company: string | null
+      subsidiaries_company: string | null
+      annual_revenue: string | null
+      financial_statement: string | null
+      status: $Enums.UserStatus
+      verification_code: string | null
+      password_resetCode: string | null
+      isEmail_verified: boolean
+      role: string | null
+      is_active: boolean | null
+    }, ExtArgs["result"]["company"]>
+    composites: {}
+  }
+
+
+  type CompanyGetPayload<S extends boolean | null | undefined | CompanyDefaultArgs> = $Result.GetResult<Prisma.$CompanyPayload, S>
+
+  type CompanyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<CompanyFindManyArgs, 'select' | 'include' | 'distinct' > & {
+      select?: CompanyCountAggregateInputType | true
+    }
+
+  export interface CompanyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Company'], meta: { name: 'Company' } }
+    /**
+     * Find zero or one Company that matches the filter.
+     * @param {CompanyFindUniqueArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends CompanyFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, CompanyFindUniqueArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one Company that matches the filter or throw an error  with `error.code='P2025'` 
+     *     if no matches were found.
+     * @param {CompanyFindUniqueOrThrowArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends CompanyFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, CompanyFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first Company that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyFindFirstArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends CompanyFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, CompanyFindFirstArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first Company that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyFindFirstOrThrowArgs} args - Arguments to find a Company
+     * @example
+     * // Get one Company
+     * const company = await prisma.company.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends CompanyFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, CompanyFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more Companies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyFindManyArgs=} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Companies
+     * const companies = await prisma.company.findMany()
+     * 
+     * // Get first 10 Companies
+     * const companies = await prisma.company.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const companyWithIdOnly = await prisma.company.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends CompanyFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, CompanyFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a Company.
+     * @param {CompanyCreateArgs} args - Arguments to create a Company.
+     * @example
+     * // Create one Company
+     * const Company = await prisma.company.create({
+     *   data: {
+     *     // ... data to create a Company
+     *   }
+     * })
+     * 
+    **/
+    create<T extends CompanyCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, CompanyCreateArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many Companies.
+     *     @param {CompanyCreateManyArgs} args - Arguments to create many Companies.
+     *     @example
+     *     // Create many Companies
+     *     const company = await prisma.company.createMany({
+     *       data: {
+     *         // ... provide data here
+     *       }
+     *     })
+     *     
+    **/
+    createMany<T extends CompanyCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, CompanyCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Company.
+     * @param {CompanyDeleteArgs} args - Arguments to delete one Company.
+     * @example
+     * // Delete one Company
+     * const Company = await prisma.company.delete({
+     *   where: {
+     *     // ... filter to delete one Company
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends CompanyDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, CompanyDeleteArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one Company.
+     * @param {CompanyUpdateArgs} args - Arguments to update one Company.
+     * @example
+     * // Update one Company
+     * const company = await prisma.company.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends CompanyUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, CompanyUpdateArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more Companies.
+     * @param {CompanyDeleteManyArgs} args - Arguments to filter Companies to delete.
+     * @example
+     * // Delete a few Companies
+     * const { count } = await prisma.company.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends CompanyDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, CompanyDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Companies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Companies
+     * const company = await prisma.company.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends CompanyUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, CompanyUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Company.
+     * @param {CompanyUpsertArgs} args - Arguments to update or create a Company.
+     * @example
+     * // Update or create a Company
+     * const company = await prisma.company.upsert({
+     *   create: {
+     *     // ... data to create a Company
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Company we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends CompanyUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, CompanyUpsertArgs<ExtArgs>>
+    ): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of Companies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyCountArgs} args - Arguments to filter Companies to count.
+     * @example
+     * // Count the number of Companies
+     * const count = await prisma.company.count({
+     *   where: {
+     *     // ... the filter for the Companies we want to count
+     *   }
+     * })
+    **/
+    count<T extends CompanyCountArgs>(
+      args?: Subset<T, CompanyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CompanyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Company.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CompanyAggregateArgs>(args: Subset<T, CompanyAggregateArgs>): Prisma.PrismaPromise<GetCompanyAggregateType<T>>
+
+    /**
+     * Group by Company.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CompanyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CompanyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CompanyGroupByArgs['orderBy'] }
+        : { orderBy?: CompanyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CompanyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCompanyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Company model
+   */
+  readonly fields: CompanyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Company.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    farmers<T extends Company$farmersArgs<ExtArgs> = {}>(args?: Subset<T, Company$farmersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FarmerPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    aggregators<T extends Company$aggregatorsArgs<ExtArgs> = {}>(args?: Subset<T, Company$aggregatorsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AggregatorPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    transporters<T extends Company$transportersArgs<ExtArgs> = {}>(args?: Subset<T, Company$transportersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransporterPayload<ExtArgs>, T, 'findMany'> | Null>;
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the Company model
+   */ 
+  interface CompanyFieldRefs {
+    readonly id: FieldRef<"Company", 'String'>
+    readonly created_at: FieldRef<"Company", 'DateTime'>
+    readonly updated_at: FieldRef<"Company", 'DateTime'>
+    readonly email: FieldRef<"Company", 'String'>
+    readonly phone_number: FieldRef<"Company", 'String'>
+    readonly password: FieldRef<"Company", 'String'>
+    readonly company_name: FieldRef<"Company", 'String'>
+    readonly company_address: FieldRef<"Company", 'String'>
+    readonly legal_entity_name: FieldRef<"Company", 'String'>
+    readonly tax_identification_number: FieldRef<"Company", 'String'>
+    readonly pentrar_company_id: FieldRef<"Company", 'String'>
+    readonly created_by_id: FieldRef<"Company", 'String'>
+    readonly last_active: FieldRef<"Company", 'String'>
+    readonly company_type: FieldRef<"Company", 'String'>
+    readonly point_of_contact: FieldRef<"Company", 'String'>
+    readonly parent_company: FieldRef<"Company", 'String'>
+    readonly subsidiaries_company: FieldRef<"Company", 'String'>
+    readonly annual_revenue: FieldRef<"Company", 'String'>
+    readonly financial_statement: FieldRef<"Company", 'String'>
+    readonly status: FieldRef<"Company", 'UserStatus'>
+    readonly verification_code: FieldRef<"Company", 'String'>
+    readonly password_resetCode: FieldRef<"Company", 'String'>
+    readonly isEmail_verified: FieldRef<"Company", 'Boolean'>
+    readonly role: FieldRef<"Company", 'String'>
+    readonly is_active: FieldRef<"Company", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+
+  /**
+   * Company findUnique
+   */
+  export type CompanyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+
+  /**
+   * Company findUniqueOrThrow
+   */
+  export type CompanyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+
+  /**
+   * Company findFirst
+   */
+  export type CompanyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Companies.
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Companies.
+     */
+    distinct?: CompanyScalarFieldEnum | CompanyScalarFieldEnum[]
+  }
+
+
+  /**
+   * Company findFirstOrThrow
+   */
+  export type CompanyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Company to fetch.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Companies.
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Companies.
+     */
+    distinct?: CompanyScalarFieldEnum | CompanyScalarFieldEnum[]
+  }
+
+
+  /**
+   * Company findMany
+   */
+  export type CompanyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter, which Companies to fetch.
+     */
+    where?: CompanyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Companies to fetch.
+     */
+    orderBy?: CompanyOrderByWithRelationInput | CompanyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Companies.
+     */
+    cursor?: CompanyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Companies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Companies.
+     */
+    skip?: number
+    distinct?: CompanyScalarFieldEnum | CompanyScalarFieldEnum[]
+  }
+
+
+  /**
+   * Company create
+   */
+  export type CompanyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Company.
+     */
+    data: XOR<CompanyCreateInput, CompanyUncheckedCreateInput>
+  }
+
+
+  /**
+   * Company createMany
+   */
+  export type CompanyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Companies.
+     */
+    data: CompanyCreateManyInput | CompanyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+
+  /**
+   * Company update
+   */
+  export type CompanyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Company.
+     */
+    data: XOR<CompanyUpdateInput, CompanyUncheckedUpdateInput>
+    /**
+     * Choose, which Company to update.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+
+  /**
+   * Company updateMany
+   */
+  export type CompanyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Companies.
+     */
+    data: XOR<CompanyUpdateManyMutationInput, CompanyUncheckedUpdateManyInput>
+    /**
+     * Filter which Companies to update
+     */
+    where?: CompanyWhereInput
+  }
+
+
+  /**
+   * Company upsert
+   */
+  export type CompanyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Company to update in case it exists.
+     */
+    where: CompanyWhereUniqueInput
+    /**
+     * In case the Company found by the `where` argument doesn't exist, create a new Company with this data.
+     */
+    create: XOR<CompanyCreateInput, CompanyUncheckedCreateInput>
+    /**
+     * In case the Company was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CompanyUpdateInput, CompanyUncheckedUpdateInput>
+  }
+
+
+  /**
+   * Company delete
+   */
+  export type CompanyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
+    /**
+     * Filter which Company to delete.
+     */
+    where: CompanyWhereUniqueInput
+  }
+
+
+  /**
+   * Company deleteMany
+   */
+  export type CompanyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Companies to delete
+     */
+    where?: CompanyWhereInput
+  }
+
+
+  /**
+   * Company.farmers
+   */
+  export type Company$farmersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Farmer
+     */
+    select?: FarmerSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: FarmerInclude<ExtArgs> | null
+    where?: FarmerWhereInput
+    orderBy?: FarmerOrderByWithRelationInput | FarmerOrderByWithRelationInput[]
+    cursor?: FarmerWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FarmerScalarFieldEnum | FarmerScalarFieldEnum[]
+  }
+
+
+  /**
+   * Company.aggregators
+   */
+  export type Company$aggregatorsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aggregator
+     */
+    select?: AggregatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: AggregatorInclude<ExtArgs> | null
+    where?: AggregatorWhereInput
+    orderBy?: AggregatorOrderByWithRelationInput | AggregatorOrderByWithRelationInput[]
+    cursor?: AggregatorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AggregatorScalarFieldEnum | AggregatorScalarFieldEnum[]
+  }
+
+
+  /**
+   * Company.transporters
+   */
+  export type Company$transportersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Transporter
+     */
+    select?: TransporterSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: TransporterInclude<ExtArgs> | null
+    where?: TransporterWhereInput
+    orderBy?: TransporterOrderByWithRelationInput | TransporterOrderByWithRelationInput[]
+    cursor?: TransporterWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TransporterScalarFieldEnum | TransporterScalarFieldEnum[]
+  }
+
+
+  /**
+   * Company without action
+   */
+  export type CompanyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Company
+     */
+    select?: CompanySelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well.
+     */
+    include?: CompanyInclude<ExtArgs> | null
   }
 
 
@@ -4978,6 +6337,7 @@ export namespace Prisma {
     vehicle_type?: boolean
     vehicle_number?: boolean
     Vehicle_license?: boolean
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
     aggregator?: boolean | AggregatorDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     farmer?: boolean | FarmerDefaultArgs<ExtArgs>
@@ -5007,6 +6367,7 @@ export namespace Prisma {
   }
 
   export type TransporterInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    company?: boolean | CompanyDefaultArgs<ExtArgs>
     aggregator?: boolean | AggregatorDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     farmer?: boolean | FarmerDefaultArgs<ExtArgs>
@@ -5016,6 +6377,7 @@ export namespace Prisma {
   export type $TransporterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Transporter"
     objects: {
+      company: Prisma.$CompanyPayload<ExtArgs>
       aggregator: Prisma.$AggregatorPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
       farmer: Prisma.$FarmerPayload<ExtArgs>
@@ -5405,6 +6767,8 @@ export namespace Prisma {
    */
   export interface Prisma__TransporterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+    company<T extends CompanyDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CompanyDefaultArgs<ExtArgs>>): Prisma__CompanyClient<$Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
     aggregator<T extends AggregatorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AggregatorDefaultArgs<ExtArgs>>): Prisma__AggregatorClient<$Result.GetResult<Prisma.$AggregatorPayload<ExtArgs>, T, 'findUniqueOrThrow'> | Null, Null, ExtArgs>;
 
@@ -6881,6 +8245,37 @@ export namespace Prisma {
   export type FarmerScalarFieldEnum = (typeof FarmerScalarFieldEnum)[keyof typeof FarmerScalarFieldEnum]
 
 
+  export const CompanyScalarFieldEnum: {
+    id: 'id',
+    created_at: 'created_at',
+    updated_at: 'updated_at',
+    email: 'email',
+    phone_number: 'phone_number',
+    password: 'password',
+    company_name: 'company_name',
+    company_address: 'company_address',
+    legal_entity_name: 'legal_entity_name',
+    tax_identification_number: 'tax_identification_number',
+    pentrar_company_id: 'pentrar_company_id',
+    created_by_id: 'created_by_id',
+    last_active: 'last_active',
+    company_type: 'company_type',
+    point_of_contact: 'point_of_contact',
+    parent_company: 'parent_company',
+    subsidiaries_company: 'subsidiaries_company',
+    annual_revenue: 'annual_revenue',
+    financial_statement: 'financial_statement',
+    status: 'status',
+    verification_code: 'verification_code',
+    password_resetCode: 'password_resetCode',
+    isEmail_verified: 'isEmail_verified',
+    role: 'role',
+    is_active: 'is_active'
+  };
+
+  export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
+
+
   export const TransporterScalarFieldEnum: {
     id: 'id',
     created_at: 'created_at',
@@ -7052,9 +8447,9 @@ export namespace Prisma {
     verification_code?: StringNullableFilter<"User"> | string | null
     password_resetCode?: StringNullableFilter<"User"> | string | null
     isEmail_verified?: BoolFilter<"User"> | boolean
-    Farmer?: FarmerListRelationFilter
-    Transporter?: TransporterListRelationFilter
-    Aggregator?: AggregatorListRelationFilter
+    farmers?: FarmerListRelationFilter
+    transporters?: TransporterListRelationFilter
+    aggregators?: AggregatorListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -7074,9 +8469,9 @@ export namespace Prisma {
     verification_code?: SortOrderInput | SortOrder
     password_resetCode?: SortOrderInput | SortOrder
     isEmail_verified?: SortOrder
-    Farmer?: FarmerOrderByRelationAggregateInput
-    Transporter?: TransporterOrderByRelationAggregateInput
-    Aggregator?: AggregatorOrderByRelationAggregateInput
+    farmers?: FarmerOrderByRelationAggregateInput
+    transporters?: TransporterOrderByRelationAggregateInput
+    aggregators?: AggregatorOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -7099,9 +8494,9 @@ export namespace Prisma {
     status?: EnumUserStatusFilter<"User"> | $Enums.UserStatus
     is_active?: BoolNullableFilter<"User"> | boolean | null
     isEmail_verified?: BoolFilter<"User"> | boolean
-    Farmer?: FarmerListRelationFilter
-    Transporter?: TransporterListRelationFilter
-    Aggregator?: AggregatorListRelationFilter
+    farmers?: FarmerListRelationFilter
+    transporters?: TransporterListRelationFilter
+    aggregators?: AggregatorListRelationFilter
   }, "id" | "email" | "phone_number" | "pentrar_user_id" | "verification_code" | "password_resetCode">
 
   export type UserOrderByWithAggregationInput = {
@@ -7163,15 +8558,16 @@ export namespace Prisma {
     last_active?: StringNullableFilter<"Aggregator"> | string | null
     phone_number?: StringNullableFilter<"Aggregator"> | string | null
     pentrar_aggregator_id?: StringNullableFilter<"Aggregator"> | string | null
-    created_by_id?: StringNullableFilter<"Aggregator"> | string | null
+    created_by_id?: StringFilter<"Aggregator"> | string
     verification_code?: StringNullableFilter<"Aggregator"> | string | null
     password_resetCode?: StringNullableFilter<"Aggregator"> | string | null
     isEmail_verified?: BoolFilter<"Aggregator"> | boolean
     status?: EnumUserStatusFilter<"Aggregator"> | $Enums.UserStatus
     role?: StringNullableFilter<"Aggregator"> | string | null
+    company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
-    Farmer?: FarmerListRelationFilter
-    Transporter?: TransporterListRelationFilter
+    farmers?: FarmerListRelationFilter
+    transporters?: TransporterListRelationFilter
   }
 
   export type AggregatorOrderByWithRelationInput = {
@@ -7186,15 +8582,16 @@ export namespace Prisma {
     last_active?: SortOrderInput | SortOrder
     phone_number?: SortOrderInput | SortOrder
     pentrar_aggregator_id?: SortOrderInput | SortOrder
-    created_by_id?: SortOrderInput | SortOrder
+    created_by_id?: SortOrder
     verification_code?: SortOrderInput | SortOrder
     password_resetCode?: SortOrderInput | SortOrder
     isEmail_verified?: SortOrder
     status?: SortOrder
     role?: SortOrderInput | SortOrder
+    company?: CompanyOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
-    Farmer?: FarmerOrderByRelationAggregateInput
-    Transporter?: TransporterOrderByRelationAggregateInput
+    farmers?: FarmerOrderByRelationAggregateInput
+    transporters?: TransporterOrderByRelationAggregateInput
   }
 
   export type AggregatorWhereUniqueInput = Prisma.AtLeast<{
@@ -7214,13 +8611,14 @@ export namespace Prisma {
     first_name?: StringNullableFilter<"Aggregator"> | string | null
     last_name?: StringNullableFilter<"Aggregator"> | string | null
     last_active?: StringNullableFilter<"Aggregator"> | string | null
-    created_by_id?: StringNullableFilter<"Aggregator"> | string | null
+    created_by_id?: StringFilter<"Aggregator"> | string
     isEmail_verified?: BoolFilter<"Aggregator"> | boolean
     status?: EnumUserStatusFilter<"Aggregator"> | $Enums.UserStatus
     role?: StringNullableFilter<"Aggregator"> | string | null
+    company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
-    Farmer?: FarmerListRelationFilter
-    Transporter?: TransporterListRelationFilter
+    farmers?: FarmerListRelationFilter
+    transporters?: TransporterListRelationFilter
   }, "id" | "email" | "phone_number" | "pentrar_aggregator_id" | "verification_code" | "password_resetCode">
 
   export type AggregatorOrderByWithAggregationInput = {
@@ -7235,7 +8633,7 @@ export namespace Prisma {
     last_active?: SortOrderInput | SortOrder
     phone_number?: SortOrderInput | SortOrder
     pentrar_aggregator_id?: SortOrderInput | SortOrder
-    created_by_id?: SortOrderInput | SortOrder
+    created_by_id?: SortOrder
     verification_code?: SortOrderInput | SortOrder
     password_resetCode?: SortOrderInput | SortOrder
     isEmail_verified?: SortOrder
@@ -7261,7 +8659,7 @@ export namespace Prisma {
     last_active?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
     phone_number?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
     pentrar_aggregator_id?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
-    created_by_id?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
+    created_by_id?: StringWithAggregatesFilter<"Aggregator"> | string
     verification_code?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
     password_resetCode?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
     isEmail_verified?: BoolWithAggregatesFilter<"Aggregator"> | boolean
@@ -7293,8 +8691,9 @@ export namespace Prisma {
     is_active?: BoolNullableFilter<"Farmer"> | boolean | null
     aggregator?: XOR<AggregatorRelationFilter, AggregatorWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
+    company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     list_of_produce?: ProduceListRelationFilter
-    Transporter?: TransporterListRelationFilter
+    transporters?: TransporterListRelationFilter
   }
 
   export type FarmerOrderByWithRelationInput = {
@@ -7318,8 +8717,9 @@ export namespace Prisma {
     is_active?: SortOrderInput | SortOrder
     aggregator?: AggregatorOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    company?: CompanyOrderByWithRelationInput
     list_of_produce?: ProduceOrderByRelationAggregateInput
-    Transporter?: TransporterOrderByRelationAggregateInput
+    transporters?: TransporterOrderByRelationAggregateInput
   }
 
   export type FarmerWhereUniqueInput = Prisma.AtLeast<{
@@ -7346,8 +8746,9 @@ export namespace Prisma {
     is_active?: BoolNullableFilter<"Farmer"> | boolean | null
     aggregator?: XOR<AggregatorRelationFilter, AggregatorWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
+    company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     list_of_produce?: ProduceListRelationFilter
-    Transporter?: TransporterListRelationFilter
+    transporters?: TransporterListRelationFilter
   }, "id" | "email" | "phone_number" | "pentrar_farmer_id" | "verification_code" | "password_resetCode">
 
   export type FarmerOrderByWithAggregationInput = {
@@ -7398,6 +8799,167 @@ export namespace Prisma {
     is_active?: BoolNullableWithAggregatesFilter<"Farmer"> | boolean | null
   }
 
+  export type CompanyWhereInput = {
+    AND?: CompanyWhereInput | CompanyWhereInput[]
+    OR?: CompanyWhereInput[]
+    NOT?: CompanyWhereInput | CompanyWhereInput[]
+    id?: StringFilter<"Company"> | string
+    created_at?: DateTimeFilter<"Company"> | Date | string
+    updated_at?: DateTimeFilter<"Company"> | Date | string
+    email?: StringNullableFilter<"Company"> | string | null
+    phone_number?: StringNullableFilter<"Company"> | string | null
+    password?: StringNullableFilter<"Company"> | string | null
+    company_name?: StringNullableFilter<"Company"> | string | null
+    company_address?: StringNullableFilter<"Company"> | string | null
+    legal_entity_name?: StringNullableFilter<"Company"> | string | null
+    tax_identification_number?: StringNullableFilter<"Company"> | string | null
+    pentrar_company_id?: StringNullableFilter<"Company"> | string | null
+    created_by_id?: StringFilter<"Company"> | string
+    last_active?: StringNullableFilter<"Company"> | string | null
+    company_type?: StringNullableFilter<"Company"> | string | null
+    point_of_contact?: StringNullableFilter<"Company"> | string | null
+    parent_company?: StringNullableFilter<"Company"> | string | null
+    subsidiaries_company?: StringNullableFilter<"Company"> | string | null
+    annual_revenue?: StringNullableFilter<"Company"> | string | null
+    financial_statement?: StringNullableFilter<"Company"> | string | null
+    status?: EnumUserStatusFilter<"Company"> | $Enums.UserStatus
+    verification_code?: StringNullableFilter<"Company"> | string | null
+    password_resetCode?: StringNullableFilter<"Company"> | string | null
+    isEmail_verified?: BoolFilter<"Company"> | boolean
+    role?: StringNullableFilter<"Company"> | string | null
+    is_active?: BoolNullableFilter<"Company"> | boolean | null
+    farmers?: FarmerListRelationFilter
+    aggregators?: AggregatorListRelationFilter
+    transporters?: TransporterListRelationFilter
+  }
+
+  export type CompanyOrderByWithRelationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    email?: SortOrderInput | SortOrder
+    phone_number?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    company_name?: SortOrderInput | SortOrder
+    company_address?: SortOrderInput | SortOrder
+    legal_entity_name?: SortOrderInput | SortOrder
+    tax_identification_number?: SortOrderInput | SortOrder
+    pentrar_company_id?: SortOrderInput | SortOrder
+    created_by_id?: SortOrder
+    last_active?: SortOrderInput | SortOrder
+    company_type?: SortOrderInput | SortOrder
+    point_of_contact?: SortOrderInput | SortOrder
+    parent_company?: SortOrderInput | SortOrder
+    subsidiaries_company?: SortOrderInput | SortOrder
+    annual_revenue?: SortOrderInput | SortOrder
+    financial_statement?: SortOrderInput | SortOrder
+    status?: SortOrder
+    verification_code?: SortOrderInput | SortOrder
+    password_resetCode?: SortOrderInput | SortOrder
+    isEmail_verified?: SortOrder
+    role?: SortOrderInput | SortOrder
+    is_active?: SortOrderInput | SortOrder
+    farmers?: FarmerOrderByRelationAggregateInput
+    aggregators?: AggregatorOrderByRelationAggregateInput
+    transporters?: TransporterOrderByRelationAggregateInput
+  }
+
+  export type CompanyWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    email?: string
+    phone_number?: string
+    tax_identification_number?: string
+    pentrar_company_id?: string
+    verification_code?: string
+    password_resetCode?: string
+    AND?: CompanyWhereInput | CompanyWhereInput[]
+    OR?: CompanyWhereInput[]
+    NOT?: CompanyWhereInput | CompanyWhereInput[]
+    created_at?: DateTimeFilter<"Company"> | Date | string
+    updated_at?: DateTimeFilter<"Company"> | Date | string
+    password?: StringNullableFilter<"Company"> | string | null
+    company_name?: StringNullableFilter<"Company"> | string | null
+    company_address?: StringNullableFilter<"Company"> | string | null
+    legal_entity_name?: StringNullableFilter<"Company"> | string | null
+    created_by_id?: StringFilter<"Company"> | string
+    last_active?: StringNullableFilter<"Company"> | string | null
+    company_type?: StringNullableFilter<"Company"> | string | null
+    point_of_contact?: StringNullableFilter<"Company"> | string | null
+    parent_company?: StringNullableFilter<"Company"> | string | null
+    subsidiaries_company?: StringNullableFilter<"Company"> | string | null
+    annual_revenue?: StringNullableFilter<"Company"> | string | null
+    financial_statement?: StringNullableFilter<"Company"> | string | null
+    status?: EnumUserStatusFilter<"Company"> | $Enums.UserStatus
+    isEmail_verified?: BoolFilter<"Company"> | boolean
+    role?: StringNullableFilter<"Company"> | string | null
+    is_active?: BoolNullableFilter<"Company"> | boolean | null
+    farmers?: FarmerListRelationFilter
+    aggregators?: AggregatorListRelationFilter
+    transporters?: TransporterListRelationFilter
+  }, "id" | "email" | "phone_number" | "tax_identification_number" | "pentrar_company_id" | "verification_code" | "password_resetCode">
+
+  export type CompanyOrderByWithAggregationInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    email?: SortOrderInput | SortOrder
+    phone_number?: SortOrderInput | SortOrder
+    password?: SortOrderInput | SortOrder
+    company_name?: SortOrderInput | SortOrder
+    company_address?: SortOrderInput | SortOrder
+    legal_entity_name?: SortOrderInput | SortOrder
+    tax_identification_number?: SortOrderInput | SortOrder
+    pentrar_company_id?: SortOrderInput | SortOrder
+    created_by_id?: SortOrder
+    last_active?: SortOrderInput | SortOrder
+    company_type?: SortOrderInput | SortOrder
+    point_of_contact?: SortOrderInput | SortOrder
+    parent_company?: SortOrderInput | SortOrder
+    subsidiaries_company?: SortOrderInput | SortOrder
+    annual_revenue?: SortOrderInput | SortOrder
+    financial_statement?: SortOrderInput | SortOrder
+    status?: SortOrder
+    verification_code?: SortOrderInput | SortOrder
+    password_resetCode?: SortOrderInput | SortOrder
+    isEmail_verified?: SortOrder
+    role?: SortOrderInput | SortOrder
+    is_active?: SortOrderInput | SortOrder
+    _count?: CompanyCountOrderByAggregateInput
+    _max?: CompanyMaxOrderByAggregateInput
+    _min?: CompanyMinOrderByAggregateInput
+  }
+
+  export type CompanyScalarWhereWithAggregatesInput = {
+    AND?: CompanyScalarWhereWithAggregatesInput | CompanyScalarWhereWithAggregatesInput[]
+    OR?: CompanyScalarWhereWithAggregatesInput[]
+    NOT?: CompanyScalarWhereWithAggregatesInput | CompanyScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Company"> | string
+    created_at?: DateTimeWithAggregatesFilter<"Company"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"Company"> | Date | string
+    email?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    phone_number?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    password?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    company_name?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    company_address?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    legal_entity_name?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    tax_identification_number?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    pentrar_company_id?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    created_by_id?: StringWithAggregatesFilter<"Company"> | string
+    last_active?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    company_type?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    point_of_contact?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    parent_company?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    subsidiaries_company?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    annual_revenue?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    financial_statement?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    status?: EnumUserStatusWithAggregatesFilter<"Company"> | $Enums.UserStatus
+    verification_code?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    password_resetCode?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    isEmail_verified?: BoolWithAggregatesFilter<"Company"> | boolean
+    role?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    is_active?: BoolNullableWithAggregatesFilter<"Company"> | boolean | null
+  }
+
   export type TransporterWhereInput = {
     AND?: TransporterWhereInput | TransporterWhereInput[]
     OR?: TransporterWhereInput[]
@@ -7422,6 +8984,7 @@ export namespace Prisma {
     vehicle_type?: StringNullableFilter<"Transporter"> | string | null
     vehicle_number?: StringNullableFilter<"Transporter"> | string | null
     Vehicle_license?: StringNullableFilter<"Transporter"> | string | null
+    company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     aggregator?: XOR<AggregatorRelationFilter, AggregatorWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
     farmer?: XOR<FarmerRelationFilter, FarmerWhereInput>
@@ -7448,6 +9011,7 @@ export namespace Prisma {
     vehicle_type?: SortOrderInput | SortOrder
     vehicle_number?: SortOrderInput | SortOrder
     Vehicle_license?: SortOrderInput | SortOrder
+    company?: CompanyOrderByWithRelationInput
     aggregator?: AggregatorOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     farmer?: FarmerOrderByWithRelationInput
@@ -7477,6 +9041,7 @@ export namespace Prisma {
     vehicle_type?: StringNullableFilter<"Transporter"> | string | null
     vehicle_number?: StringNullableFilter<"Transporter"> | string | null
     Vehicle_license?: StringNullableFilter<"Transporter"> | string | null
+    company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     aggregator?: XOR<AggregatorRelationFilter, AggregatorWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
     farmer?: XOR<FarmerRelationFilter, FarmerWhereInput>
@@ -7633,9 +9198,9 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    Farmer?: FarmerCreateNestedManyWithoutUserInput
-    Transporter?: TransporterCreateNestedManyWithoutUserInput
-    Aggregator?: AggregatorCreateNestedManyWithoutUserInput
+    farmers?: FarmerCreateNestedManyWithoutUserInput
+    transporters?: TransporterCreateNestedManyWithoutUserInput
+    aggregators?: AggregatorCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -7655,9 +9220,9 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    Farmer?: FarmerUncheckedCreateNestedManyWithoutUserInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutUserInput
-    Aggregator?: AggregatorUncheckedCreateNestedManyWithoutUserInput
+    farmers?: FarmerUncheckedCreateNestedManyWithoutUserInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutUserInput
+    aggregators?: AggregatorUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -7677,9 +9242,9 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Farmer?: FarmerUpdateManyWithoutUserNestedInput
-    Transporter?: TransporterUpdateManyWithoutUserNestedInput
-    Aggregator?: AggregatorUpdateManyWithoutUserNestedInput
+    farmers?: FarmerUpdateManyWithoutUserNestedInput
+    transporters?: TransporterUpdateManyWithoutUserNestedInput
+    aggregators?: AggregatorUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -7699,9 +9264,9 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Farmer?: FarmerUncheckedUpdateManyWithoutUserNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutUserNestedInput
-    Aggregator?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
+    farmers?: FarmerUncheckedUpdateManyWithoutUserNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutUserNestedInput
+    aggregators?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -7778,9 +9343,10 @@ export namespace Prisma {
     isEmail_verified?: boolean
     status: $Enums.UserStatus
     role?: string | null
-    user?: UserCreateNestedOneWithoutAggregatorInput
-    Farmer?: FarmerCreateNestedManyWithoutAggregatorInput
-    Transporter?: TransporterCreateNestedManyWithoutAggregatorInput
+    company: CompanyCreateNestedOneWithoutAggregatorsInput
+    user?: UserCreateNestedOneWithoutAggregatorsInput
+    farmers?: FarmerCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterCreateNestedManyWithoutAggregatorInput
   }
 
   export type AggregatorUncheckedCreateInput = {
@@ -7795,14 +9361,14 @@ export namespace Prisma {
     last_active?: string | null
     phone_number?: string | null
     pentrar_aggregator_id?: string | null
-    created_by_id?: string | null
+    created_by_id: string
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
     role?: string | null
-    Farmer?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
+    farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
 
   export type AggregatorUpdateInput = {
@@ -7822,9 +9388,10 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneWithoutAggregatorNestedInput
-    Farmer?: FarmerUpdateManyWithoutAggregatorNestedInput
-    Transporter?: TransporterUpdateManyWithoutAggregatorNestedInput
+    company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
+    user?: UserUpdateOneWithoutAggregatorsNestedInput
+    farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
   }
 
   export type AggregatorUncheckedUpdateInput = {
@@ -7839,14 +9406,14 @@ export namespace Prisma {
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
-    created_by_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    Farmer?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
+    farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
 
   export type AggregatorCreateManyInput = {
@@ -7861,7 +9428,7 @@ export namespace Prisma {
     last_active?: string | null
     phone_number?: string | null
     pentrar_aggregator_id?: string | null
-    created_by_id?: string | null
+    created_by_id: string
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
@@ -7900,7 +9467,7 @@ export namespace Prisma {
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
-    created_by_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
@@ -7926,10 +9493,11 @@ export namespace Prisma {
     isEmail_verified?: boolean
     role?: string | null
     is_active?: boolean | null
-    aggregator: AggregatorCreateNestedOneWithoutFarmerInput
-    user: UserCreateNestedOneWithoutFarmerInput
+    aggregator: AggregatorCreateNestedOneWithoutFarmersInput
+    user: UserCreateNestedOneWithoutFarmersInput
+    company: CompanyCreateNestedOneWithoutFarmersInput
     list_of_produce?: ProduceCreateNestedManyWithoutFarmerInput
-    Transporter?: TransporterCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerUncheckedCreateInput = {
@@ -7952,7 +9520,7 @@ export namespace Prisma {
     role?: string | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerUpdateInput = {
@@ -7973,10 +9541,11 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutFarmerNestedInput
-    user?: UserUpdateOneRequiredWithoutFarmerNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
+    user?: UserUpdateOneRequiredWithoutFarmersNestedInput
+    company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
     list_of_produce?: ProduceUpdateManyWithoutFarmerNestedInput
-    Transporter?: TransporterUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerUncheckedUpdateInput = {
@@ -7999,7 +9568,7 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerCreateManyInput = {
@@ -8064,6 +9633,214 @@ export namespace Prisma {
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
+  export type CompanyCreateInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    farmers?: FarmerCreateNestedManyWithoutCompanyInput
+    aggregators?: AggregatorCreateNestedManyWithoutCompanyInput
+    transporters?: TransporterCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    farmers?: FarmerUncheckedCreateNestedManyWithoutCompanyInput
+    aggregators?: AggregatorUncheckedCreateNestedManyWithoutCompanyInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    farmers?: FarmerUpdateManyWithoutCompanyNestedInput
+    aggregators?: AggregatorUpdateManyWithoutCompanyNestedInput
+    transporters?: TransporterUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    farmers?: FarmerUncheckedUpdateManyWithoutCompanyNestedInput
+    aggregators?: AggregatorUncheckedUpdateManyWithoutCompanyNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyCreateManyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+  }
+
+  export type CompanyUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type CompanyUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
   export type TransporterCreateInput = {
     id?: string
     created_at?: Date | string
@@ -8084,9 +9861,10 @@ export namespace Prisma {
     vehicle_type?: string | null
     vehicle_number?: string | null
     Vehicle_license?: string | null
-    aggregator: AggregatorCreateNestedOneWithoutTransporterInput
-    user: UserCreateNestedOneWithoutTransporterInput
-    farmer: FarmerCreateNestedOneWithoutTransporterInput
+    company: CompanyCreateNestedOneWithoutTransportersInput
+    aggregator: AggregatorCreateNestedOneWithoutTransportersInput
+    user: UserCreateNestedOneWithoutTransportersInput
+    farmer: FarmerCreateNestedOneWithoutTransportersInput
   }
 
   export type TransporterUncheckedCreateInput = {
@@ -8132,9 +9910,10 @@ export namespace Prisma {
     vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
     vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
     Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutTransporterNestedInput
-    user?: UserUpdateOneRequiredWithoutTransporterNestedInput
-    farmer?: FarmerUpdateOneRequiredWithoutTransporterNestedInput
+    company?: CompanyUpdateOneRequiredWithoutTransportersNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutTransportersNestedInput
+    user?: UserUpdateOneRequiredWithoutTransportersNestedInput
+    farmer?: FarmerUpdateOneRequiredWithoutTransportersNestedInput
   }
 
   export type TransporterUncheckedUpdateInput = {
@@ -8544,6 +10323,11 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type CompanyRelationFilter = {
+    is?: CompanyWhereInput
+    isNot?: CompanyWhereInput
+  }
+
   export type UserNullableRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -8690,6 +10474,90 @@ export namespace Prisma {
     pentrar_farmer_id?: SortOrder
     created_by_id?: SortOrder
     last_active?: SortOrder
+    status?: SortOrder
+    verification_code?: SortOrder
+    password_resetCode?: SortOrder
+    isEmail_verified?: SortOrder
+    role?: SortOrder
+    is_active?: SortOrder
+  }
+
+  export type CompanyCountOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    email?: SortOrder
+    phone_number?: SortOrder
+    password?: SortOrder
+    company_name?: SortOrder
+    company_address?: SortOrder
+    legal_entity_name?: SortOrder
+    tax_identification_number?: SortOrder
+    pentrar_company_id?: SortOrder
+    created_by_id?: SortOrder
+    last_active?: SortOrder
+    company_type?: SortOrder
+    point_of_contact?: SortOrder
+    parent_company?: SortOrder
+    subsidiaries_company?: SortOrder
+    annual_revenue?: SortOrder
+    financial_statement?: SortOrder
+    status?: SortOrder
+    verification_code?: SortOrder
+    password_resetCode?: SortOrder
+    isEmail_verified?: SortOrder
+    role?: SortOrder
+    is_active?: SortOrder
+  }
+
+  export type CompanyMaxOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    email?: SortOrder
+    phone_number?: SortOrder
+    password?: SortOrder
+    company_name?: SortOrder
+    company_address?: SortOrder
+    legal_entity_name?: SortOrder
+    tax_identification_number?: SortOrder
+    pentrar_company_id?: SortOrder
+    created_by_id?: SortOrder
+    last_active?: SortOrder
+    company_type?: SortOrder
+    point_of_contact?: SortOrder
+    parent_company?: SortOrder
+    subsidiaries_company?: SortOrder
+    annual_revenue?: SortOrder
+    financial_statement?: SortOrder
+    status?: SortOrder
+    verification_code?: SortOrder
+    password_resetCode?: SortOrder
+    isEmail_verified?: SortOrder
+    role?: SortOrder
+    is_active?: SortOrder
+  }
+
+  export type CompanyMinOrderByAggregateInput = {
+    id?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
+    email?: SortOrder
+    phone_number?: SortOrder
+    password?: SortOrder
+    company_name?: SortOrder
+    company_address?: SortOrder
+    legal_entity_name?: SortOrder
+    tax_identification_number?: SortOrder
+    pentrar_company_id?: SortOrder
+    created_by_id?: SortOrder
+    last_active?: SortOrder
+    company_type?: SortOrder
+    point_of_contact?: SortOrder
+    parent_company?: SortOrder
+    subsidiaries_company?: SortOrder
+    annual_revenue?: SortOrder
+    financial_statement?: SortOrder
     status?: SortOrder
     verification_code?: SortOrder
     password_resetCode?: SortOrder
@@ -8998,9 +10866,15 @@ export namespace Prisma {
     deleteMany?: AggregatorScalarWhereInput | AggregatorScalarWhereInput[]
   }
 
-  export type UserCreateNestedOneWithoutAggregatorInput = {
-    create?: XOR<UserCreateWithoutAggregatorInput, UserUncheckedCreateWithoutAggregatorInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAggregatorInput
+  export type CompanyCreateNestedOneWithoutAggregatorsInput = {
+    create?: XOR<CompanyCreateWithoutAggregatorsInput, CompanyUncheckedCreateWithoutAggregatorsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutAggregatorsInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutAggregatorsInput = {
+    create?: XOR<UserCreateWithoutAggregatorsInput, UserUncheckedCreateWithoutAggregatorsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAggregatorsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -9032,14 +10906,22 @@ export namespace Prisma {
     connect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
   }
 
-  export type UserUpdateOneWithoutAggregatorNestedInput = {
-    create?: XOR<UserCreateWithoutAggregatorInput, UserUncheckedCreateWithoutAggregatorInput>
-    connectOrCreate?: UserCreateOrConnectWithoutAggregatorInput
-    upsert?: UserUpsertWithoutAggregatorInput
+  export type CompanyUpdateOneRequiredWithoutAggregatorsNestedInput = {
+    create?: XOR<CompanyCreateWithoutAggregatorsInput, CompanyUncheckedCreateWithoutAggregatorsInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutAggregatorsInput
+    upsert?: CompanyUpsertWithoutAggregatorsInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutAggregatorsInput, CompanyUpdateWithoutAggregatorsInput>, CompanyUncheckedUpdateWithoutAggregatorsInput>
+  }
+
+  export type UserUpdateOneWithoutAggregatorsNestedInput = {
+    create?: XOR<UserCreateWithoutAggregatorsInput, UserUncheckedCreateWithoutAggregatorsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutAggregatorsInput
+    upsert?: UserUpsertWithoutAggregatorsInput
     disconnect?: UserWhereInput | boolean
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAggregatorInput, UserUpdateWithoutAggregatorInput>, UserUncheckedUpdateWithoutAggregatorInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAggregatorsInput, UserUpdateWithoutAggregatorsInput>, UserUncheckedUpdateWithoutAggregatorsInput>
   }
 
   export type FarmerUpdateManyWithoutAggregatorNestedInput = {
@@ -9102,16 +10984,22 @@ export namespace Prisma {
     set: string[]
   }
 
-  export type AggregatorCreateNestedOneWithoutFarmerInput = {
-    create?: XOR<AggregatorCreateWithoutFarmerInput, AggregatorUncheckedCreateWithoutFarmerInput>
-    connectOrCreate?: AggregatorCreateOrConnectWithoutFarmerInput
+  export type AggregatorCreateNestedOneWithoutFarmersInput = {
+    create?: XOR<AggregatorCreateWithoutFarmersInput, AggregatorUncheckedCreateWithoutFarmersInput>
+    connectOrCreate?: AggregatorCreateOrConnectWithoutFarmersInput
     connect?: AggregatorWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutFarmerInput = {
-    create?: XOR<UserCreateWithoutFarmerInput, UserUncheckedCreateWithoutFarmerInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFarmerInput
+  export type UserCreateNestedOneWithoutFarmersInput = {
+    create?: XOR<UserCreateWithoutFarmersInput, UserUncheckedCreateWithoutFarmersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFarmersInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type CompanyCreateNestedOneWithoutFarmersInput = {
+    create?: XOR<CompanyCreateWithoutFarmersInput, CompanyUncheckedCreateWithoutFarmersInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutFarmersInput
+    connect?: CompanyWhereUniqueInput
   }
 
   export type ProduceCreateNestedManyWithoutFarmerInput = {
@@ -9147,20 +11035,28 @@ export namespace Prisma {
     push?: string | string[]
   }
 
-  export type AggregatorUpdateOneRequiredWithoutFarmerNestedInput = {
-    create?: XOR<AggregatorCreateWithoutFarmerInput, AggregatorUncheckedCreateWithoutFarmerInput>
-    connectOrCreate?: AggregatorCreateOrConnectWithoutFarmerInput
-    upsert?: AggregatorUpsertWithoutFarmerInput
+  export type AggregatorUpdateOneRequiredWithoutFarmersNestedInput = {
+    create?: XOR<AggregatorCreateWithoutFarmersInput, AggregatorUncheckedCreateWithoutFarmersInput>
+    connectOrCreate?: AggregatorCreateOrConnectWithoutFarmersInput
+    upsert?: AggregatorUpsertWithoutFarmersInput
     connect?: AggregatorWhereUniqueInput
-    update?: XOR<XOR<AggregatorUpdateToOneWithWhereWithoutFarmerInput, AggregatorUpdateWithoutFarmerInput>, AggregatorUncheckedUpdateWithoutFarmerInput>
+    update?: XOR<XOR<AggregatorUpdateToOneWithWhereWithoutFarmersInput, AggregatorUpdateWithoutFarmersInput>, AggregatorUncheckedUpdateWithoutFarmersInput>
   }
 
-  export type UserUpdateOneRequiredWithoutFarmerNestedInput = {
-    create?: XOR<UserCreateWithoutFarmerInput, UserUncheckedCreateWithoutFarmerInput>
-    connectOrCreate?: UserCreateOrConnectWithoutFarmerInput
-    upsert?: UserUpsertWithoutFarmerInput
+  export type UserUpdateOneRequiredWithoutFarmersNestedInput = {
+    create?: XOR<UserCreateWithoutFarmersInput, UserUncheckedCreateWithoutFarmersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutFarmersInput
+    upsert?: UserUpsertWithoutFarmersInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFarmerInput, UserUpdateWithoutFarmerInput>, UserUncheckedUpdateWithoutFarmerInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutFarmersInput, UserUpdateWithoutFarmersInput>, UserUncheckedUpdateWithoutFarmersInput>
+  }
+
+  export type CompanyUpdateOneRequiredWithoutFarmersNestedInput = {
+    create?: XOR<CompanyCreateWithoutFarmersInput, CompanyUncheckedCreateWithoutFarmersInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutFarmersInput
+    upsert?: CompanyUpsertWithoutFarmersInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutFarmersInput, CompanyUpdateWithoutFarmersInput>, CompanyUncheckedUpdateWithoutFarmersInput>
   }
 
   export type ProduceUpdateManyWithoutFarmerNestedInput = {
@@ -9219,46 +11115,186 @@ export namespace Prisma {
     deleteMany?: TransporterScalarWhereInput | TransporterScalarWhereInput[]
   }
 
-  export type AggregatorCreateNestedOneWithoutTransporterInput = {
-    create?: XOR<AggregatorCreateWithoutTransporterInput, AggregatorUncheckedCreateWithoutTransporterInput>
-    connectOrCreate?: AggregatorCreateOrConnectWithoutTransporterInput
+  export type FarmerCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<FarmerCreateWithoutCompanyInput, FarmerUncheckedCreateWithoutCompanyInput> | FarmerCreateWithoutCompanyInput[] | FarmerUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: FarmerCreateOrConnectWithoutCompanyInput | FarmerCreateOrConnectWithoutCompanyInput[]
+    createMany?: FarmerCreateManyCompanyInputEnvelope
+    connect?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+  }
+
+  export type AggregatorCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<AggregatorCreateWithoutCompanyInput, AggregatorUncheckedCreateWithoutCompanyInput> | AggregatorCreateWithoutCompanyInput[] | AggregatorUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: AggregatorCreateOrConnectWithoutCompanyInput | AggregatorCreateOrConnectWithoutCompanyInput[]
+    createMany?: AggregatorCreateManyCompanyInputEnvelope
+    connect?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+  }
+
+  export type TransporterCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<TransporterCreateWithoutCompanyInput, TransporterUncheckedCreateWithoutCompanyInput> | TransporterCreateWithoutCompanyInput[] | TransporterUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: TransporterCreateOrConnectWithoutCompanyInput | TransporterCreateOrConnectWithoutCompanyInput[]
+    createMany?: TransporterCreateManyCompanyInputEnvelope
+    connect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+  }
+
+  export type FarmerUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<FarmerCreateWithoutCompanyInput, FarmerUncheckedCreateWithoutCompanyInput> | FarmerCreateWithoutCompanyInput[] | FarmerUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: FarmerCreateOrConnectWithoutCompanyInput | FarmerCreateOrConnectWithoutCompanyInput[]
+    createMany?: FarmerCreateManyCompanyInputEnvelope
+    connect?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+  }
+
+  export type AggregatorUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<AggregatorCreateWithoutCompanyInput, AggregatorUncheckedCreateWithoutCompanyInput> | AggregatorCreateWithoutCompanyInput[] | AggregatorUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: AggregatorCreateOrConnectWithoutCompanyInput | AggregatorCreateOrConnectWithoutCompanyInput[]
+    createMany?: AggregatorCreateManyCompanyInputEnvelope
+    connect?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+  }
+
+  export type TransporterUncheckedCreateNestedManyWithoutCompanyInput = {
+    create?: XOR<TransporterCreateWithoutCompanyInput, TransporterUncheckedCreateWithoutCompanyInput> | TransporterCreateWithoutCompanyInput[] | TransporterUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: TransporterCreateOrConnectWithoutCompanyInput | TransporterCreateOrConnectWithoutCompanyInput[]
+    createMany?: TransporterCreateManyCompanyInputEnvelope
+    connect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+  }
+
+  export type FarmerUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<FarmerCreateWithoutCompanyInput, FarmerUncheckedCreateWithoutCompanyInput> | FarmerCreateWithoutCompanyInput[] | FarmerUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: FarmerCreateOrConnectWithoutCompanyInput | FarmerCreateOrConnectWithoutCompanyInput[]
+    upsert?: FarmerUpsertWithWhereUniqueWithoutCompanyInput | FarmerUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: FarmerCreateManyCompanyInputEnvelope
+    set?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    disconnect?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    delete?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    connect?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    update?: FarmerUpdateWithWhereUniqueWithoutCompanyInput | FarmerUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: FarmerUpdateManyWithWhereWithoutCompanyInput | FarmerUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: FarmerScalarWhereInput | FarmerScalarWhereInput[]
+  }
+
+  export type AggregatorUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<AggregatorCreateWithoutCompanyInput, AggregatorUncheckedCreateWithoutCompanyInput> | AggregatorCreateWithoutCompanyInput[] | AggregatorUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: AggregatorCreateOrConnectWithoutCompanyInput | AggregatorCreateOrConnectWithoutCompanyInput[]
+    upsert?: AggregatorUpsertWithWhereUniqueWithoutCompanyInput | AggregatorUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: AggregatorCreateManyCompanyInputEnvelope
+    set?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    disconnect?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    delete?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    connect?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    update?: AggregatorUpdateWithWhereUniqueWithoutCompanyInput | AggregatorUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: AggregatorUpdateManyWithWhereWithoutCompanyInput | AggregatorUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: AggregatorScalarWhereInput | AggregatorScalarWhereInput[]
+  }
+
+  export type TransporterUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<TransporterCreateWithoutCompanyInput, TransporterUncheckedCreateWithoutCompanyInput> | TransporterCreateWithoutCompanyInput[] | TransporterUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: TransporterCreateOrConnectWithoutCompanyInput | TransporterCreateOrConnectWithoutCompanyInput[]
+    upsert?: TransporterUpsertWithWhereUniqueWithoutCompanyInput | TransporterUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: TransporterCreateManyCompanyInputEnvelope
+    set?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    disconnect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    delete?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    connect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    update?: TransporterUpdateWithWhereUniqueWithoutCompanyInput | TransporterUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: TransporterUpdateManyWithWhereWithoutCompanyInput | TransporterUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: TransporterScalarWhereInput | TransporterScalarWhereInput[]
+  }
+
+  export type FarmerUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<FarmerCreateWithoutCompanyInput, FarmerUncheckedCreateWithoutCompanyInput> | FarmerCreateWithoutCompanyInput[] | FarmerUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: FarmerCreateOrConnectWithoutCompanyInput | FarmerCreateOrConnectWithoutCompanyInput[]
+    upsert?: FarmerUpsertWithWhereUniqueWithoutCompanyInput | FarmerUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: FarmerCreateManyCompanyInputEnvelope
+    set?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    disconnect?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    delete?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    connect?: FarmerWhereUniqueInput | FarmerWhereUniqueInput[]
+    update?: FarmerUpdateWithWhereUniqueWithoutCompanyInput | FarmerUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: FarmerUpdateManyWithWhereWithoutCompanyInput | FarmerUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: FarmerScalarWhereInput | FarmerScalarWhereInput[]
+  }
+
+  export type AggregatorUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<AggregatorCreateWithoutCompanyInput, AggregatorUncheckedCreateWithoutCompanyInput> | AggregatorCreateWithoutCompanyInput[] | AggregatorUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: AggregatorCreateOrConnectWithoutCompanyInput | AggregatorCreateOrConnectWithoutCompanyInput[]
+    upsert?: AggregatorUpsertWithWhereUniqueWithoutCompanyInput | AggregatorUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: AggregatorCreateManyCompanyInputEnvelope
+    set?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    disconnect?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    delete?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    connect?: AggregatorWhereUniqueInput | AggregatorWhereUniqueInput[]
+    update?: AggregatorUpdateWithWhereUniqueWithoutCompanyInput | AggregatorUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: AggregatorUpdateManyWithWhereWithoutCompanyInput | AggregatorUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: AggregatorScalarWhereInput | AggregatorScalarWhereInput[]
+  }
+
+  export type TransporterUncheckedUpdateManyWithoutCompanyNestedInput = {
+    create?: XOR<TransporterCreateWithoutCompanyInput, TransporterUncheckedCreateWithoutCompanyInput> | TransporterCreateWithoutCompanyInput[] | TransporterUncheckedCreateWithoutCompanyInput[]
+    connectOrCreate?: TransporterCreateOrConnectWithoutCompanyInput | TransporterCreateOrConnectWithoutCompanyInput[]
+    upsert?: TransporterUpsertWithWhereUniqueWithoutCompanyInput | TransporterUpsertWithWhereUniqueWithoutCompanyInput[]
+    createMany?: TransporterCreateManyCompanyInputEnvelope
+    set?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    disconnect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    delete?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    connect?: TransporterWhereUniqueInput | TransporterWhereUniqueInput[]
+    update?: TransporterUpdateWithWhereUniqueWithoutCompanyInput | TransporterUpdateWithWhereUniqueWithoutCompanyInput[]
+    updateMany?: TransporterUpdateManyWithWhereWithoutCompanyInput | TransporterUpdateManyWithWhereWithoutCompanyInput[]
+    deleteMany?: TransporterScalarWhereInput | TransporterScalarWhereInput[]
+  }
+
+  export type CompanyCreateNestedOneWithoutTransportersInput = {
+    create?: XOR<CompanyCreateWithoutTransportersInput, CompanyUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutTransportersInput
+    connect?: CompanyWhereUniqueInput
+  }
+
+  export type AggregatorCreateNestedOneWithoutTransportersInput = {
+    create?: XOR<AggregatorCreateWithoutTransportersInput, AggregatorUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: AggregatorCreateOrConnectWithoutTransportersInput
     connect?: AggregatorWhereUniqueInput
   }
 
-  export type UserCreateNestedOneWithoutTransporterInput = {
-    create?: XOR<UserCreateWithoutTransporterInput, UserUncheckedCreateWithoutTransporterInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransporterInput
+  export type UserCreateNestedOneWithoutTransportersInput = {
+    create?: XOR<UserCreateWithoutTransportersInput, UserUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransportersInput
     connect?: UserWhereUniqueInput
   }
 
-  export type FarmerCreateNestedOneWithoutTransporterInput = {
-    create?: XOR<FarmerCreateWithoutTransporterInput, FarmerUncheckedCreateWithoutTransporterInput>
-    connectOrCreate?: FarmerCreateOrConnectWithoutTransporterInput
+  export type FarmerCreateNestedOneWithoutTransportersInput = {
+    create?: XOR<FarmerCreateWithoutTransportersInput, FarmerUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: FarmerCreateOrConnectWithoutTransportersInput
     connect?: FarmerWhereUniqueInput
   }
 
-  export type AggregatorUpdateOneRequiredWithoutTransporterNestedInput = {
-    create?: XOR<AggregatorCreateWithoutTransporterInput, AggregatorUncheckedCreateWithoutTransporterInput>
-    connectOrCreate?: AggregatorCreateOrConnectWithoutTransporterInput
-    upsert?: AggregatorUpsertWithoutTransporterInput
+  export type CompanyUpdateOneRequiredWithoutTransportersNestedInput = {
+    create?: XOR<CompanyCreateWithoutTransportersInput, CompanyUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: CompanyCreateOrConnectWithoutTransportersInput
+    upsert?: CompanyUpsertWithoutTransportersInput
+    connect?: CompanyWhereUniqueInput
+    update?: XOR<XOR<CompanyUpdateToOneWithWhereWithoutTransportersInput, CompanyUpdateWithoutTransportersInput>, CompanyUncheckedUpdateWithoutTransportersInput>
+  }
+
+  export type AggregatorUpdateOneRequiredWithoutTransportersNestedInput = {
+    create?: XOR<AggregatorCreateWithoutTransportersInput, AggregatorUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: AggregatorCreateOrConnectWithoutTransportersInput
+    upsert?: AggregatorUpsertWithoutTransportersInput
     connect?: AggregatorWhereUniqueInput
-    update?: XOR<XOR<AggregatorUpdateToOneWithWhereWithoutTransporterInput, AggregatorUpdateWithoutTransporterInput>, AggregatorUncheckedUpdateWithoutTransporterInput>
+    update?: XOR<XOR<AggregatorUpdateToOneWithWhereWithoutTransportersInput, AggregatorUpdateWithoutTransportersInput>, AggregatorUncheckedUpdateWithoutTransportersInput>
   }
 
-  export type UserUpdateOneRequiredWithoutTransporterNestedInput = {
-    create?: XOR<UserCreateWithoutTransporterInput, UserUncheckedCreateWithoutTransporterInput>
-    connectOrCreate?: UserCreateOrConnectWithoutTransporterInput
-    upsert?: UserUpsertWithoutTransporterInput
+  export type UserUpdateOneRequiredWithoutTransportersNestedInput = {
+    create?: XOR<UserCreateWithoutTransportersInput, UserUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTransportersInput
+    upsert?: UserUpsertWithoutTransportersInput
     connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransporterInput, UserUpdateWithoutTransporterInput>, UserUncheckedUpdateWithoutTransporterInput>
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTransportersInput, UserUpdateWithoutTransportersInput>, UserUncheckedUpdateWithoutTransportersInput>
   }
 
-  export type FarmerUpdateOneRequiredWithoutTransporterNestedInput = {
-    create?: XOR<FarmerCreateWithoutTransporterInput, FarmerUncheckedCreateWithoutTransporterInput>
-    connectOrCreate?: FarmerCreateOrConnectWithoutTransporterInput
-    upsert?: FarmerUpsertWithoutTransporterInput
+  export type FarmerUpdateOneRequiredWithoutTransportersNestedInput = {
+    create?: XOR<FarmerCreateWithoutTransportersInput, FarmerUncheckedCreateWithoutTransportersInput>
+    connectOrCreate?: FarmerCreateOrConnectWithoutTransportersInput
+    upsert?: FarmerUpsertWithoutTransportersInput
     connect?: FarmerWhereUniqueInput
-    update?: XOR<XOR<FarmerUpdateToOneWithWhereWithoutTransporterInput, FarmerUpdateWithoutTransporterInput>, FarmerUncheckedUpdateWithoutTransporterInput>
+    update?: XOR<XOR<FarmerUpdateToOneWithWhereWithoutTransportersInput, FarmerUpdateWithoutTransportersInput>, FarmerUncheckedUpdateWithoutTransportersInput>
   }
 
   export type FarmerCreateNestedOneWithoutList_of_produceInput = {
@@ -9480,9 +11516,10 @@ export namespace Prisma {
     isEmail_verified?: boolean
     role?: string | null
     is_active?: boolean | null
-    aggregator: AggregatorCreateNestedOneWithoutFarmerInput
+    aggregator: AggregatorCreateNestedOneWithoutFarmersInput
+    company: CompanyCreateNestedOneWithoutFarmersInput
     list_of_produce?: ProduceCreateNestedManyWithoutFarmerInput
-    Transporter?: TransporterCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerUncheckedCreateWithoutUserInput = {
@@ -9504,7 +11541,7 @@ export namespace Prisma {
     role?: string | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerCreateOrConnectWithoutUserInput = {
@@ -9537,8 +11574,9 @@ export namespace Prisma {
     vehicle_type?: string | null
     vehicle_number?: string | null
     Vehicle_license?: string | null
-    aggregator: AggregatorCreateNestedOneWithoutTransporterInput
-    farmer: FarmerCreateNestedOneWithoutTransporterInput
+    company: CompanyCreateNestedOneWithoutTransportersInput
+    aggregator: AggregatorCreateNestedOneWithoutTransportersInput
+    farmer: FarmerCreateNestedOneWithoutTransportersInput
   }
 
   export type TransporterUncheckedCreateWithoutUserInput = {
@@ -9590,8 +11628,9 @@ export namespace Prisma {
     isEmail_verified?: boolean
     status: $Enums.UserStatus
     role?: string | null
-    Farmer?: FarmerCreateNestedManyWithoutAggregatorInput
-    Transporter?: TransporterCreateNestedManyWithoutAggregatorInput
+    company: CompanyCreateNestedOneWithoutAggregatorsInput
+    farmers?: FarmerCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterCreateNestedManyWithoutAggregatorInput
   }
 
   export type AggregatorUncheckedCreateWithoutUserInput = {
@@ -9611,8 +11650,8 @@ export namespace Prisma {
     isEmail_verified?: boolean
     status: $Enums.UserStatus
     role?: string | null
-    Farmer?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
+    farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
 
   export type AggregatorCreateOrConnectWithoutUserInput = {
@@ -9738,7 +11777,7 @@ export namespace Prisma {
     last_active?: StringNullableFilter<"Aggregator"> | string | null
     phone_number?: StringNullableFilter<"Aggregator"> | string | null
     pentrar_aggregator_id?: StringNullableFilter<"Aggregator"> | string | null
-    created_by_id?: StringNullableFilter<"Aggregator"> | string | null
+    created_by_id?: StringFilter<"Aggregator"> | string
     verification_code?: StringNullableFilter<"Aggregator"> | string | null
     password_resetCode?: StringNullableFilter<"Aggregator"> | string | null
     isEmail_verified?: BoolFilter<"Aggregator"> | boolean
@@ -9746,7 +11785,72 @@ export namespace Prisma {
     role?: StringNullableFilter<"Aggregator"> | string | null
   }
 
-  export type UserCreateWithoutAggregatorInput = {
+  export type CompanyCreateWithoutAggregatorsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    farmers?: FarmerCreateNestedManyWithoutCompanyInput
+    transporters?: TransporterCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutAggregatorsInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    farmers?: FarmerUncheckedCreateNestedManyWithoutCompanyInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutAggregatorsInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutAggregatorsInput, CompanyUncheckedCreateWithoutAggregatorsInput>
+  }
+
+  export type UserCreateWithoutAggregatorsInput = {
     id?: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -9763,11 +11867,11 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    Farmer?: FarmerCreateNestedManyWithoutUserInput
-    Transporter?: TransporterCreateNestedManyWithoutUserInput
+    farmers?: FarmerCreateNestedManyWithoutUserInput
+    transporters?: TransporterCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutAggregatorInput = {
+  export type UserUncheckedCreateWithoutAggregatorsInput = {
     id?: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -9784,13 +11888,13 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    Farmer?: FarmerUncheckedCreateNestedManyWithoutUserInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutUserInput
+    farmers?: FarmerUncheckedCreateNestedManyWithoutUserInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutAggregatorInput = {
+  export type UserCreateOrConnectWithoutAggregatorsInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutAggregatorInput, UserUncheckedCreateWithoutAggregatorInput>
+    create: XOR<UserCreateWithoutAggregatorsInput, UserUncheckedCreateWithoutAggregatorsInput>
   }
 
   export type FarmerCreateWithoutAggregatorInput = {
@@ -9811,9 +11915,10 @@ export namespace Prisma {
     isEmail_verified?: boolean
     role?: string | null
     is_active?: boolean | null
-    user: UserCreateNestedOneWithoutFarmerInput
+    user: UserCreateNestedOneWithoutFarmersInput
+    company: CompanyCreateNestedOneWithoutFarmersInput
     list_of_produce?: ProduceCreateNestedManyWithoutFarmerInput
-    Transporter?: TransporterCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerUncheckedCreateWithoutAggregatorInput = {
@@ -9835,7 +11940,7 @@ export namespace Prisma {
     role?: string | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerCreateOrConnectWithoutAggregatorInput = {
@@ -9868,8 +11973,9 @@ export namespace Prisma {
     vehicle_type?: string | null
     vehicle_number?: string | null
     Vehicle_license?: string | null
-    user: UserCreateNestedOneWithoutTransporterInput
-    farmer: FarmerCreateNestedOneWithoutTransporterInput
+    company: CompanyCreateNestedOneWithoutTransportersInput
+    user: UserCreateNestedOneWithoutTransportersInput
+    farmer: FarmerCreateNestedOneWithoutTransportersInput
   }
 
   export type TransporterUncheckedCreateWithoutAggregatorInput = {
@@ -9904,18 +12010,89 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserUpsertWithoutAggregatorInput = {
-    update: XOR<UserUpdateWithoutAggregatorInput, UserUncheckedUpdateWithoutAggregatorInput>
-    create: XOR<UserCreateWithoutAggregatorInput, UserUncheckedCreateWithoutAggregatorInput>
+  export type CompanyUpsertWithoutAggregatorsInput = {
+    update: XOR<CompanyUpdateWithoutAggregatorsInput, CompanyUncheckedUpdateWithoutAggregatorsInput>
+    create: XOR<CompanyCreateWithoutAggregatorsInput, CompanyUncheckedCreateWithoutAggregatorsInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutAggregatorsInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutAggregatorsInput, CompanyUncheckedUpdateWithoutAggregatorsInput>
+  }
+
+  export type CompanyUpdateWithoutAggregatorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    farmers?: FarmerUpdateManyWithoutCompanyNestedInput
+    transporters?: TransporterUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutAggregatorsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    farmers?: FarmerUncheckedUpdateManyWithoutCompanyNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type UserUpsertWithoutAggregatorsInput = {
+    update: XOR<UserUpdateWithoutAggregatorsInput, UserUncheckedUpdateWithoutAggregatorsInput>
+    create: XOR<UserCreateWithoutAggregatorsInput, UserUncheckedCreateWithoutAggregatorsInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutAggregatorInput = {
+  export type UserUpdateToOneWithWhereWithoutAggregatorsInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutAggregatorInput, UserUncheckedUpdateWithoutAggregatorInput>
+    data: XOR<UserUpdateWithoutAggregatorsInput, UserUncheckedUpdateWithoutAggregatorsInput>
   }
 
-  export type UserUpdateWithoutAggregatorInput = {
+  export type UserUpdateWithoutAggregatorsInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9932,11 +12109,11 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Farmer?: FarmerUpdateManyWithoutUserNestedInput
-    Transporter?: TransporterUpdateManyWithoutUserNestedInput
+    farmers?: FarmerUpdateManyWithoutUserNestedInput
+    transporters?: TransporterUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutAggregatorInput = {
+  export type UserUncheckedUpdateWithoutAggregatorsInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -9953,8 +12130,8 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Farmer?: FarmerUncheckedUpdateManyWithoutUserNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutUserNestedInput
+    farmers?: FarmerUncheckedUpdateManyWithoutUserNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FarmerUpsertWithWhereUniqueWithoutAggregatorInput = {
@@ -9989,7 +12166,7 @@ export namespace Prisma {
     data: XOR<TransporterUpdateManyMutationInput, TransporterUncheckedUpdateManyWithoutAggregatorInput>
   }
 
-  export type AggregatorCreateWithoutFarmerInput = {
+  export type AggregatorCreateWithoutFarmersInput = {
     id?: string
     created_at: Date | string
     updated_at?: Date | string
@@ -10006,11 +12183,12 @@ export namespace Prisma {
     isEmail_verified?: boolean
     status: $Enums.UserStatus
     role?: string | null
-    user?: UserCreateNestedOneWithoutAggregatorInput
-    Transporter?: TransporterCreateNestedManyWithoutAggregatorInput
+    company: CompanyCreateNestedOneWithoutAggregatorsInput
+    user?: UserCreateNestedOneWithoutAggregatorsInput
+    transporters?: TransporterCreateNestedManyWithoutAggregatorInput
   }
 
-  export type AggregatorUncheckedCreateWithoutFarmerInput = {
+  export type AggregatorUncheckedCreateWithoutFarmersInput = {
     id?: string
     created_at: Date | string
     updated_at?: Date | string
@@ -10022,21 +12200,21 @@ export namespace Prisma {
     last_active?: string | null
     phone_number?: string | null
     pentrar_aggregator_id?: string | null
-    created_by_id?: string | null
+    created_by_id: string
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
     role?: string | null
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
 
-  export type AggregatorCreateOrConnectWithoutFarmerInput = {
+  export type AggregatorCreateOrConnectWithoutFarmersInput = {
     where: AggregatorWhereUniqueInput
-    create: XOR<AggregatorCreateWithoutFarmerInput, AggregatorUncheckedCreateWithoutFarmerInput>
+    create: XOR<AggregatorCreateWithoutFarmersInput, AggregatorUncheckedCreateWithoutFarmersInput>
   }
 
-  export type UserCreateWithoutFarmerInput = {
+  export type UserCreateWithoutFarmersInput = {
     id?: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -10053,11 +12231,11 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    Transporter?: TransporterCreateNestedManyWithoutUserInput
-    Aggregator?: AggregatorCreateNestedManyWithoutUserInput
+    transporters?: TransporterCreateNestedManyWithoutUserInput
+    aggregators?: AggregatorCreateNestedManyWithoutUserInput
   }
 
-  export type UserUncheckedCreateWithoutFarmerInput = {
+  export type UserUncheckedCreateWithoutFarmersInput = {
     id?: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -10074,13 +12252,78 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutUserInput
-    Aggregator?: AggregatorUncheckedCreateNestedManyWithoutUserInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutUserInput
+    aggregators?: AggregatorUncheckedCreateNestedManyWithoutUserInput
   }
 
-  export type UserCreateOrConnectWithoutFarmerInput = {
+  export type UserCreateOrConnectWithoutFarmersInput = {
     where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutFarmerInput, UserUncheckedCreateWithoutFarmerInput>
+    create: XOR<UserCreateWithoutFarmersInput, UserUncheckedCreateWithoutFarmersInput>
+  }
+
+  export type CompanyCreateWithoutFarmersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    aggregators?: AggregatorCreateNestedManyWithoutCompanyInput
+    transporters?: TransporterCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutFarmersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    aggregators?: AggregatorUncheckedCreateNestedManyWithoutCompanyInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutFarmersInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutFarmersInput, CompanyUncheckedCreateWithoutFarmersInput>
   }
 
   export type ProduceCreateWithoutFarmerInput = {
@@ -10137,8 +12380,9 @@ export namespace Prisma {
     vehicle_type?: string | null
     vehicle_number?: string | null
     Vehicle_license?: string | null
-    aggregator: AggregatorCreateNestedOneWithoutTransporterInput
-    user: UserCreateNestedOneWithoutTransporterInput
+    company: CompanyCreateNestedOneWithoutTransportersInput
+    aggregator: AggregatorCreateNestedOneWithoutTransportersInput
+    user: UserCreateNestedOneWithoutTransportersInput
   }
 
   export type TransporterUncheckedCreateWithoutFarmerInput = {
@@ -10173,18 +12417,18 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type AggregatorUpsertWithoutFarmerInput = {
-    update: XOR<AggregatorUpdateWithoutFarmerInput, AggregatorUncheckedUpdateWithoutFarmerInput>
-    create: XOR<AggregatorCreateWithoutFarmerInput, AggregatorUncheckedCreateWithoutFarmerInput>
+  export type AggregatorUpsertWithoutFarmersInput = {
+    update: XOR<AggregatorUpdateWithoutFarmersInput, AggregatorUncheckedUpdateWithoutFarmersInput>
+    create: XOR<AggregatorCreateWithoutFarmersInput, AggregatorUncheckedCreateWithoutFarmersInput>
     where?: AggregatorWhereInput
   }
 
-  export type AggregatorUpdateToOneWithWhereWithoutFarmerInput = {
+  export type AggregatorUpdateToOneWithWhereWithoutFarmersInput = {
     where?: AggregatorWhereInput
-    data: XOR<AggregatorUpdateWithoutFarmerInput, AggregatorUncheckedUpdateWithoutFarmerInput>
+    data: XOR<AggregatorUpdateWithoutFarmersInput, AggregatorUncheckedUpdateWithoutFarmersInput>
   }
 
-  export type AggregatorUpdateWithoutFarmerInput = {
+  export type AggregatorUpdateWithoutFarmersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10201,11 +12445,12 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneWithoutAggregatorNestedInput
-    Transporter?: TransporterUpdateManyWithoutAggregatorNestedInput
+    company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
+    user?: UserUpdateOneWithoutAggregatorsNestedInput
+    transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
   }
 
-  export type AggregatorUncheckedUpdateWithoutFarmerInput = {
+  export type AggregatorUncheckedUpdateWithoutFarmersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10217,27 +12462,27 @@ export namespace Prisma {
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
-    created_by_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    Transporter?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
 
-  export type UserUpsertWithoutFarmerInput = {
-    update: XOR<UserUpdateWithoutFarmerInput, UserUncheckedUpdateWithoutFarmerInput>
-    create: XOR<UserCreateWithoutFarmerInput, UserUncheckedCreateWithoutFarmerInput>
+  export type UserUpsertWithoutFarmersInput = {
+    update: XOR<UserUpdateWithoutFarmersInput, UserUncheckedUpdateWithoutFarmersInput>
+    create: XOR<UserCreateWithoutFarmersInput, UserUncheckedCreateWithoutFarmersInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutFarmerInput = {
+  export type UserUpdateToOneWithWhereWithoutFarmersInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutFarmerInput, UserUncheckedUpdateWithoutFarmerInput>
+    data: XOR<UserUpdateWithoutFarmersInput, UserUncheckedUpdateWithoutFarmersInput>
   }
 
-  export type UserUpdateWithoutFarmerInput = {
+  export type UserUpdateWithoutFarmersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10254,11 +12499,11 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Transporter?: TransporterUpdateManyWithoutUserNestedInput
-    Aggregator?: AggregatorUpdateManyWithoutUserNestedInput
+    transporters?: TransporterUpdateManyWithoutUserNestedInput
+    aggregators?: AggregatorUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutFarmerInput = {
+  export type UserUncheckedUpdateWithoutFarmersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10275,8 +12520,79 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Transporter?: TransporterUncheckedUpdateManyWithoutUserNestedInput
-    Aggregator?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutUserNestedInput
+    aggregators?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type CompanyUpsertWithoutFarmersInput = {
+    update: XOR<CompanyUpdateWithoutFarmersInput, CompanyUncheckedUpdateWithoutFarmersInput>
+    create: XOR<CompanyCreateWithoutFarmersInput, CompanyUncheckedCreateWithoutFarmersInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutFarmersInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutFarmersInput, CompanyUncheckedUpdateWithoutFarmersInput>
+  }
+
+  export type CompanyUpdateWithoutFarmersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    aggregators?: AggregatorUpdateManyWithoutCompanyNestedInput
+    transporters?: TransporterUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutFarmersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    aggregators?: AggregatorUncheckedUpdateManyWithoutCompanyNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutCompanyNestedInput
   }
 
   export type ProduceUpsertWithWhereUniqueWithoutFarmerInput = {
@@ -10327,101 +12643,7 @@ export namespace Prisma {
     data: XOR<TransporterUpdateManyMutationInput, TransporterUncheckedUpdateManyWithoutFarmerInput>
   }
 
-  export type AggregatorCreateWithoutTransporterInput = {
-    id?: string
-    created_at: Date | string
-    updated_at?: Date | string
-    is_active?: boolean | null
-    email?: string | null
-    password?: string | null
-    first_name?: string | null
-    last_name?: string | null
-    last_active?: string | null
-    phone_number?: string | null
-    pentrar_aggregator_id?: string | null
-    verification_code?: string | null
-    password_resetCode?: string | null
-    isEmail_verified?: boolean
-    status: $Enums.UserStatus
-    role?: string | null
-    user?: UserCreateNestedOneWithoutAggregatorInput
-    Farmer?: FarmerCreateNestedManyWithoutAggregatorInput
-  }
-
-  export type AggregatorUncheckedCreateWithoutTransporterInput = {
-    id?: string
-    created_at: Date | string
-    updated_at?: Date | string
-    is_active?: boolean | null
-    email?: string | null
-    password?: string | null
-    first_name?: string | null
-    last_name?: string | null
-    last_active?: string | null
-    phone_number?: string | null
-    pentrar_aggregator_id?: string | null
-    created_by_id?: string | null
-    verification_code?: string | null
-    password_resetCode?: string | null
-    isEmail_verified?: boolean
-    status: $Enums.UserStatus
-    role?: string | null
-    Farmer?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
-  }
-
-  export type AggregatorCreateOrConnectWithoutTransporterInput = {
-    where: AggregatorWhereUniqueInput
-    create: XOR<AggregatorCreateWithoutTransporterInput, AggregatorUncheckedCreateWithoutTransporterInput>
-  }
-
-  export type UserCreateWithoutTransporterInput = {
-    id?: string
-    created_at?: Date | string
-    updated_at?: Date | string
-    email: string
-    password?: string | null
-    first_name?: string | null
-    last_name?: string | null
-    role?: string | null
-    last_active?: string | null
-    status: $Enums.UserStatus
-    phone_number?: string | null
-    is_active?: boolean | null
-    pentrar_user_id?: string | null
-    verification_code?: string | null
-    password_resetCode?: string | null
-    isEmail_verified?: boolean
-    Farmer?: FarmerCreateNestedManyWithoutUserInput
-    Aggregator?: AggregatorCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutTransporterInput = {
-    id?: string
-    created_at?: Date | string
-    updated_at?: Date | string
-    email: string
-    password?: string | null
-    first_name?: string | null
-    last_name?: string | null
-    role?: string | null
-    last_active?: string | null
-    status: $Enums.UserStatus
-    phone_number?: string | null
-    is_active?: boolean | null
-    pentrar_user_id?: string | null
-    verification_code?: string | null
-    password_resetCode?: string | null
-    isEmail_verified?: boolean
-    Farmer?: FarmerUncheckedCreateNestedManyWithoutUserInput
-    Aggregator?: AggregatorUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutTransporterInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutTransporterInput, UserUncheckedCreateWithoutTransporterInput>
-  }
-
-  export type FarmerCreateWithoutTransporterInput = {
+  export type FarmerCreateWithoutCompanyInput = {
     id?: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -10439,12 +12661,387 @@ export namespace Prisma {
     isEmail_verified?: boolean
     role?: string | null
     is_active?: boolean | null
-    aggregator: AggregatorCreateNestedOneWithoutFarmerInput
-    user: UserCreateNestedOneWithoutFarmerInput
+    aggregator: AggregatorCreateNestedOneWithoutFarmersInput
+    user: UserCreateNestedOneWithoutFarmersInput
+    list_of_produce?: ProduceCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterCreateNestedManyWithoutFarmerInput
+  }
+
+  export type FarmerUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    type_of_produce?: FarmerCreatetype_of_produceInput | string[]
+    pentrar_farmer_id?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
+  }
+
+  export type FarmerCreateOrConnectWithoutCompanyInput = {
+    where: FarmerWhereUniqueInput
+    create: XOR<FarmerCreateWithoutCompanyInput, FarmerUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type FarmerCreateManyCompanyInputEnvelope = {
+    data: FarmerCreateManyCompanyInput | FarmerCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AggregatorCreateWithoutCompanyInput = {
+    id?: string
+    created_at: Date | string
+    updated_at?: Date | string
+    is_active?: boolean | null
+    email?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    last_active?: string | null
+    phone_number?: string | null
+    pentrar_aggregator_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    status: $Enums.UserStatus
+    role?: string | null
+    user?: UserCreateNestedOneWithoutAggregatorsInput
+    farmers?: FarmerCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterCreateNestedManyWithoutAggregatorInput
+  }
+
+  export type AggregatorUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    created_at: Date | string
+    updated_at?: Date | string
+    is_active?: boolean | null
+    email?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    last_active?: string | null
+    phone_number?: string | null
+    pentrar_aggregator_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    status: $Enums.UserStatus
+    role?: string | null
+    farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
+  }
+
+  export type AggregatorCreateOrConnectWithoutCompanyInput = {
+    where: AggregatorWhereUniqueInput
+    create: XOR<AggregatorCreateWithoutCompanyInput, AggregatorUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type AggregatorCreateManyCompanyInputEnvelope = {
+    data: AggregatorCreateManyCompanyInput | AggregatorCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TransporterCreateWithoutCompanyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    role?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    phone_number?: string | null
+    is_active?: boolean | null
+    pentrar_trans_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    vehicle_type?: string | null
+    vehicle_number?: string | null
+    Vehicle_license?: string | null
+    aggregator: AggregatorCreateNestedOneWithoutTransportersInput
+    user: UserCreateNestedOneWithoutTransportersInput
+    farmer: FarmerCreateNestedOneWithoutTransportersInput
+  }
+
+  export type TransporterUncheckedCreateWithoutCompanyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    role?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    phone_number?: string | null
+    is_active?: boolean | null
+    pentrar_trans_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    vehicle_type?: string | null
+    vehicle_number?: string | null
+    Vehicle_license?: string | null
+  }
+
+  export type TransporterCreateOrConnectWithoutCompanyInput = {
+    where: TransporterWhereUniqueInput
+    create: XOR<TransporterCreateWithoutCompanyInput, TransporterUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type TransporterCreateManyCompanyInputEnvelope = {
+    data: TransporterCreateManyCompanyInput | TransporterCreateManyCompanyInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FarmerUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: FarmerWhereUniqueInput
+    update: XOR<FarmerUpdateWithoutCompanyInput, FarmerUncheckedUpdateWithoutCompanyInput>
+    create: XOR<FarmerCreateWithoutCompanyInput, FarmerUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type FarmerUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: FarmerWhereUniqueInput
+    data: XOR<FarmerUpdateWithoutCompanyInput, FarmerUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type FarmerUpdateManyWithWhereWithoutCompanyInput = {
+    where: FarmerScalarWhereInput
+    data: XOR<FarmerUpdateManyMutationInput, FarmerUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type AggregatorUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: AggregatorWhereUniqueInput
+    update: XOR<AggregatorUpdateWithoutCompanyInput, AggregatorUncheckedUpdateWithoutCompanyInput>
+    create: XOR<AggregatorCreateWithoutCompanyInput, AggregatorUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type AggregatorUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: AggregatorWhereUniqueInput
+    data: XOR<AggregatorUpdateWithoutCompanyInput, AggregatorUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type AggregatorUpdateManyWithWhereWithoutCompanyInput = {
+    where: AggregatorScalarWhereInput
+    data: XOR<AggregatorUpdateManyMutationInput, AggregatorUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type TransporterUpsertWithWhereUniqueWithoutCompanyInput = {
+    where: TransporterWhereUniqueInput
+    update: XOR<TransporterUpdateWithoutCompanyInput, TransporterUncheckedUpdateWithoutCompanyInput>
+    create: XOR<TransporterCreateWithoutCompanyInput, TransporterUncheckedCreateWithoutCompanyInput>
+  }
+
+  export type TransporterUpdateWithWhereUniqueWithoutCompanyInput = {
+    where: TransporterWhereUniqueInput
+    data: XOR<TransporterUpdateWithoutCompanyInput, TransporterUncheckedUpdateWithoutCompanyInput>
+  }
+
+  export type TransporterUpdateManyWithWhereWithoutCompanyInput = {
+    where: TransporterScalarWhereInput
+    data: XOR<TransporterUpdateManyMutationInput, TransporterUncheckedUpdateManyWithoutCompanyInput>
+  }
+
+  export type CompanyCreateWithoutTransportersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    farmers?: FarmerCreateNestedManyWithoutCompanyInput
+    aggregators?: AggregatorCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyUncheckedCreateWithoutTransportersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    company_name?: string | null
+    company_address?: string | null
+    legal_entity_name?: string | null
+    tax_identification_number?: string | null
+    pentrar_company_id?: string | null
+    created_by_id: string
+    last_active?: string | null
+    company_type?: string | null
+    point_of_contact?: string | null
+    parent_company?: string | null
+    subsidiaries_company?: string | null
+    annual_revenue?: string | null
+    financial_statement?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    farmers?: FarmerUncheckedCreateNestedManyWithoutCompanyInput
+    aggregators?: AggregatorUncheckedCreateNestedManyWithoutCompanyInput
+  }
+
+  export type CompanyCreateOrConnectWithoutTransportersInput = {
+    where: CompanyWhereUniqueInput
+    create: XOR<CompanyCreateWithoutTransportersInput, CompanyUncheckedCreateWithoutTransportersInput>
+  }
+
+  export type AggregatorCreateWithoutTransportersInput = {
+    id?: string
+    created_at: Date | string
+    updated_at?: Date | string
+    is_active?: boolean | null
+    email?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    last_active?: string | null
+    phone_number?: string | null
+    pentrar_aggregator_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    status: $Enums.UserStatus
+    role?: string | null
+    company: CompanyCreateNestedOneWithoutAggregatorsInput
+    user?: UserCreateNestedOneWithoutAggregatorsInput
+    farmers?: FarmerCreateNestedManyWithoutAggregatorInput
+  }
+
+  export type AggregatorUncheckedCreateWithoutTransportersInput = {
+    id?: string
+    created_at: Date | string
+    updated_at?: Date | string
+    is_active?: boolean | null
+    email?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    last_active?: string | null
+    phone_number?: string | null
+    pentrar_aggregator_id?: string | null
+    created_by_id: string
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    status: $Enums.UserStatus
+    role?: string | null
+    farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
+  }
+
+  export type AggregatorCreateOrConnectWithoutTransportersInput = {
+    where: AggregatorWhereUniqueInput
+    create: XOR<AggregatorCreateWithoutTransportersInput, AggregatorUncheckedCreateWithoutTransportersInput>
+  }
+
+  export type UserCreateWithoutTransportersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    role?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    phone_number?: string | null
+    is_active?: boolean | null
+    pentrar_user_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    farmers?: FarmerCreateNestedManyWithoutUserInput
+    aggregators?: AggregatorCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTransportersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    role?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    phone_number?: string | null
+    is_active?: boolean | null
+    pentrar_user_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    farmers?: FarmerUncheckedCreateNestedManyWithoutUserInput
+    aggregators?: AggregatorUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTransportersInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTransportersInput, UserUncheckedCreateWithoutTransportersInput>
+  }
+
+  export type FarmerCreateWithoutTransportersInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    type_of_produce?: FarmerCreatetype_of_produceInput | string[]
+    pentrar_farmer_id?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+    aggregator: AggregatorCreateNestedOneWithoutFarmersInput
+    user: UserCreateNestedOneWithoutFarmersInput
+    company: CompanyCreateNestedOneWithoutFarmersInput
     list_of_produce?: ProduceCreateNestedManyWithoutFarmerInput
   }
 
-  export type FarmerUncheckedCreateWithoutTransporterInput = {
+  export type FarmerUncheckedCreateWithoutTransportersInput = {
     id?: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -10466,23 +13063,94 @@ export namespace Prisma {
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
   }
 
-  export type FarmerCreateOrConnectWithoutTransporterInput = {
+  export type FarmerCreateOrConnectWithoutTransportersInput = {
     where: FarmerWhereUniqueInput
-    create: XOR<FarmerCreateWithoutTransporterInput, FarmerUncheckedCreateWithoutTransporterInput>
+    create: XOR<FarmerCreateWithoutTransportersInput, FarmerUncheckedCreateWithoutTransportersInput>
   }
 
-  export type AggregatorUpsertWithoutTransporterInput = {
-    update: XOR<AggregatorUpdateWithoutTransporterInput, AggregatorUncheckedUpdateWithoutTransporterInput>
-    create: XOR<AggregatorCreateWithoutTransporterInput, AggregatorUncheckedCreateWithoutTransporterInput>
+  export type CompanyUpsertWithoutTransportersInput = {
+    update: XOR<CompanyUpdateWithoutTransportersInput, CompanyUncheckedUpdateWithoutTransportersInput>
+    create: XOR<CompanyCreateWithoutTransportersInput, CompanyUncheckedCreateWithoutTransportersInput>
+    where?: CompanyWhereInput
+  }
+
+  export type CompanyUpdateToOneWithWhereWithoutTransportersInput = {
+    where?: CompanyWhereInput
+    data: XOR<CompanyUpdateWithoutTransportersInput, CompanyUncheckedUpdateWithoutTransportersInput>
+  }
+
+  export type CompanyUpdateWithoutTransportersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    farmers?: FarmerUpdateManyWithoutCompanyNestedInput
+    aggregators?: AggregatorUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type CompanyUncheckedUpdateWithoutTransportersInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    company_name?: NullableStringFieldUpdateOperationsInput | string | null
+    company_address?: NullableStringFieldUpdateOperationsInput | string | null
+    legal_entity_name?: NullableStringFieldUpdateOperationsInput | string | null
+    tax_identification_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_company_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    company_type?: NullableStringFieldUpdateOperationsInput | string | null
+    point_of_contact?: NullableStringFieldUpdateOperationsInput | string | null
+    parent_company?: NullableStringFieldUpdateOperationsInput | string | null
+    subsidiaries_company?: NullableStringFieldUpdateOperationsInput | string | null
+    annual_revenue?: NullableStringFieldUpdateOperationsInput | string | null
+    financial_statement?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    farmers?: FarmerUncheckedUpdateManyWithoutCompanyNestedInput
+    aggregators?: AggregatorUncheckedUpdateManyWithoutCompanyNestedInput
+  }
+
+  export type AggregatorUpsertWithoutTransportersInput = {
+    update: XOR<AggregatorUpdateWithoutTransportersInput, AggregatorUncheckedUpdateWithoutTransportersInput>
+    create: XOR<AggregatorCreateWithoutTransportersInput, AggregatorUncheckedCreateWithoutTransportersInput>
     where?: AggregatorWhereInput
   }
 
-  export type AggregatorUpdateToOneWithWhereWithoutTransporterInput = {
+  export type AggregatorUpdateToOneWithWhereWithoutTransportersInput = {
     where?: AggregatorWhereInput
-    data: XOR<AggregatorUpdateWithoutTransporterInput, AggregatorUncheckedUpdateWithoutTransporterInput>
+    data: XOR<AggregatorUpdateWithoutTransportersInput, AggregatorUncheckedUpdateWithoutTransportersInput>
   }
 
-  export type AggregatorUpdateWithoutTransporterInput = {
+  export type AggregatorUpdateWithoutTransportersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10499,11 +13167,12 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneWithoutAggregatorNestedInput
-    Farmer?: FarmerUpdateManyWithoutAggregatorNestedInput
+    company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
+    user?: UserUpdateOneWithoutAggregatorsNestedInput
+    farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
   }
 
-  export type AggregatorUncheckedUpdateWithoutTransporterInput = {
+  export type AggregatorUncheckedUpdateWithoutTransportersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10515,27 +13184,27 @@ export namespace Prisma {
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
     pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
-    created_by_id?: NullableStringFieldUpdateOperationsInput | string | null
+    created_by_id?: StringFieldUpdateOperationsInput | string
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    Farmer?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
+    farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
   }
 
-  export type UserUpsertWithoutTransporterInput = {
-    update: XOR<UserUpdateWithoutTransporterInput, UserUncheckedUpdateWithoutTransporterInput>
-    create: XOR<UserCreateWithoutTransporterInput, UserUncheckedCreateWithoutTransporterInput>
+  export type UserUpsertWithoutTransportersInput = {
+    update: XOR<UserUpdateWithoutTransportersInput, UserUncheckedUpdateWithoutTransportersInput>
+    create: XOR<UserCreateWithoutTransportersInput, UserUncheckedCreateWithoutTransportersInput>
     where?: UserWhereInput
   }
 
-  export type UserUpdateToOneWithWhereWithoutTransporterInput = {
+  export type UserUpdateToOneWithWhereWithoutTransportersInput = {
     where?: UserWhereInput
-    data: XOR<UserUpdateWithoutTransporterInput, UserUncheckedUpdateWithoutTransporterInput>
+    data: XOR<UserUpdateWithoutTransportersInput, UserUncheckedUpdateWithoutTransportersInput>
   }
 
-  export type UserUpdateWithoutTransporterInput = {
+  export type UserUpdateWithoutTransportersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10552,11 +13221,11 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Farmer?: FarmerUpdateManyWithoutUserNestedInput
-    Aggregator?: AggregatorUpdateManyWithoutUserNestedInput
+    farmers?: FarmerUpdateManyWithoutUserNestedInput
+    aggregators?: AggregatorUpdateManyWithoutUserNestedInput
   }
 
-  export type UserUncheckedUpdateWithoutTransporterInput = {
+  export type UserUncheckedUpdateWithoutTransportersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10573,22 +13242,22 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    Farmer?: FarmerUncheckedUpdateManyWithoutUserNestedInput
-    Aggregator?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
+    farmers?: FarmerUncheckedUpdateManyWithoutUserNestedInput
+    aggregators?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
   }
 
-  export type FarmerUpsertWithoutTransporterInput = {
-    update: XOR<FarmerUpdateWithoutTransporterInput, FarmerUncheckedUpdateWithoutTransporterInput>
-    create: XOR<FarmerCreateWithoutTransporterInput, FarmerUncheckedCreateWithoutTransporterInput>
+  export type FarmerUpsertWithoutTransportersInput = {
+    update: XOR<FarmerUpdateWithoutTransportersInput, FarmerUncheckedUpdateWithoutTransportersInput>
+    create: XOR<FarmerCreateWithoutTransportersInput, FarmerUncheckedCreateWithoutTransportersInput>
     where?: FarmerWhereInput
   }
 
-  export type FarmerUpdateToOneWithWhereWithoutTransporterInput = {
+  export type FarmerUpdateToOneWithWhereWithoutTransportersInput = {
     where?: FarmerWhereInput
-    data: XOR<FarmerUpdateWithoutTransporterInput, FarmerUncheckedUpdateWithoutTransporterInput>
+    data: XOR<FarmerUpdateWithoutTransportersInput, FarmerUncheckedUpdateWithoutTransportersInput>
   }
 
-  export type FarmerUpdateWithoutTransporterInput = {
+  export type FarmerUpdateWithoutTransportersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10606,12 +13275,13 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutFarmerNestedInput
-    user?: UserUpdateOneRequiredWithoutFarmerNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
+    user?: UserUpdateOneRequiredWithoutFarmersNestedInput
+    company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
     list_of_produce?: ProduceUpdateManyWithoutFarmerNestedInput
   }
 
-  export type FarmerUncheckedUpdateWithoutTransporterInput = {
+  export type FarmerUncheckedUpdateWithoutTransportersInput = {
     id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10651,9 +13321,10 @@ export namespace Prisma {
     isEmail_verified?: boolean
     role?: string | null
     is_active?: boolean | null
-    aggregator: AggregatorCreateNestedOneWithoutFarmerInput
-    user: UserCreateNestedOneWithoutFarmerInput
-    Transporter?: TransporterCreateNestedManyWithoutFarmerInput
+    aggregator: AggregatorCreateNestedOneWithoutFarmersInput
+    user: UserCreateNestedOneWithoutFarmersInput
+    company: CompanyCreateNestedOneWithoutFarmersInput
+    transporters?: TransporterCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerUncheckedCreateWithoutList_of_produceInput = {
@@ -10675,7 +13346,7 @@ export namespace Prisma {
     isEmail_verified?: boolean
     role?: string | null
     is_active?: boolean | null
-    Transporter?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
+    transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
   }
 
   export type FarmerCreateOrConnectWithoutList_of_produceInput = {
@@ -10712,9 +13383,10 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutFarmerNestedInput
-    user?: UserUpdateOneRequiredWithoutFarmerNestedInput
-    Transporter?: TransporterUpdateManyWithoutFarmerNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
+    user?: UserUpdateOneRequiredWithoutFarmersNestedInput
+    company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
+    transporters?: TransporterUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerUncheckedUpdateWithoutList_of_produceInput = {
@@ -10736,7 +13408,7 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    Transporter?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerCreateManyUserInput = {
@@ -10818,9 +13490,10 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutFarmerNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
+    company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
     list_of_produce?: ProduceUpdateManyWithoutFarmerNestedInput
-    Transporter?: TransporterUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerUncheckedUpdateWithoutUserInput = {
@@ -10842,7 +13515,7 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerUncheckedUpdateManyWithoutUserInput = {
@@ -10885,8 +13558,9 @@ export namespace Prisma {
     vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
     vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
     Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutTransporterNestedInput
-    farmer?: FarmerUpdateOneRequiredWithoutTransporterNestedInput
+    company?: CompanyUpdateOneRequiredWithoutTransportersNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutTransportersNestedInput
+    farmer?: FarmerUpdateOneRequiredWithoutTransportersNestedInput
   }
 
   export type TransporterUncheckedUpdateWithoutUserInput = {
@@ -10950,8 +13624,9 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    Farmer?: FarmerUpdateManyWithoutAggregatorNestedInput
-    Transporter?: TransporterUpdateManyWithoutAggregatorNestedInput
+    company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
+    farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
   }
 
   export type AggregatorUncheckedUpdateWithoutUserInput = {
@@ -10971,8 +13646,8 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     role?: NullableStringFieldUpdateOperationsInput | string | null
-    Farmer?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
+    farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
 
   export type AggregatorUncheckedUpdateManyWithoutUserInput = {
@@ -11054,9 +13729,10 @@ export namespace Prisma {
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    user?: UserUpdateOneRequiredWithoutFarmerNestedInput
+    user?: UserUpdateOneRequiredWithoutFarmersNestedInput
+    company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
     list_of_produce?: ProduceUpdateManyWithoutFarmerNestedInput
-    Transporter?: TransporterUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerUncheckedUpdateWithoutAggregatorInput = {
@@ -11078,7 +13754,7 @@ export namespace Prisma {
     role?: NullableStringFieldUpdateOperationsInput | string | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
-    Transporter?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
   }
 
   export type FarmerUncheckedUpdateManyWithoutAggregatorInput = {
@@ -11121,8 +13797,9 @@ export namespace Prisma {
     vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
     vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
     Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
-    user?: UserUpdateOneRequiredWithoutTransporterNestedInput
-    farmer?: FarmerUpdateOneRequiredWithoutTransporterNestedInput
+    company?: CompanyUpdateOneRequiredWithoutTransportersNestedInput
+    user?: UserUpdateOneRequiredWithoutTransportersNestedInput
+    farmer?: FarmerUpdateOneRequiredWithoutTransportersNestedInput
   }
 
   export type TransporterUncheckedUpdateWithoutAggregatorInput = {
@@ -11259,8 +13936,9 @@ export namespace Prisma {
     vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
     vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
     Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
-    aggregator?: AggregatorUpdateOneRequiredWithoutTransporterNestedInput
-    user?: UserUpdateOneRequiredWithoutTransporterNestedInput
+    company?: CompanyUpdateOneRequiredWithoutTransportersNestedInput
+    aggregator?: AggregatorUpdateOneRequiredWithoutTransportersNestedInput
+    user?: UserUpdateOneRequiredWithoutTransportersNestedInput
   }
 
   export type TransporterUncheckedUpdateWithoutFarmerInput = {
@@ -11307,6 +13985,264 @@ export namespace Prisma {
     Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type FarmerCreateManyCompanyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email?: string | null
+    phone_number?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    type_of_produce?: FarmerCreatetype_of_produceInput | string[]
+    pentrar_farmer_id?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    role?: string | null
+    is_active?: boolean | null
+  }
+
+  export type AggregatorCreateManyCompanyInput = {
+    id?: string
+    created_at: Date | string
+    updated_at?: Date | string
+    is_active?: boolean | null
+    email?: string | null
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    last_active?: string | null
+    phone_number?: string | null
+    pentrar_aggregator_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    status: $Enums.UserStatus
+    role?: string | null
+  }
+
+  export type TransporterCreateManyCompanyInput = {
+    id?: string
+    created_at?: Date | string
+    updated_at?: Date | string
+    email: string
+    password?: string | null
+    first_name?: string | null
+    last_name?: string | null
+    role?: string | null
+    last_active?: string | null
+    status: $Enums.UserStatus
+    phone_number?: string | null
+    is_active?: boolean | null
+    pentrar_trans_id?: string | null
+    verification_code?: string | null
+    password_resetCode?: string | null
+    isEmail_verified?: boolean
+    vehicle_type?: string | null
+    vehicle_number?: string | null
+    Vehicle_license?: string | null
+  }
+
+  export type FarmerUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    type_of_produce?: FarmerUpdatetype_of_produceInput | string[]
+    pentrar_farmer_id?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
+    user?: UserUpdateOneRequiredWithoutFarmersNestedInput
+    list_of_produce?: ProduceUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUpdateManyWithoutFarmerNestedInput
+  }
+
+  export type FarmerUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    type_of_produce?: FarmerUpdatetype_of_produceInput | string[]
+    pentrar_farmer_id?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
+  }
+
+  export type FarmerUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    type_of_produce?: FarmerUpdatetype_of_produceInput | string[]
+    pentrar_farmer_id?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type AggregatorUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    user?: UserUpdateOneWithoutAggregatorsNestedInput
+    farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
+  }
+
+  export type AggregatorUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
+    transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
+  }
+
+  export type AggregatorUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    pentrar_aggregator_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TransporterUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    pentrar_trans_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
+    Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
+    aggregator?: AggregatorUpdateOneRequiredWithoutTransportersNestedInput
+    user?: UserUpdateOneRequiredWithoutTransportersNestedInput
+    farmer?: FarmerUpdateOneRequiredWithoutTransportersNestedInput
+  }
+
+  export type TransporterUncheckedUpdateWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    pentrar_trans_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
+    Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type TransporterUncheckedUpdateManyWithoutCompanyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    email?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    first_name?: NullableStringFieldUpdateOperationsInput | string | null
+    last_name?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableStringFieldUpdateOperationsInput | string | null
+    last_active?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+    phone_number?: NullableStringFieldUpdateOperationsInput | string | null
+    is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    pentrar_trans_id?: NullableStringFieldUpdateOperationsInput | string | null
+    verification_code?: NullableStringFieldUpdateOperationsInput | string | null
+    password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
+    isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    vehicle_type?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicle_number?: NullableStringFieldUpdateOperationsInput | string | null
+    Vehicle_license?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
 
 
   /**
@@ -11325,6 +14261,10 @@ export namespace Prisma {
      */
     export type FarmerCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FarmerCountOutputTypeDefaultArgs<ExtArgs>
     /**
+     * @deprecated Use CompanyCountOutputTypeDefaultArgs instead
+     */
+    export type CompanyCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CompanyCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use UserDefaultArgs instead
      */
     export type UserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UserDefaultArgs<ExtArgs>
@@ -11336,6 +14276,10 @@ export namespace Prisma {
      * @deprecated Use FarmerDefaultArgs instead
      */
     export type FarmerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = FarmerDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use CompanyDefaultArgs instead
+     */
+    export type CompanyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CompanyDefaultArgs<ExtArgs>
     /**
      * @deprecated Use TransporterDefaultArgs instead
      */

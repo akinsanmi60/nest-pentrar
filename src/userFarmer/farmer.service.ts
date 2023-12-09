@@ -73,6 +73,9 @@ export class FarmerService {
           {
             pentrar_farmer_id: search.toString(),
           },
+          {
+            phone_number: search.toString(),
+          },
           { id: { contains: search.toString(), mode: "insensitive" } },
           // Add more fields as needed
         ];
@@ -93,7 +96,7 @@ export class FarmerService {
             updated_at: true,
             is_active: true,
             pentrar_farmer_id: true,
-            Transporter: {
+            transporters: {
               select: {
                 id: true,
                 first_name: true,
@@ -254,5 +257,45 @@ export class FarmerService {
       console.error("Error deleting farmer:", error);
       throw new InternalServerErrorException("Failed to delete Farmer");
     }
+  }
+
+  async getFarmerById(id: string) {
+    const farmer = await this.prisma.farmer.findUnique({
+      where: { id },
+      select: {
+        id: true,
+        created_at: true,
+        first_name: true,
+        last_active: true,
+        last_name: true,
+        phone_number: true,
+        status: true,
+        email: true,
+        updated_at: true,
+        is_active: true,
+        pentrar_farmer_id: true,
+        transporters: {
+          select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            phone_number: true,
+            is_active: true,
+            pentrar_trans_id: true,
+          },
+        },
+      },
+    });
+
+    if (!farmer) {
+      throw new BadRequestException("Farmer not found");
+    }
+
+    return {
+      message: " fetched successfully",
+      data: {
+        ...farmer,
+      },
+    };
   }
 }

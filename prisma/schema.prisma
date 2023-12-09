@@ -29,9 +29,9 @@ model User {
   phone_number       String?       @unique
   is_active          Boolean?
   pentrar_user_id    String?       @unique
-  Farmer             Farmer[]
-  Transporter        Transporter[]
-  Aggregator         Aggregator[]
+  farmers             Farmer[]
+  transporters        Transporter[]
+  aggregators         Aggregator[]
   verification_code  String?       @unique
   password_resetCode String?       @unique
   isEmail_verified   Boolean       @default(false)
@@ -49,10 +49,11 @@ model Aggregator {
   last_active           String?
   phone_number          String?       @unique
   pentrar_aggregator_id String?       @unique
+  company               Company       @relation(fields: [created_by_id], references: [pentrar_company_id], map: "company_relation")
   user                  User?         @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
-  created_by_id         String?
-  Farmer                Farmer[]
-  Transporter           Transporter[]
+  created_by_id         String
+  farmers                Farmer[]
+  transporters           Transporter[]
   verification_code     String?       @unique
   password_resetCode    String?       @unique
   isEmail_verified      Boolean       @default(false)
@@ -73,16 +74,48 @@ model Farmer {
   pentrar_farmer_id  String?       @unique
   aggregator         Aggregator    @relation(fields: [created_by_id], references: [pentrar_aggregator_id], map: "aggregator_relation")
   user               User          @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
+  company            Company       @relation(fields: [created_by_id], references: [pentrar_company_id], map: "company_relation")
   created_by_id      String
   last_active        String?
   list_of_produce    Produce[]
-  Transporter        Transporter[]
+  transporters        Transporter[]
   status             UserStatus
   verification_code  String?       @unique
   password_resetCode String?       @unique
   isEmail_verified   Boolean       @default(false)
   role               String?
   is_active          Boolean?
+}
+
+model Company {
+  id                        String        @id @default(uuid())
+  created_at                DateTime      @default(now()) @map("created_at")
+  updated_at                DateTime      @updatedAt @map("updated_at")
+  email                     String?       @unique
+  phone_number              String?       @unique
+  password                  String?
+  company_name              String?
+  company_address           String?
+  legal_entity_name         String?
+  tax_identification_number String?       @unique
+  pentrar_company_id        String?       @unique
+  created_by_id             String
+  last_active               String?
+  company_type              String?
+  point_of_contact          String?
+  parent_company            String?
+  subsidiaries_company      String?
+  annual_revenue            String?
+  financial_statement       String?
+  status                    UserStatus
+  verification_code         String?       @unique
+  password_resetCode        String?       @unique
+  isEmail_verified          Boolean       @default(false)
+  role                      String?
+  is_active                 Boolean?
+  farmers                    Farmer[]
+  aggregators                Aggregator[]
+  transporters               Transporter[]
 }
 
 model Transporter {
@@ -99,6 +132,7 @@ model Transporter {
   phone_number       String?    @unique
   is_active          Boolean?
   pentrar_trans_id   String?
+  company            Company    @relation(fields: [created_by_id], references: [pentrar_company_id], map: "company_relation")
   aggregator         Aggregator @relation(fields: [created_by_id], references: [pentrar_aggregator_id], map: "aggregator_relation")
   user               User       @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
   farmer             Farmer     @relation(fields: [created_by_id], references: [pentrar_farmer_id], map: "farmer_relation")

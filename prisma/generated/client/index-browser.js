@@ -167,6 +167,34 @@ exports.Prisma.FarmerScalarFieldEnum = {
   is_active: 'is_active'
 };
 
+exports.Prisma.CompanyScalarFieldEnum = {
+  id: 'id',
+  created_at: 'created_at',
+  updated_at: 'updated_at',
+  email: 'email',
+  phone_number: 'phone_number',
+  password: 'password',
+  company_name: 'company_name',
+  company_address: 'company_address',
+  legal_entity_name: 'legal_entity_name',
+  tax_identification_number: 'tax_identification_number',
+  pentrar_company_id: 'pentrar_company_id',
+  created_by_id: 'created_by_id',
+  last_active: 'last_active',
+  company_type: 'company_type',
+  point_of_contact: 'point_of_contact',
+  parent_company: 'parent_company',
+  subsidiaries_company: 'subsidiaries_company',
+  annual_revenue: 'annual_revenue',
+  financial_statement: 'financial_statement',
+  status: 'status',
+  verification_code: 'verification_code',
+  password_resetCode: 'password_resetCode',
+  isEmail_verified: 'isEmail_verified',
+  role: 'role',
+  is_active: 'is_active'
+};
+
 exports.Prisma.TransporterScalarFieldEnum = {
   id: 'id',
   created_at: 'created_at',
@@ -228,6 +256,7 @@ exports.Prisma.ModelName = {
   User: 'User',
   Aggregator: 'Aggregator',
   Farmer: 'Farmer',
+  Company: 'Company',
   Transporter: 'Transporter',
   Produce: 'Produce'
 };

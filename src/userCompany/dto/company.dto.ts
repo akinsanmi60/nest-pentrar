@@ -1,8 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString, IsUUID, Length } from "class-validator";
+import { IsEmail, IsNumber, IsString, IsUUID, Length } from "class-validator";
+import { AggregatorInfoDto } from "src/userAggregator/dto/aggregator.dto";
+import { getFarmerInfoResponse } from "src/userFarmer/dto/farmer.dto";
 import { TransporterInfoDto } from "src/userTransporter/dto/transporter.dto";
 
-export class GetAllFarmerDto {
+export class GetAllCompanyDto {
   @ApiProperty({
     example: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     required: false,
@@ -24,9 +26,9 @@ export class GetAllFarmerDto {
 
   @ApiProperty({ example: "pen1234", required: false })
   @IsString()
-  pentrar_farmer_id: string;
+  pentrar_company_id: string;
 
-  @ApiProperty({ example: "08-12-202", required: false })
+  @ApiProperty({ example: "08-12-2023", required: false })
   created_at: string;
 
   @ApiProperty({
@@ -43,7 +45,7 @@ export class GetAllFarmerDto {
   phone_number: string;
 }
 
-export class ActivateFarmerDto {
+export class ActivateCompanyDto {
   @ApiProperty({
     example: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
     required: true,
@@ -51,87 +53,67 @@ export class ActivateFarmerDto {
   @IsUUID("4", { message: "ID must be a valid UUID." })
   id: string;
 }
-export class UpdateFarmerDto {
+
+export class UpdateCompanyDto {
   @ApiProperty()
-  @Length(11, 11, {
-    message: "Phone number must be at must be 11 characters long.",
-  })
-  phone_number: string;
+  @IsEmail({}, { message: "Please provide a valid email address." })
+  email: string;
 }
 
-export class getFarmerByIdDtoResponse {
+export class getCompanyByIdDtoResponse {
   @ApiProperty()
   id: string;
-
-  @ApiProperty()
-  first_name: string;
-
-  @ApiProperty()
-  last_name: string;
-
-  @ApiProperty()
-  pentrar_farmer_id: string;
-
-  @ApiProperty()
-  phone_number: string;
-
-  @ApiProperty()
-  list_of_produce: string;
-
-  @ApiProperty()
-  is_active: string;
 
   @ApiProperty()
   created_at: string;
 
   @ApiProperty()
-  updated_at: string;
-
-  @ApiProperty()
-  created_by_id: string;
+  company_name: string;
 
   @ApiProperty()
   last_active: string;
 
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
-  status: string;
-
-  @ApiProperty({ type: () => TransporterInfoDto, isArray: true })
-  transporters: TransporterInfoDto[];
-}
-export class getFarmerInfoResponse {
-  @ApiProperty()
-  id: string;
-
-  @ApiProperty()
-  pentrar_farmer_id: string;
-
-  @ApiProperty()
-  first_name: string;
-
-  @ApiProperty()
-  last_name: string;
+  legal_entity_name: string;
 
   @ApiProperty()
   phone_number: string;
 
   @ApiProperty()
-  list_of_produce: string;
-
-  @ApiProperty()
-  is_active: boolean;
+  status: string;
 
   @ApiProperty()
   email: string;
 
-  @ApiProperty({ type: () => TransporterInfoDto, isArray: true })
+  @ApiProperty()
+  updated_at: string;
+
+  @ApiProperty()
+  is_active: string;
+
+  @ApiProperty()
+  pentrar_company_id: string;
+
+  @ApiProperty({
+    type: () => getFarmerInfoResponse,
+    isArray: true,
+  })
+  farmers: getFarmerInfoResponse[];
+
+  @ApiProperty({
+    type: () => AggregatorInfoDto,
+    isArray: true,
+  })
+  aggregators: AggregatorInfoDto[];
+
+  @ApiProperty({
+    type: () => TransporterInfoDto,
+    isArray: true,
+  })
   transporters: TransporterInfoDto[];
 }
 
-class FarmerDataResponse {
+class CompanyDataResponse {
   @ApiProperty()
   total: number;
 
@@ -145,15 +127,15 @@ class FarmerDataResponse {
   page_size: number;
 
   @ApiProperty({
-    type: () => getFarmerByIdDtoResponse,
+    type: () => getCompanyByIdDtoResponse,
     isArray: true,
   })
-  farmers_list: getFarmerByIdDtoResponse[];
+  companies_list: getCompanyByIdDtoResponse[];
 }
 
-export class GetAllFarmerResponse {
+export class GetAllCompanyResponse {
   @ApiProperty()
   message: string;
   @ApiProperty()
-  data: FarmerDataResponse;
+  data: CompanyDataResponse;
 }
