@@ -123,7 +123,8 @@ exports.Prisma.UserScalarFieldEnum = {
   pentrar_user_id: 'pentrar_user_id',
   verification_code: 'verification_code',
   password_resetCode: 'password_resetCode',
-  isEmail_verified: 'isEmail_verified'
+  isEmail_verified: 'isEmail_verified',
+  role_type: 'role_type'
 };
 
 exports.Prisma.AggregatorScalarFieldEnum = {
@@ -245,6 +246,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.Role = exports.$Enums.Role = {
+  Admin: 'Admin',
+  SubAdmin: 'SubAdmin',
+  Farmer: 'Farmer',
+  Aggregator: 'Aggregator',
+  Company: 'Company',
+  Transporter: 'Transporter'
+};
+
 exports.UserStatus = exports.$Enums.UserStatus = {
   Active: 'Active',
   Inactive: 'Inactive',

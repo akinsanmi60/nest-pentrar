@@ -44,7 +44,7 @@ export class UserRegisterDto {
   @ApiProperty()
   @IsNotEmpty({ message: "Role cannot be empty." })
   @IsAlpha()
-  role: string;
+  role_type: string;
 
   @ApiProperty()
   @Length(11, 11, {

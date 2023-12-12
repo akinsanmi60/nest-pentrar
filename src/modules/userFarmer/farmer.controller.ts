@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from "@nestjs/common";
 import { FarmerService } from "./farmer.service";
 import {
@@ -16,13 +17,19 @@ import {
   getFarmerByIdDtoResponse,
 } from "./dto/farmer.dto";
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
 } from "@nestjs/swagger";
+import { JwtAuthGuard } from "src/auth/jwtAuth.guard";
+import { RolesGuard } from "src/roles/roles.guard";
+import { Role } from "src/roles/role.enum";
+import { Roles } from "src/roles/roles.decorator";
 
+@ApiBearerAuth()
 @ApiTags("Farmer")
 @Controller("farmer")
 export class FarmerController {
@@ -31,6 +38,8 @@ export class FarmerController {
   @Get("allfarmers")
   @ApiQuery({ type: GetAllFarmerDto, required: false })
   @ApiResponse({ type: GetAllFarmerResponse, isArray: true })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   getAllFarmers(@Query() dto) {
     return this.farmerService.getAllFarmers(dto);
   }
@@ -38,6 +47,8 @@ export class FarmerController {
   @Post(":id/activate-farmer")
   @ApiParam({ name: "id", type: "string" })
   @ApiResponse({ type: getFarmerByIdDtoResponse })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   activateFarmer(@Param("id") id: string) {
     return this.farmerService.activateFarmer(id);
   }
@@ -45,6 +56,8 @@ export class FarmerController {
   @Post(":id/deactivate-farmer")
   @ApiParam({ name: "id", type: "string" })
   @ApiResponse({ type: getFarmerByIdDtoResponse })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   deactivateFarmer(@Param("id") id: string) {
     return this.farmerService.deactivateFarmer(id);
   }
@@ -53,6 +66,8 @@ export class FarmerController {
   @ApiBody({ type: UpdateFarmerDto })
   @ApiResponse({ type: getFarmerByIdDtoResponse })
   @ApiParam({ name: "id" })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin, Role.Farmer)
   updateFarmer(@Param("id") id: string, @Body() dto) {
     return this.farmerService.updateFarmer(id, dto);
   }
@@ -60,6 +75,8 @@ export class FarmerController {
   @Delete(":id/delete-farmer")
   @ApiParam({ name: "id", type: "string" })
   @ApiResponse({ type: getFarmerByIdDtoResponse })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   deleteFarmer(@Param("id") id: string) {
     return this.farmerService.deleteFarmer(id);
   }

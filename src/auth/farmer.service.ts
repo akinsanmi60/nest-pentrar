@@ -84,8 +84,6 @@ export class FarmerAuthService {
       created_by_id,
     } = dto;
 
-    console.log(dto);
-
     const emailTaken = await this.authResolver.findOneFarmerByEmail(email);
 
     const isEmailTaken =

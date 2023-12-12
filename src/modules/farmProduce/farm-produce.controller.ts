@@ -9,6 +9,7 @@ import {
 } from "@nestjs/common";
 import { FarmProduceService } from "./farm-produce.service";
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiParam,
   ApiQuery,
@@ -23,6 +24,7 @@ import {
   ProduceUpdateDto,
 } from "./dto/farm-produce.dto";
 
+@ApiBearerAuth()
 @ApiTags("Produce")
 @Controller("produce")
 export class FarmProduceController {

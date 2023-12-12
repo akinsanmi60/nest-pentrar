@@ -15,6 +15,9 @@ export class AuthResolver {
     return this.prisma.aggregator.findUnique({ where: { phone_number } });
   }
 
+  findOneAggregatorById(id: string): Promise<Aggregator | null> {
+    return this.prisma.aggregator.findUnique({ where: { id } });
+  }
   findOneUserByEmail(email: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { email } });
   }
@@ -22,11 +25,18 @@ export class AuthResolver {
   findOneUserByPhone(phone_number: string): Promise<User | null> {
     return this.prisma.user.findUnique({ where: { phone_number } });
   }
+
+  findOneUserById(id: string): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { id } });
+  }
   findOneFarmerByEmail(email: string): Promise<Farmer | null> {
     return this.prisma.farmer.findUnique({ where: { email } });
   }
 
   findOneFarmerByPhone(phone_number: string): Promise<Farmer | null> {
     return this.prisma.farmer.findUnique({ where: { phone_number } });
+  }
+  findOneFarmerById(id: string): Promise<Farmer | null> {
+    return this.prisma.farmer.findUnique({ where: { id } });
   }
 }

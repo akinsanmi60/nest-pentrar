@@ -48,7 +48,19 @@ export type Produce = $Result.DefaultSelection<Prisma.$ProducePayload>
  * Enums
  */
 export namespace $Enums {
-  export const UserStatus: {
+  export const Role: {
+  Admin: 'Admin',
+  SubAdmin: 'SubAdmin',
+  Farmer: 'Farmer',
+  Aggregator: 'Aggregator',
+  Company: 'Company',
+  Transporter: 'Transporter'
+};
+
+export type Role = (typeof Role)[keyof typeof Role]
+
+
+export const UserStatus: {
   Active: 'Active',
   Inactive: 'Inactive',
   Pending: 'Pending',
@@ -58,6 +70,10 @@ export namespace $Enums {
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
 
 }
+
+export type Role = $Enums.Role
+
+export const Role: typeof $Enums.Role
 
 export type UserStatus = $Enums.UserStatus
 
@@ -1498,7 +1514,7 @@ export namespace Prisma {
     password: string | null
     first_name: string | null
     last_name: string | null
-    role: string | null
+    role: $Enums.Role | null
     last_active: string | null
     status: $Enums.UserStatus | null
     phone_number: string | null
@@ -1507,6 +1523,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean | null
+    role_type: string | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1517,7 +1534,7 @@ export namespace Prisma {
     password: string | null
     first_name: string | null
     last_name: string | null
-    role: string | null
+    role: $Enums.Role | null
     last_active: string | null
     status: $Enums.UserStatus | null
     phone_number: string | null
@@ -1526,6 +1543,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean | null
+    role_type: string | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1545,6 +1563,7 @@ export namespace Prisma {
     verification_code: number
     password_resetCode: number
     isEmail_verified: number
+    role_type: number
     _all: number
   }
 
@@ -1566,6 +1585,7 @@ export namespace Prisma {
     verification_code?: true
     password_resetCode?: true
     isEmail_verified?: true
+    role_type?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1585,6 +1605,7 @@ export namespace Prisma {
     verification_code?: true
     password_resetCode?: true
     isEmail_verified?: true
+    role_type?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1604,6 +1625,7 @@ export namespace Prisma {
     verification_code?: true
     password_resetCode?: true
     isEmail_verified?: true
+    role_type?: true
     _all?: true
   }
 
@@ -1687,7 +1709,7 @@ export namespace Prisma {
     password: string | null
     first_name: string | null
     last_name: string | null
-    role: string | null
+    role: $Enums.Role | null
     last_active: string | null
     status: $Enums.UserStatus
     phone_number: string | null
@@ -1696,6 +1718,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean
+    role_type: string | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1732,6 +1755,7 @@ export namespace Prisma {
     verification_code?: boolean
     password_resetCode?: boolean
     isEmail_verified?: boolean
+    role_type?: boolean
     farmers?: boolean | User$farmersArgs<ExtArgs>
     transporters?: boolean | User$transportersArgs<ExtArgs>
     aggregators?: boolean | User$aggregatorsArgs<ExtArgs>
@@ -1755,6 +1779,7 @@ export namespace Prisma {
     verification_code?: boolean
     password_resetCode?: boolean
     isEmail_verified?: boolean
+    role_type?: boolean
   }
 
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1780,7 +1805,7 @@ export namespace Prisma {
       password: string | null
       first_name: string | null
       last_name: string | null
-      role: string | null
+      role: $Enums.Role | null
       last_active: string | null
       status: $Enums.UserStatus
       phone_number: string | null
@@ -1789,6 +1814,7 @@ export namespace Prisma {
       verification_code: string | null
       password_resetCode: string | null
       isEmail_verified: boolean
+      role_type: string | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2195,7 +2221,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly first_name: FieldRef<"User", 'String'>
     readonly last_name: FieldRef<"User", 'String'>
-    readonly role: FieldRef<"User", 'String'>
+    readonly role: FieldRef<"User", 'Role'>
     readonly last_active: FieldRef<"User", 'String'>
     readonly status: FieldRef<"User", 'UserStatus'>
     readonly phone_number: FieldRef<"User", 'String'>
@@ -2204,6 +2230,7 @@ export namespace Prisma {
     readonly verification_code: FieldRef<"User", 'String'>
     readonly password_resetCode: FieldRef<"User", 'String'>
     readonly isEmail_verified: FieldRef<"User", 'Boolean'>
+    readonly role_type: FieldRef<"User", 'String'>
   }
     
 
@@ -2621,7 +2648,7 @@ export namespace Prisma {
     password_resetCode: string | null
     isEmail_verified: boolean | null
     status: $Enums.UserStatus | null
-    role: string | null
+    role: $Enums.Role | null
   }
 
   export type AggregatorMaxAggregateOutputType = {
@@ -2641,7 +2668,7 @@ export namespace Prisma {
     password_resetCode: string | null
     isEmail_verified: boolean | null
     status: $Enums.UserStatus | null
-    role: string | null
+    role: $Enums.Role | null
   }
 
   export type AggregatorCountAggregateOutputType = {
@@ -2816,7 +2843,7 @@ export namespace Prisma {
     password_resetCode: string | null
     isEmail_verified: boolean
     status: $Enums.UserStatus
-    role: string | null
+    role: $Enums.Role | null
     _count: AggregatorCountAggregateOutputType | null
     _min: AggregatorMinAggregateOutputType | null
     _max: AggregatorMaxAggregateOutputType | null
@@ -2915,7 +2942,7 @@ export namespace Prisma {
       password_resetCode: string | null
       isEmail_verified: boolean
       status: $Enums.UserStatus
-      role: string | null
+      role: $Enums.Role | null
     }, ExtArgs["result"]["aggregator"]>
     composites: {}
   }
@@ -3333,7 +3360,7 @@ export namespace Prisma {
     readonly password_resetCode: FieldRef<"Aggregator", 'String'>
     readonly isEmail_verified: FieldRef<"Aggregator", 'Boolean'>
     readonly status: FieldRef<"Aggregator", 'UserStatus'>
-    readonly role: FieldRef<"Aggregator", 'String'>
+    readonly role: FieldRef<"Aggregator", 'Role'>
   }
     
 
@@ -3745,7 +3772,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean | null
-    role: string | null
+    role: $Enums.Role | null
     is_active: boolean | null
   }
 
@@ -3765,7 +3792,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean | null
-    role: string | null
+    role: $Enums.Role | null
     is_active: boolean | null
   }
 
@@ -3943,7 +3970,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean
-    role: string | null
+    role: $Enums.Role | null
     is_active: boolean | null
     _count: FarmerCountAggregateOutputType | null
     _min: FarmerMinAggregateOutputType | null
@@ -4048,7 +4075,7 @@ export namespace Prisma {
       verification_code: string | null
       password_resetCode: string | null
       isEmail_verified: boolean
-      role: string | null
+      role: $Enums.Role | null
       is_active: boolean | null
     }, ExtArgs["result"]["farmer"]>
     composites: {}
@@ -4469,7 +4496,7 @@ export namespace Prisma {
     readonly verification_code: FieldRef<"Farmer", 'String'>
     readonly password_resetCode: FieldRef<"Farmer", 'String'>
     readonly isEmail_verified: FieldRef<"Farmer", 'Boolean'>
-    readonly role: FieldRef<"Farmer", 'String'>
+    readonly role: FieldRef<"Farmer", 'Role'>
     readonly is_active: FieldRef<"Farmer", 'Boolean'>
   }
     
@@ -4874,7 +4901,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean | null
-    role: string | null
+    role: $Enums.Role | null
     is_active: boolean | null
   }
 
@@ -4902,7 +4929,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean | null
-    role: string | null
+    role: $Enums.Role | null
     is_active: boolean | null
   }
 
@@ -5117,7 +5144,7 @@ export namespace Prisma {
     verification_code: string | null
     password_resetCode: string | null
     isEmail_verified: boolean
-    role: string | null
+    role: $Enums.Role | null
     is_active: boolean | null
     _count: CompanyCountAggregateOutputType | null
     _min: CompanyMinAggregateOutputType | null
@@ -5237,7 +5264,7 @@ export namespace Prisma {
       verification_code: string | null
       password_resetCode: string | null
       isEmail_verified: boolean
-      role: string | null
+      role: $Enums.Role | null
       is_active: boolean | null
     }, ExtArgs["result"]["company"]>
     composites: {}
@@ -5661,7 +5688,7 @@ export namespace Prisma {
     readonly verification_code: FieldRef<"Company", 'String'>
     readonly password_resetCode: FieldRef<"Company", 'String'>
     readonly isEmail_verified: FieldRef<"Company", 'Boolean'>
-    readonly role: FieldRef<"Company", 'String'>
+    readonly role: FieldRef<"Company", 'Role'>
     readonly is_active: FieldRef<"Company", 'Boolean'>
   }
     
@@ -6071,7 +6098,7 @@ export namespace Prisma {
     password: string | null
     first_name: string | null
     last_name: string | null
-    role: string | null
+    role: $Enums.Role | null
     last_active: string | null
     status: $Enums.UserStatus | null
     phone_number: string | null
@@ -6094,7 +6121,7 @@ export namespace Prisma {
     password: string | null
     first_name: string | null
     last_name: string | null
-    role: string | null
+    role: $Enums.Role | null
     last_active: string | null
     status: $Enums.UserStatus | null
     phone_number: string | null
@@ -6284,7 +6311,7 @@ export namespace Prisma {
     password: string | null
     first_name: string | null
     last_name: string | null
-    role: string | null
+    role: $Enums.Role | null
     last_active: string | null
     status: $Enums.UserStatus
     phone_number: string | null
@@ -6390,7 +6417,7 @@ export namespace Prisma {
       password: string | null
       first_name: string | null
       last_name: string | null
-      role: string | null
+      role: $Enums.Role | null
       last_active: string | null
       status: $Enums.UserStatus
       phone_number: string | null
@@ -6811,7 +6838,7 @@ export namespace Prisma {
     readonly password: FieldRef<"Transporter", 'String'>
     readonly first_name: FieldRef<"Transporter", 'String'>
     readonly last_name: FieldRef<"Transporter", 'String'>
-    readonly role: FieldRef<"Transporter", 'String'>
+    readonly role: FieldRef<"Transporter", 'Role'>
     readonly last_active: FieldRef<"Transporter", 'String'>
     readonly status: FieldRef<"Transporter", 'UserStatus'>
     readonly phone_number: FieldRef<"Transporter", 'String'>
@@ -8192,7 +8219,8 @@ export namespace Prisma {
     pentrar_user_id: 'pentrar_user_id',
     verification_code: 'verification_code',
     password_resetCode: 'password_resetCode',
-    isEmail_verified: 'isEmail_verified'
+    isEmail_verified: 'isEmail_verified',
+    role_type: 'role_type'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -8376,6 +8404,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Role'
+   */
+  export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+  /**
+   * Reference to a field of type 'Role[]'
+   */
+  export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+  /**
    * Reference to a field of type 'UserStatus'
    */
   export type EnumUserStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserStatus'>
@@ -8438,7 +8480,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"User"> | string | null
     first_name?: StringNullableFilter<"User"> | string | null
     last_name?: StringNullableFilter<"User"> | string | null
-    role?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleNullableFilter<"User"> | $Enums.Role | null
     last_active?: StringNullableFilter<"User"> | string | null
     status?: EnumUserStatusFilter<"User"> | $Enums.UserStatus
     phone_number?: StringNullableFilter<"User"> | string | null
@@ -8447,6 +8489,7 @@ export namespace Prisma {
     verification_code?: StringNullableFilter<"User"> | string | null
     password_resetCode?: StringNullableFilter<"User"> | string | null
     isEmail_verified?: BoolFilter<"User"> | boolean
+    role_type?: StringNullableFilter<"User"> | string | null
     farmers?: FarmerListRelationFilter
     transporters?: TransporterListRelationFilter
     aggregators?: AggregatorListRelationFilter
@@ -8469,6 +8512,7 @@ export namespace Prisma {
     verification_code?: SortOrderInput | SortOrder
     password_resetCode?: SortOrderInput | SortOrder
     isEmail_verified?: SortOrder
+    role_type?: SortOrderInput | SortOrder
     farmers?: FarmerOrderByRelationAggregateInput
     transporters?: TransporterOrderByRelationAggregateInput
     aggregators?: AggregatorOrderByRelationAggregateInput
@@ -8489,11 +8533,12 @@ export namespace Prisma {
     password?: StringNullableFilter<"User"> | string | null
     first_name?: StringNullableFilter<"User"> | string | null
     last_name?: StringNullableFilter<"User"> | string | null
-    role?: StringNullableFilter<"User"> | string | null
+    role?: EnumRoleNullableFilter<"User"> | $Enums.Role | null
     last_active?: StringNullableFilter<"User"> | string | null
     status?: EnumUserStatusFilter<"User"> | $Enums.UserStatus
     is_active?: BoolNullableFilter<"User"> | boolean | null
     isEmail_verified?: BoolFilter<"User"> | boolean
+    role_type?: StringNullableFilter<"User"> | string | null
     farmers?: FarmerListRelationFilter
     transporters?: TransporterListRelationFilter
     aggregators?: AggregatorListRelationFilter
@@ -8516,6 +8561,7 @@ export namespace Prisma {
     verification_code?: SortOrderInput | SortOrder
     password_resetCode?: SortOrderInput | SortOrder
     isEmail_verified?: SortOrder
+    role_type?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -8532,7 +8578,7 @@ export namespace Prisma {
     password?: StringNullableWithAggregatesFilter<"User"> | string | null
     first_name?: StringNullableWithAggregatesFilter<"User"> | string | null
     last_name?: StringNullableWithAggregatesFilter<"User"> | string | null
-    role?: StringNullableWithAggregatesFilter<"User"> | string | null
+    role?: EnumRoleNullableWithAggregatesFilter<"User"> | $Enums.Role | null
     last_active?: StringNullableWithAggregatesFilter<"User"> | string | null
     status?: EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus
     phone_number?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -8541,6 +8587,7 @@ export namespace Prisma {
     verification_code?: StringNullableWithAggregatesFilter<"User"> | string | null
     password_resetCode?: StringNullableWithAggregatesFilter<"User"> | string | null
     isEmail_verified?: BoolWithAggregatesFilter<"User"> | boolean
+    role_type?: StringNullableWithAggregatesFilter<"User"> | string | null
   }
 
   export type AggregatorWhereInput = {
@@ -8563,7 +8610,7 @@ export namespace Prisma {
     password_resetCode?: StringNullableFilter<"Aggregator"> | string | null
     isEmail_verified?: BoolFilter<"Aggregator"> | boolean
     status?: EnumUserStatusFilter<"Aggregator"> | $Enums.UserStatus
-    role?: StringNullableFilter<"Aggregator"> | string | null
+    role?: EnumRoleNullableFilter<"Aggregator"> | $Enums.Role | null
     company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     farmers?: FarmerListRelationFilter
@@ -8614,7 +8661,7 @@ export namespace Prisma {
     created_by_id?: StringFilter<"Aggregator"> | string
     isEmail_verified?: BoolFilter<"Aggregator"> | boolean
     status?: EnumUserStatusFilter<"Aggregator"> | $Enums.UserStatus
-    role?: StringNullableFilter<"Aggregator"> | string | null
+    role?: EnumRoleNullableFilter<"Aggregator"> | $Enums.Role | null
     company?: XOR<CompanyRelationFilter, CompanyWhereInput>
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     farmers?: FarmerListRelationFilter
@@ -8664,7 +8711,7 @@ export namespace Prisma {
     password_resetCode?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
     isEmail_verified?: BoolWithAggregatesFilter<"Aggregator"> | boolean
     status?: EnumUserStatusWithAggregatesFilter<"Aggregator"> | $Enums.UserStatus
-    role?: StringNullableWithAggregatesFilter<"Aggregator"> | string | null
+    role?: EnumRoleNullableWithAggregatesFilter<"Aggregator"> | $Enums.Role | null
   }
 
   export type FarmerWhereInput = {
@@ -8687,7 +8734,7 @@ export namespace Prisma {
     verification_code?: StringNullableFilter<"Farmer"> | string | null
     password_resetCode?: StringNullableFilter<"Farmer"> | string | null
     isEmail_verified?: BoolFilter<"Farmer"> | boolean
-    role?: StringNullableFilter<"Farmer"> | string | null
+    role?: EnumRoleNullableFilter<"Farmer"> | $Enums.Role | null
     is_active?: BoolNullableFilter<"Farmer"> | boolean | null
     aggregator?: XOR<AggregatorRelationFilter, AggregatorWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -8742,7 +8789,7 @@ export namespace Prisma {
     last_active?: StringNullableFilter<"Farmer"> | string | null
     status?: EnumUserStatusFilter<"Farmer"> | $Enums.UserStatus
     isEmail_verified?: BoolFilter<"Farmer"> | boolean
-    role?: StringNullableFilter<"Farmer"> | string | null
+    role?: EnumRoleNullableFilter<"Farmer"> | $Enums.Role | null
     is_active?: BoolNullableFilter<"Farmer"> | boolean | null
     aggregator?: XOR<AggregatorRelationFilter, AggregatorWhereInput>
     user?: XOR<UserRelationFilter, UserWhereInput>
@@ -8795,7 +8842,7 @@ export namespace Prisma {
     verification_code?: StringNullableWithAggregatesFilter<"Farmer"> | string | null
     password_resetCode?: StringNullableWithAggregatesFilter<"Farmer"> | string | null
     isEmail_verified?: BoolWithAggregatesFilter<"Farmer"> | boolean
-    role?: StringNullableWithAggregatesFilter<"Farmer"> | string | null
+    role?: EnumRoleNullableWithAggregatesFilter<"Farmer"> | $Enums.Role | null
     is_active?: BoolNullableWithAggregatesFilter<"Farmer"> | boolean | null
   }
 
@@ -8826,7 +8873,7 @@ export namespace Prisma {
     verification_code?: StringNullableFilter<"Company"> | string | null
     password_resetCode?: StringNullableFilter<"Company"> | string | null
     isEmail_verified?: BoolFilter<"Company"> | boolean
-    role?: StringNullableFilter<"Company"> | string | null
+    role?: EnumRoleNullableFilter<"Company"> | $Enums.Role | null
     is_active?: BoolNullableFilter<"Company"> | boolean | null
     farmers?: FarmerListRelationFilter
     aggregators?: AggregatorListRelationFilter
@@ -8891,7 +8938,7 @@ export namespace Prisma {
     financial_statement?: StringNullableFilter<"Company"> | string | null
     status?: EnumUserStatusFilter<"Company"> | $Enums.UserStatus
     isEmail_verified?: BoolFilter<"Company"> | boolean
-    role?: StringNullableFilter<"Company"> | string | null
+    role?: EnumRoleNullableFilter<"Company"> | $Enums.Role | null
     is_active?: BoolNullableFilter<"Company"> | boolean | null
     farmers?: FarmerListRelationFilter
     aggregators?: AggregatorListRelationFilter
@@ -8956,7 +9003,7 @@ export namespace Prisma {
     verification_code?: StringNullableWithAggregatesFilter<"Company"> | string | null
     password_resetCode?: StringNullableWithAggregatesFilter<"Company"> | string | null
     isEmail_verified?: BoolWithAggregatesFilter<"Company"> | boolean
-    role?: StringNullableWithAggregatesFilter<"Company"> | string | null
+    role?: EnumRoleNullableWithAggregatesFilter<"Company"> | $Enums.Role | null
     is_active?: BoolNullableWithAggregatesFilter<"Company"> | boolean | null
   }
 
@@ -8971,7 +9018,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"Transporter"> | string | null
     first_name?: StringNullableFilter<"Transporter"> | string | null
     last_name?: StringNullableFilter<"Transporter"> | string | null
-    role?: StringNullableFilter<"Transporter"> | string | null
+    role?: EnumRoleNullableFilter<"Transporter"> | $Enums.Role | null
     last_active?: StringNullableFilter<"Transporter"> | string | null
     status?: EnumUserStatusFilter<"Transporter"> | $Enums.UserStatus
     phone_number?: StringNullableFilter<"Transporter"> | string | null
@@ -9031,7 +9078,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"Transporter"> | string | null
     first_name?: StringNullableFilter<"Transporter"> | string | null
     last_name?: StringNullableFilter<"Transporter"> | string | null
-    role?: StringNullableFilter<"Transporter"> | string | null
+    role?: EnumRoleNullableFilter<"Transporter"> | $Enums.Role | null
     last_active?: StringNullableFilter<"Transporter"> | string | null
     status?: EnumUserStatusFilter<"Transporter"> | $Enums.UserStatus
     is_active?: BoolNullableFilter<"Transporter"> | boolean | null
@@ -9084,7 +9131,7 @@ export namespace Prisma {
     password?: StringNullableWithAggregatesFilter<"Transporter"> | string | null
     first_name?: StringNullableWithAggregatesFilter<"Transporter"> | string | null
     last_name?: StringNullableWithAggregatesFilter<"Transporter"> | string | null
-    role?: StringNullableWithAggregatesFilter<"Transporter"> | string | null
+    role?: EnumRoleNullableWithAggregatesFilter<"Transporter"> | $Enums.Role | null
     last_active?: StringNullableWithAggregatesFilter<"Transporter"> | string | null
     status?: EnumUserStatusWithAggregatesFilter<"Transporter"> | $Enums.UserStatus
     phone_number?: StringNullableWithAggregatesFilter<"Transporter"> | string | null
@@ -9189,7 +9236,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -9198,6 +9245,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     farmers?: FarmerCreateNestedManyWithoutUserInput
     transporters?: TransporterCreateNestedManyWithoutUserInput
     aggregators?: AggregatorCreateNestedManyWithoutUserInput
@@ -9211,7 +9259,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -9220,6 +9268,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutUserInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutUserInput
     aggregators?: AggregatorUncheckedCreateNestedManyWithoutUserInput
@@ -9233,7 +9282,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9242,6 +9291,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     farmers?: FarmerUpdateManyWithoutUserNestedInput
     transporters?: TransporterUpdateManyWithoutUserNestedInput
     aggregators?: AggregatorUpdateManyWithoutUserNestedInput
@@ -9255,7 +9305,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9264,6 +9314,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     farmers?: FarmerUncheckedUpdateManyWithoutUserNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutUserNestedInput
     aggregators?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
@@ -9277,7 +9328,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -9286,6 +9337,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -9296,7 +9348,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9305,6 +9357,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -9315,7 +9368,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9324,6 +9377,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type AggregatorCreateInput = {
@@ -9342,7 +9396,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     company: CompanyCreateNestedOneWithoutAggregatorsInput
     user?: UserCreateNestedOneWithoutAggregatorsInput
     farmers?: FarmerCreateNestedManyWithoutAggregatorInput
@@ -9366,7 +9420,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
@@ -9387,7 +9441,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
     user?: UserUpdateOneWithoutAggregatorsNestedInput
     farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
@@ -9411,7 +9465,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
@@ -9433,7 +9487,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
   }
 
   export type AggregatorUpdateManyMutationInput = {
@@ -9452,7 +9506,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
   }
 
   export type AggregatorUncheckedUpdateManyInput = {
@@ -9472,7 +9526,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
   }
 
   export type FarmerCreateInput = {
@@ -9491,7 +9545,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregator: AggregatorCreateNestedOneWithoutFarmersInput
     user: UserCreateNestedOneWithoutFarmersInput
@@ -9517,7 +9571,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
@@ -9539,7 +9593,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
     user?: UserUpdateOneRequiredWithoutFarmersNestedInput
@@ -9565,7 +9619,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
@@ -9588,7 +9642,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
   }
 
@@ -9608,7 +9662,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -9629,7 +9683,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -9657,7 +9711,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     farmers?: FarmerCreateNestedManyWithoutCompanyInput
     aggregators?: AggregatorCreateNestedManyWithoutCompanyInput
@@ -9688,7 +9742,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutCompanyInput
     aggregators?: AggregatorUncheckedCreateNestedManyWithoutCompanyInput
@@ -9719,7 +9773,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     farmers?: FarmerUpdateManyWithoutCompanyNestedInput
     aggregators?: AggregatorUpdateManyWithoutCompanyNestedInput
@@ -9750,7 +9804,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     farmers?: FarmerUncheckedUpdateManyWithoutCompanyNestedInput
     aggregators?: AggregatorUncheckedUpdateManyWithoutCompanyNestedInput
@@ -9781,7 +9835,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
   }
 
@@ -9809,7 +9863,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -9837,7 +9891,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -9849,7 +9903,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -9875,7 +9929,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -9898,7 +9952,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9924,7 +9978,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9947,7 +10001,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -9970,7 +10024,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -9992,7 +10046,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10138,6 +10192,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumRoleNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRoleNullableFilter<$PrismaModel> | $Enums.Role | null
+  }
+
   export type EnumUserStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
     in?: $Enums.UserStatus[] | ListEnumUserStatusFieldRefInput<$PrismaModel>
@@ -10207,6 +10268,7 @@ export namespace Prisma {
     verification_code?: SortOrder
     password_resetCode?: SortOrder
     isEmail_verified?: SortOrder
+    role_type?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -10226,6 +10288,7 @@ export namespace Prisma {
     verification_code?: SortOrder
     password_resetCode?: SortOrder
     isEmail_verified?: SortOrder
+    role_type?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -10245,6 +10308,7 @@ export namespace Prisma {
     verification_code?: SortOrder
     password_resetCode?: SortOrder
     isEmail_verified?: SortOrder
+    role_type?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -10295,6 +10359,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.Role | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumRoleNullableFilter<$PrismaModel>
+    _max?: NestedEnumRoleNullableFilter<$PrismaModel>
   }
 
   export type EnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -10768,6 +10842,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type NullableEnumRoleFieldUpdateOperationsInput = {
+    set?: $Enums.Role | null
   }
 
   export type EnumUserStatusFieldUpdateOperationsInput = {
@@ -11358,6 +11436,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedEnumRoleNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRoleNullableFilter<$PrismaModel> | $Enums.Role | null
+  }
+
   export type NestedEnumUserStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
     in?: $Enums.UserStatus[] | ListEnumUserStatusFieldRefInput<$PrismaModel>
@@ -11445,6 +11530,16 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Role | EnumRoleFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Role[] | ListEnumRoleFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumRoleNullableWithAggregatesFilter<$PrismaModel> | $Enums.Role | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumRoleNullableFilter<$PrismaModel>
+    _max?: NestedEnumRoleNullableFilter<$PrismaModel>
+  }
+
   export type NestedEnumUserStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.UserStatus | EnumUserStatusFieldRefInput<$PrismaModel>
     in?: $Enums.UserStatus[] | ListEnumUserStatusFieldRefInput<$PrismaModel>
@@ -11514,7 +11609,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregator: AggregatorCreateNestedOneWithoutFarmersInput
     company: CompanyCreateNestedOneWithoutFarmersInput
@@ -11538,7 +11633,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
@@ -11562,7 +11657,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -11587,7 +11682,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -11627,7 +11722,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     company: CompanyCreateNestedOneWithoutAggregatorsInput
     farmers?: FarmerCreateNestedManyWithoutAggregatorInput
     transporters?: TransporterCreateNestedManyWithoutAggregatorInput
@@ -11649,7 +11744,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
@@ -11700,7 +11795,7 @@ export namespace Prisma {
     verification_code?: StringNullableFilter<"Farmer"> | string | null
     password_resetCode?: StringNullableFilter<"Farmer"> | string | null
     isEmail_verified?: BoolFilter<"Farmer"> | boolean
-    role?: StringNullableFilter<"Farmer"> | string | null
+    role?: EnumRoleNullableFilter<"Farmer"> | $Enums.Role | null
     is_active?: BoolNullableFilter<"Farmer"> | boolean | null
   }
 
@@ -11731,7 +11826,7 @@ export namespace Prisma {
     password?: StringNullableFilter<"Transporter"> | string | null
     first_name?: StringNullableFilter<"Transporter"> | string | null
     last_name?: StringNullableFilter<"Transporter"> | string | null
-    role?: StringNullableFilter<"Transporter"> | string | null
+    role?: EnumRoleNullableFilter<"Transporter"> | $Enums.Role | null
     last_active?: StringNullableFilter<"Transporter"> | string | null
     status?: EnumUserStatusFilter<"Transporter"> | $Enums.UserStatus
     phone_number?: StringNullableFilter<"Transporter"> | string | null
@@ -11782,7 +11877,7 @@ export namespace Prisma {
     password_resetCode?: StringNullableFilter<"Aggregator"> | string | null
     isEmail_verified?: BoolFilter<"Aggregator"> | boolean
     status?: EnumUserStatusFilter<"Aggregator"> | $Enums.UserStatus
-    role?: StringNullableFilter<"Aggregator"> | string | null
+    role?: EnumRoleNullableFilter<"Aggregator"> | $Enums.Role | null
   }
 
   export type CompanyCreateWithoutAggregatorsInput = {
@@ -11809,7 +11904,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     farmers?: FarmerCreateNestedManyWithoutCompanyInput
     transporters?: TransporterCreateNestedManyWithoutCompanyInput
@@ -11839,7 +11934,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutCompanyInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutCompanyInput
@@ -11858,7 +11953,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -11867,6 +11962,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     farmers?: FarmerCreateNestedManyWithoutUserInput
     transporters?: TransporterCreateNestedManyWithoutUserInput
   }
@@ -11879,7 +11975,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -11888,6 +11984,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutUserInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutUserInput
   }
@@ -11913,7 +12010,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     user: UserCreateNestedOneWithoutFarmersInput
     company: CompanyCreateNestedOneWithoutFarmersInput
@@ -11937,7 +12034,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
@@ -11961,7 +12058,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -11986,7 +12083,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12045,7 +12142,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     farmers?: FarmerUpdateManyWithoutCompanyNestedInput
     transporters?: TransporterUpdateManyWithoutCompanyNestedInput
@@ -12075,7 +12172,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     farmers?: FarmerUncheckedUpdateManyWithoutCompanyNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutCompanyNestedInput
@@ -12100,7 +12197,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12109,6 +12206,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     farmers?: FarmerUpdateManyWithoutUserNestedInput
     transporters?: TransporterUpdateManyWithoutUserNestedInput
   }
@@ -12121,7 +12219,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12130,6 +12228,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     farmers?: FarmerUncheckedUpdateManyWithoutUserNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -12182,7 +12281,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     company: CompanyCreateNestedOneWithoutAggregatorsInput
     user?: UserCreateNestedOneWithoutAggregatorsInput
     transporters?: TransporterCreateNestedManyWithoutAggregatorInput
@@ -12205,7 +12304,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
 
@@ -12222,7 +12321,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12231,6 +12330,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     transporters?: TransporterCreateNestedManyWithoutUserInput
     aggregators?: AggregatorCreateNestedManyWithoutUserInput
   }
@@ -12243,7 +12343,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12252,6 +12352,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     transporters?: TransporterUncheckedCreateNestedManyWithoutUserInput
     aggregators?: AggregatorUncheckedCreateNestedManyWithoutUserInput
   }
@@ -12285,7 +12386,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregators?: AggregatorCreateNestedManyWithoutCompanyInput
     transporters?: TransporterCreateNestedManyWithoutCompanyInput
@@ -12315,7 +12416,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregators?: AggregatorUncheckedCreateNestedManyWithoutCompanyInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutCompanyInput
@@ -12368,7 +12469,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12393,7 +12494,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12444,7 +12545,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
     user?: UserUpdateOneWithoutAggregatorsNestedInput
     transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
@@ -12467,7 +12568,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
 
@@ -12490,7 +12591,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12499,6 +12600,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     transporters?: TransporterUpdateManyWithoutUserNestedInput
     aggregators?: AggregatorUpdateManyWithoutUserNestedInput
   }
@@ -12511,7 +12613,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -12520,6 +12622,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     transporters?: TransporterUncheckedUpdateManyWithoutUserNestedInput
     aggregators?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -12559,7 +12662,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregators?: AggregatorUpdateManyWithoutCompanyNestedInput
     transporters?: TransporterUpdateManyWithoutCompanyNestedInput
@@ -12589,7 +12692,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregators?: AggregatorUncheckedUpdateManyWithoutCompanyNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutCompanyNestedInput
@@ -12659,7 +12762,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregator: AggregatorCreateNestedOneWithoutFarmersInput
     user: UserCreateNestedOneWithoutFarmersInput
@@ -12683,7 +12786,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
@@ -12715,7 +12818,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     user?: UserCreateNestedOneWithoutAggregatorsInput
     farmers?: FarmerCreateNestedManyWithoutAggregatorInput
     transporters?: TransporterCreateNestedManyWithoutAggregatorInput
@@ -12737,7 +12840,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
     transporters?: TransporterUncheckedCreateNestedManyWithoutAggregatorInput
   }
@@ -12760,7 +12863,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12785,7 +12888,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12881,7 +12984,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     farmers?: FarmerCreateNestedManyWithoutCompanyInput
     aggregators?: AggregatorCreateNestedManyWithoutCompanyInput
@@ -12911,7 +13014,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutCompanyInput
     aggregators?: AggregatorUncheckedCreateNestedManyWithoutCompanyInput
@@ -12938,7 +13041,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     company: CompanyCreateNestedOneWithoutAggregatorsInput
     user?: UserCreateNestedOneWithoutAggregatorsInput
     farmers?: FarmerCreateNestedManyWithoutAggregatorInput
@@ -12961,7 +13064,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutAggregatorInput
   }
 
@@ -12978,7 +13081,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -12987,6 +13090,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     farmers?: FarmerCreateNestedManyWithoutUserInput
     aggregators?: AggregatorCreateNestedManyWithoutUserInput
   }
@@ -12999,7 +13103,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -13008,6 +13112,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
+    role_type?: string | null
     farmers?: FarmerUncheckedCreateNestedManyWithoutUserInput
     aggregators?: AggregatorUncheckedCreateNestedManyWithoutUserInput
   }
@@ -13033,7 +13138,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregator: AggregatorCreateNestedOneWithoutFarmersInput
     user: UserCreateNestedOneWithoutFarmersInput
@@ -13058,7 +13163,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     list_of_produce?: ProduceUncheckedCreateNestedManyWithoutFarmerInput
   }
@@ -13103,7 +13208,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     farmers?: FarmerUpdateManyWithoutCompanyNestedInput
     aggregators?: AggregatorUpdateManyWithoutCompanyNestedInput
@@ -13133,7 +13238,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     farmers?: FarmerUncheckedUpdateManyWithoutCompanyNestedInput
     aggregators?: AggregatorUncheckedUpdateManyWithoutCompanyNestedInput
@@ -13166,7 +13271,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
     user?: UserUpdateOneWithoutAggregatorsNestedInput
     farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
@@ -13189,7 +13294,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
   }
 
@@ -13212,7 +13317,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13221,6 +13326,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     farmers?: FarmerUpdateManyWithoutUserNestedInput
     aggregators?: AggregatorUpdateManyWithoutUserNestedInput
   }
@@ -13233,7 +13339,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13242,6 +13348,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
+    role_type?: NullableStringFieldUpdateOperationsInput | string | null
     farmers?: FarmerUncheckedUpdateManyWithoutUserNestedInput
     aggregators?: AggregatorUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -13273,7 +13380,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
     user?: UserUpdateOneRequiredWithoutFarmersNestedInput
@@ -13298,7 +13405,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
   }
@@ -13319,7 +13426,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     aggregator: AggregatorCreateNestedOneWithoutFarmersInput
     user: UserCreateNestedOneWithoutFarmersInput
@@ -13344,7 +13451,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
     transporters?: TransporterUncheckedCreateNestedManyWithoutFarmerInput
   }
@@ -13381,7 +13488,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
     user?: UserUpdateOneRequiredWithoutFarmersNestedInput
@@ -13406,7 +13513,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
   }
@@ -13427,7 +13534,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
   }
 
@@ -13439,7 +13546,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -13469,7 +13576,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
   }
 
   export type FarmerUpdateWithoutUserInput = {
@@ -13488,7 +13595,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
     company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
@@ -13512,7 +13619,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
@@ -13534,7 +13641,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -13546,7 +13653,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13571,7 +13678,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13593,7 +13700,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13623,7 +13730,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     company?: CompanyUpdateOneRequiredWithoutAggregatorsNestedInput
     farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
     transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
@@ -13645,7 +13752,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
@@ -13666,7 +13773,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
   }
 
   export type FarmerCreateManyAggregatorInput = {
@@ -13685,7 +13792,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
   }
 
@@ -13697,7 +13804,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -13727,7 +13834,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     user?: UserUpdateOneRequiredWithoutFarmersNestedInput
     company?: CompanyUpdateOneRequiredWithoutFarmersNestedInput
@@ -13751,7 +13858,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
@@ -13773,7 +13880,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -13785,7 +13892,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13810,7 +13917,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13832,7 +13939,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13866,7 +13973,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -13924,7 +14031,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13949,7 +14056,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13971,7 +14078,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14001,7 +14108,7 @@ export namespace Prisma {
     verification_code?: string | null
     password_resetCode?: string | null
     isEmail_verified?: boolean
-    role?: string | null
+    role?: $Enums.Role | null
     is_active?: boolean | null
   }
 
@@ -14021,7 +14128,7 @@ export namespace Prisma {
     password_resetCode?: string | null
     isEmail_verified?: boolean
     status: $Enums.UserStatus
-    role?: string | null
+    role?: $Enums.Role | null
   }
 
   export type TransporterCreateManyCompanyInput = {
@@ -14032,7 +14139,7 @@ export namespace Prisma {
     password?: string | null
     first_name?: string | null
     last_name?: string | null
-    role?: string | null
+    role?: $Enums.Role | null
     last_active?: string | null
     status: $Enums.UserStatus
     phone_number?: string | null
@@ -14062,7 +14169,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     aggregator?: AggregatorUpdateOneRequiredWithoutFarmersNestedInput
     user?: UserUpdateOneRequiredWithoutFarmersNestedInput
@@ -14086,7 +14193,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
     list_of_produce?: ProduceUncheckedUpdateManyWithoutFarmerNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutFarmerNestedInput
@@ -14108,7 +14215,7 @@ export namespace Prisma {
     verification_code?: NullableStringFieldUpdateOperationsInput | string | null
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     is_active?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
@@ -14128,7 +14235,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     user?: UserUpdateOneWithoutAggregatorsNestedInput
     farmers?: FarmerUpdateManyWithoutAggregatorNestedInput
     transporters?: TransporterUpdateManyWithoutAggregatorNestedInput
@@ -14150,7 +14257,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     farmers?: FarmerUncheckedUpdateManyWithoutAggregatorNestedInput
     transporters?: TransporterUncheckedUpdateManyWithoutAggregatorNestedInput
   }
@@ -14171,7 +14278,7 @@ export namespace Prisma {
     password_resetCode?: NullableStringFieldUpdateOperationsInput | string | null
     isEmail_verified?: BoolFieldUpdateOperationsInput | boolean
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
   }
 
   export type TransporterUpdateWithoutCompanyInput = {
@@ -14182,7 +14289,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14207,7 +14314,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14229,7 +14336,7 @@ export namespace Prisma {
     password?: NullableStringFieldUpdateOperationsInput | string | null
     first_name?: NullableStringFieldUpdateOperationsInput | string | null
     last_name?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     last_active?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
     phone_number?: NullableStringFieldUpdateOperationsInput | string | null

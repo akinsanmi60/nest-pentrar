@@ -3,6 +3,15 @@ generator client {
   output   = "./generated/client"
 }
 
+generator dbml {
+  provider   = "prisma-dbml-generator"
+  output     = "../dbml"
+  outputName = "awesome.dbml"
+  projectName = "Project Name"
+  projectDatabaseType = "PostgreSQL"
+  projectNote = "Test project description"
+}
+
 // datasource db {
 //   provider = "postgresql"
 //   url      = env("DATABASE_URL")
@@ -23,18 +32,19 @@ model User {
   password           String?
   first_name         String?
   last_name          String?
-  role               String?
+  role               Role?
   last_active        String?
   status             UserStatus
   phone_number       String?       @unique
   is_active          Boolean?
   pentrar_user_id    String?       @unique
-  farmers             Farmer[]
-  transporters        Transporter[]
-  aggregators         Aggregator[]
+  farmers            Farmer[]
+  transporters       Transporter[]
+  aggregators        Aggregator[]
   verification_code  String?       @unique
   password_resetCode String?       @unique
   isEmail_verified   Boolean       @default(false)
+  role_type          String?
 }
 
 model Aggregator {
@@ -52,13 +62,13 @@ model Aggregator {
   company               Company       @relation(fields: [created_by_id], references: [pentrar_company_id], map: "company_relation")
   user                  User?         @relation(fields: [created_by_id], references: [pentrar_user_id], map: "user_relation")
   created_by_id         String
-  farmers                Farmer[]
-  transporters           Transporter[]
+  farmers               Farmer[]
+  transporters          Transporter[]
   verification_code     String?       @unique
   password_resetCode    String?       @unique
   isEmail_verified      Boolean       @default(false)
   status                UserStatus
-  role                  String?
+  role                  Role?
 }
 
 model Farmer {
@@ -78,12 +88,12 @@ model Farmer {
   created_by_id      String
   last_active        String?
   list_of_produce    Produce[]
-  transporters        Transporter[]
+  transporters       Transporter[]
   status             UserStatus
   verification_code  String?       @unique
   password_resetCode String?       @unique
   isEmail_verified   Boolean       @default(false)
-  role               String?
+  role               Role?
   is_active          Boolean?
 }
 
@@ -111,11 +121,11 @@ model Company {
   verification_code         String?       @unique
   password_resetCode        String?       @unique
   isEmail_verified          Boolean       @default(false)
-  role                      String?
+  role                      Role?
   is_active                 Boolean?
-  farmers                    Farmer[]
-  aggregators                Aggregator[]
-  transporters               Transporter[]
+  farmers                   Farmer[]
+  aggregators               Aggregator[]
+  transporters              Transporter[]
 }
 
 model Transporter {
@@ -126,7 +136,7 @@ model Transporter {
   password           String?
   first_name         String?
   last_name          String?
-  role               String?
+  role               Role?
   last_active        String?
   status             UserStatus
   phone_number       String?    @unique
@@ -165,3 +175,14 @@ enum UserStatus {
   Pending
   Invited
 }
+
+enum Role {
+  Admin
+  SubAdmin
+  Farmer
+  Aggregator
+  Company
+  Transporter
+}
+
+

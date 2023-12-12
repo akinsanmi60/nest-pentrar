@@ -16,7 +16,7 @@ import { PasswordService } from "./password.service";
 import { MailService } from "../mail/mail.service";
 import { ResponseInterceptor } from "../responeFilter/respone.service";
 import { v4 as uuidv4 } from "uuid";
-import crypto from "crypto";
+import * as crypto from "crypto";
 import { AuthResolver } from "./authFinder.service";
 
 @UseInterceptors(ResponseInterceptor)
@@ -75,7 +75,8 @@ export class AuthService {
   }
 
   async register(dto: UserRegisterDto) {
-    const { email, password, first_name, last_name, phone_number, role } = dto;
+    const { email, password, first_name, last_name, phone_number, role_type } =
+      dto;
 
     const emailTaken = await this.authResolver.findOneUserByEmail(email);
 
@@ -101,7 +102,7 @@ export class AuthService {
     }
     const code = crypto.randomInt(100000, 999999);
 
-    const hashedPassword = this.passwordService.hashPassword(password);
+    const hashedPassword = await this.passwordService.hashPassword(password);
 
     const newUser = await this.prisma.user.create({
       data: {
@@ -112,10 +113,11 @@ export class AuthService {
         last_name,
         pentrar_user_id: uuidv4(),
         phone_number,
-        role,
+        role: "SubAdmin",
         status: "Pending",
         isEmail_verified: false,
         verification_code: code.toString(),
+        role_type,
       },
     });
 

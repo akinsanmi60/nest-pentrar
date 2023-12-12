@@ -2,16 +2,16 @@ import { Module } from "@nestjs/common";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./userAuth.service";
 import { PrismaService } from "src/prisma/prisma.service";
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule, JwtService } from "@nestjs/jwt";
 import { PasswordService } from "./password.service";
 import { JwtStrategy } from "./auth.jwt.strategy";
 import { MailModule } from "../mail/mail.module";
 import { ConfigService } from "@nestjs/config";
-import { SecurityConfig } from "src/common/configs/config.interface";
 import { PassportModule } from "@nestjs/passport";
 import { AuthResolver } from "./authFinder.service";
 import { AggregatorAuthService } from "./aggregatorAuth.service";
 import { FarmerAuthService } from "./farmer.service";
+import { SecurityConfig } from "src/common/configs/config.interface";
 
 @Module({
   imports: [
@@ -39,6 +39,7 @@ import { FarmerAuthService } from "./farmer.service";
     AuthResolver,
     AggregatorAuthService,
     FarmerAuthService,
+    JwtService,
   ],
 })
 export class AuthModule {}

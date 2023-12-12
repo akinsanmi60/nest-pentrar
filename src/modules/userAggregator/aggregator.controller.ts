@@ -7,9 +7,11 @@ import {
   Post,
   Put,
   Query,
+  UseGuards,
 } from "@nestjs/common";
 import { AggregratorService } from "./aggregator.service";
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiParam,
   ApiQuery,
@@ -22,7 +24,12 @@ import {
   GetAllAggregatorResponse,
   UpdateAggregatorDto,
 } from "./dto/aggregator.dto";
+import { RolesGuard } from "src/roles/roles.guard";
+import { JwtAuthGuard } from "src/auth/jwtAuth.guard";
+import { Roles } from "src/roles/roles.decorator";
+import { Role } from "src/roles/role.enum";
 
+@ApiBearerAuth()
 @ApiTags("Aggregator")
 @Controller("aggregator")
 export class AggregatorController {
@@ -33,6 +40,8 @@ export class AggregatorController {
   @ApiResponse({
     type: GetAllAggregatorResponse,
   })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   async getAllAggregators(@Query() dto) {
     return await this.aggregatorService.getAllAggregators(dto);
   }
@@ -42,6 +51,8 @@ export class AggregatorController {
   @ApiResponse({
     type: AggregatorInfoDto,
   })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   async activateAggregator(@Param("id") id: string) {
     return await this.aggregatorService.activateAggregator(id);
   }
@@ -51,6 +62,8 @@ export class AggregatorController {
   @ApiResponse({
     type: AggregatorInfoDto,
   })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   async deactivateAggregator(@Param("id") id) {
     return await this.aggregatorService.deactivateAggregator(id);
   }
@@ -61,6 +74,8 @@ export class AggregatorController {
   @ApiResponse({
     type: AggregatorInfoDto,
   })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin, Role.Aggregator)
   async updateAggregator(@Param("id") id, @Body() dto) {
     return await this.aggregatorService.updateAggregator(id, dto);
   }
@@ -70,6 +85,8 @@ export class AggregatorController {
   @ApiResponse({
     type: AggregatorInfoDto,
   })
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin, Role.SubAdmin)
   async deleteAggregator(@Param("id") id) {
     return await this.aggregatorService.deleteAggregator(id);
   }

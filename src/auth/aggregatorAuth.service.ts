@@ -218,13 +218,9 @@ export class AggregatorAuthService {
   async resetPassword(dto: ResetPasswordDto) {
     const { code, new_password } = dto;
 
-    console.log(code, new_password);
-
     const foundUser = await this.prisma.aggregator.findUnique({
       where: { password_resetCode: code },
     });
-
-    console.log(foundUser);
 
     if (!foundUser) {
       throw new BadRequestException("Invalid code");

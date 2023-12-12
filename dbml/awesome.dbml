@@ -1,0 +1,189 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Project "Project Name" {
+  database_type: 'PostgreSQL'
+  Note: 'Test project description'
+}
+
+Table User {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  email String [unique, not null]
+  password String
+  first_name String
+  last_name String
+  role Role
+  last_active String
+  status UserStatus [not null]
+  phone_number String [unique]
+  is_active Boolean
+  pentrar_user_id String [unique]
+  farmers Farmer [not null]
+  transporters Transporter [not null]
+  aggregators Aggregator [not null]
+  verification_code String [unique]
+  password_resetCode String [unique]
+  isEmail_verified Boolean [not null, default: false]
+  role_type String
+}
+
+Table Aggregator {
+  id String [pk]
+  created_at DateTime [not null]
+  updated_at DateTime [not null]
+  is_active Boolean
+  email String [unique]
+  password String
+  first_name String
+  last_name String
+  last_active String
+  phone_number String [unique]
+  pentrar_aggregator_id String [unique]
+  company Company [not null]
+  user User
+  created_by_id String [not null]
+  farmers Farmer [not null]
+  transporters Transporter [not null]
+  verification_code String [unique]
+  password_resetCode String [unique]
+  isEmail_verified Boolean [not null, default: false]
+  status UserStatus [not null]
+  role Role
+}
+
+Table Farmer {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  email String [unique]
+  phone_number String [unique]
+  password String
+  first_name String
+  last_name String
+  type_of_produce String[] [not null]
+  pentrar_farmer_id String [unique]
+  aggregator Aggregator [not null]
+  user User [not null]
+  company Company [not null]
+  created_by_id String [not null]
+  last_active String
+  list_of_produce Produce [not null]
+  transporters Transporter [not null]
+  status UserStatus [not null]
+  verification_code String [unique]
+  password_resetCode String [unique]
+  isEmail_verified Boolean [not null, default: false]
+  role Role
+  is_active Boolean
+}
+
+Table Company {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  email String [unique]
+  phone_number String [unique]
+  password String
+  company_name String
+  company_address String
+  legal_entity_name String
+  tax_identification_number String [unique]
+  pentrar_company_id String [unique]
+  created_by_id String [not null]
+  last_active String
+  company_type String
+  point_of_contact String
+  parent_company String
+  subsidiaries_company String
+  annual_revenue String
+  financial_statement String
+  status UserStatus [not null]
+  verification_code String [unique]
+  password_resetCode String [unique]
+  isEmail_verified Boolean [not null, default: false]
+  role Role
+  is_active Boolean
+  farmers Farmer [not null]
+  aggregators Aggregator [not null]
+  transporters Transporter [not null]
+}
+
+Table Transporter {
+  id String [pk]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  email String [unique, not null]
+  password String
+  first_name String
+  last_name String
+  role Role
+  last_active String
+  status UserStatus [not null]
+  phone_number String [unique]
+  is_active Boolean
+  pentrar_trans_id String
+  company Company [not null]
+  aggregator Aggregator [not null]
+  user User [not null]
+  farmer Farmer [not null]
+  created_by_id String [not null]
+  verification_code String [unique]
+  password_resetCode String [unique]
+  isEmail_verified Boolean [not null, default: false]
+  vehicle_type String
+  vehicle_number String
+  Vehicle_license String
+}
+
+Table Produce {
+  id String [pk]
+  name String
+  quantity Int
+  unit Int
+  farmer Farmer [not null]
+  farmer_id String [not null]
+  created_at DateTime [default: `now()`, not null]
+  updated_at DateTime [not null]
+  pentrar_produce_id String
+  image String
+  description String
+}
+
+Enum UserStatus {
+  Active
+  Inactive
+  Pending
+  Invited
+}
+
+Enum Role {
+  Admin
+  SubAdmin
+  Farmer
+  Aggregator
+  Company
+  Transporter
+}
+
+Ref: Aggregator.created_by_id > Company.pentrar_company_id
+
+Ref: Aggregator.created_by_id > User.pentrar_user_id
+
+Ref: Farmer.created_by_id > Aggregator.pentrar_aggregator_id
+
+Ref: Farmer.created_by_id > User.pentrar_user_id
+
+Ref: Farmer.created_by_id > Company.pentrar_company_id
+
+Ref: Transporter.created_by_id > Company.pentrar_company_id
+
+Ref: Transporter.created_by_id > Aggregator.pentrar_aggregator_id
+
+Ref: Transporter.created_by_id > User.pentrar_user_id
+
+Ref: Transporter.created_by_id > Farmer.pentrar_farmer_id
+
+Ref: Produce.farmer_id > Farmer.id
