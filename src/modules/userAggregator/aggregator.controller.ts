@@ -24,10 +24,10 @@ import {
   GetAllAggregatorResponse,
   UpdateAggregatorDto,
 } from "./dto/aggregator.dto";
-import { RolesGuard } from "src/roles/roles.guard";
-import { JwtAuthGuard } from "src/auth/jwtAuth.guard";
-import { Roles } from "src/roles/roles.decorator";
-import { Role } from "src/roles/role.enum";
+import { RolesGuard } from "../../roles/roles.guard";
+import { JwtAuthGuard } from "../../auth/jwtAuth.guard";
+import { Roles } from "../../roles/roles.decorator";
+import { Role } from "../../roles/role.enum";
 
 @ApiBearerAuth()
 @ApiTags("Aggregator")
